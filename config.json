@@ -1,0 +1,22 @@
+{
+    "Web":
+    {
+        "port": 443,
+        "cookieSecret": "password",
+        "ssl":
+        {
+            "key": "ssl/ssl.key",
+            "cert": "ssl/ssl.crt"
+        }
+    },
+    "Database":
+    {
+        "host":"localhost",
+        "port": 3306,
+        "user":"user",
+        "password":"password",
+
+        "database": "easywiki",
+        "multipleStatements": true
+    }
+}
