@@ -62,9 +62,22 @@ class Web
             req.templateObject.RenderAndSend(req, res, "index", {title: "Home"});
         });
 
-        this._app.all("/test", function(req,res)
+        this._app.all("/(:view)*", function(req,res)
         {
-            req.templateObject.RenderAndSend(req, res, "test", {title: "Test page"});
+            var view = req.params.view + req.params["0"];
+            if(req.templateObject.ViewExists(view))
+            {
+                req.templateObject.RenderAndSend(req, res, view, {title: "Home"});
+            }
+            else
+            {
+                req.templateObject.RenderAndSend(req,res.status(404),"error",{
+                    title: "Page not found",
+                    "description": "<i class=\"far fa-frown\"></i> Page not found!",
+                    "subtext": "Whoops, this page doesn't exist."
+                });
+            }
+            
         });
 
         this._app.all("*", function(req,res)

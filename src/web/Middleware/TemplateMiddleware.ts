@@ -68,17 +68,36 @@ class TemplateObject
     {
         let viewPath = path.join(__dirname, dirPrefix, "views", view + ".html");
         let builtViewPath = path.join(__dirname, dirPrefix, "built-views", view + ".html");
+        let builtViewFolderPath = path.join(__dirname, dirPrefix, "built-views", view);
         
         let html = "";
 
         if(fs.existsSync(builtViewPath))
+        {
             html = fs.readFileSync(builtViewPath).toString();
+        }
+        else if(fs.existsSync(builtViewFolderPath))
+        {
+            html = fs.readFileSync(path.join(builtViewFolderPath,"index.html")).toString();
+        }
         else
+        {
             html = fs.readFileSync(viewPath).toString();
+        }
 
         renderObj["view"] = mustache.render(html, renderObj);
 
         return renderObj;
+    }
+
+    public ViewExists(view: string) : boolean
+    {
+        let viewPath = path.join(__dirname, dirPrefix, "views", view + ".html");
+        let builtViewPath = path.join(__dirname, dirPrefix, "built-views", view + ".html");
+        let builtViewFolderPath = path.join(__dirname, dirPrefix, "built-views", view, "index.html");
+
+        return fs.existsSync(builtViewPath) || fs.existsSync(builtViewFolderPath) ||
+               fs.existsSync(viewPath)
     }
 
 }
