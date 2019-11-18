@@ -2,20 +2,42 @@ class Logger
 {
     public static Log(origin : string, message: string)
     {
-        console.log(origin + ": " + message);
+        console.log(this.GetTime() + origin + ": " + message);
     }
 
     public static Error(origin : string, message: string, error: Error|undefined)
     {
         if(error)
         {
-            console.log(origin + ": " + message);
+            console.log(origin + ": " + message + this.GetTime());
             console.log(error.stack);
         }
         else
         {
-            console.log(origin + ": " + message);
+            console.log(origin + ": " + message + this.GetTime());
         }
+    }
+
+    public static GetTime() : string
+    {
+        let d : Date = new Date();
+        let timeStr = this.AddLeadingZero(d.getHours()) + ":" +
+                      this.AddLeadingZero(d.getMinutes()) + ":" +
+                      this.AddLeadingZero(d.getSeconds());
+
+        let dateStr = this.AddLeadingZero(d.getDay()) + "/" +
+                      this.AddLeadingZero(d.getMonth()) + "/" +
+                      this.AddLeadingZero(d.getFullYear());
+
+        return "[" + dateStr + " " + timeStr + "] ";
+    }
+
+    public static AddLeadingZero(i : number) : string
+    {
+        if(i.toString().length < 2)
+            return "0" + i.toString();
+        else
+            return i.toString();
     }
 }
 
