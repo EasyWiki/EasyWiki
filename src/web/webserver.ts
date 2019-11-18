@@ -3,13 +3,13 @@ import path from 'path';
 import express from "express";
 import https from "https";
 import cookieParser from "cookie-parser";
-import createError from 'http-errors';
 
 import { LoggerMiddleware } from './Middleware/LoggerMiddleware';
 
 import {Config} from "../modules/Config";
 import { TemplateMiddleware } from './Middleware/TemplateMiddleware';
 import { Logger } from '../modules/Logger';
+import { ErrorMiddleware } from './Middleware/ErrorMiddleware';
 
 class Web
 {
@@ -57,15 +57,21 @@ class Web
     {
         var self = this;
 
-        this._app.all("/",function(req,res)
+        this._app.all("/", function(req,res)
         {
             req.templateObject.RenderAndSend(req, res, "index", {title: "Home"});
         });
 
-        this._app.use(function(req, res, next)
+        this._app.all("*", function(req,res)
         {
-            next(createError(404));
+            req.templateObject.RenderAndSend(req,res.status(404),"error",{
+                title: "Page not found",
+                "description": "Page not found!",
+                "subtext": "Whoops, this page doesn't exist."
+            });
         });
+
+        this._app.use(ErrorMiddleware.HandleError);
     }
 
     private GetSslCertificate() : https.ServerOptions
