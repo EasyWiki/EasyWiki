@@ -76,6 +76,9 @@ class MarkdownBuilder
         let compiled = kramed(markdownText, {});
         let newPath = path.join(__dirname, dirPrefix, "built-views", filePath.replace(".md",".html"));
 
+        compiled = "<section class=\"section is-size-4\"><div class=\"container\">" + compiled +
+                   "</div></section>";
+
         fs.writeFileSync(newPath, compiled);
     }
 }

@@ -66,7 +66,16 @@ class TemplateObject
 
     private RenderView(view: string, renderObj: any)
     {
-        let html = fs.readFileSync(path.join(__dirname, dirPrefix, "views", view + ".html")).toString();
+        let viewPath = path.join(__dirname, dirPrefix, "views", view + ".html");
+        let builtViewPath = path.join(__dirname, dirPrefix, "built-views", view + ".html");
+        
+        let html = "";
+
+        if(fs.existsSync(builtViewPath))
+            html = fs.readFileSync(builtViewPath).toString();
+        else
+            html = fs.readFileSync(viewPath).toString();
+
         renderObj["view"] = mustache.render(html, renderObj);
 
         return renderObj;

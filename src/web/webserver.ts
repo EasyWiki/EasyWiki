@@ -62,6 +62,11 @@ class Web
             req.templateObject.RenderAndSend(req, res, "index", {title: "Home"});
         });
 
+        this._app.all("/test", function(req,res)
+        {
+            req.templateObject.RenderAndSend(req, res, "test", {title: "Test page"});
+        });
+
         this._app.all("*", function(req,res)
         {
             req.templateObject.RenderAndSend(req,res.status(404),"error",{

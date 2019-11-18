@@ -10,7 +10,8 @@
     "watch": "tsc --build --watch",
     "clean": "tsc --build --clean",
     "build-css": "node-sass -r -x sass -o public/css",
-    "build-all": "npm run build && npm run build-css"
+    "build-all": "npm run build && npm run build-css",
+    "build-md": "node app/buildMarkdown.js"
   },
   "repository": {
     "type": "git",
