@@ -24,6 +24,7 @@ class TemplateMiddleware
 
     public static AttachTheme(req: express.Request, res: express.Response, next: express.NextFunction)
     {
+        req.theme = "light";
         next();
     }
 }

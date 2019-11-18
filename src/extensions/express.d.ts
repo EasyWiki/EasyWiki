@@ -8,6 +8,7 @@ declare global
         interface Request
         {
             templateObject : TemplateObject;
+            theme: string;
         }
     }
 }
