@@ -1,0 +1,39 @@
+$title :  #000000;
+$function-title :  rgb(116, 83, 31);
+$class-title: rgb(43, 144, 175);
+$keyword: rgb(89, 0, 255);
+$string:  rgb(163, 21, 21);
+$comment: rgb(0, 128, 25);
+
+.hljs-title
+{
+    color: $title;
+    font-weight: bold;
+}
+
+.hljs-class .hljs-title
+{
+    color: $class-title !important;
+    font-weight: bold;
+}
+
+.hljs-function .hljs-title
+{
+    color: $function-title !important;
+    font-weight: bold;
+}
+
+.hljs-keyword
+{
+    color: $keyword;
+}
+
+.hljs-string
+{
+    color: $string;
+}
+
+.hljs-comment
+{
+    color: $string;
+}
