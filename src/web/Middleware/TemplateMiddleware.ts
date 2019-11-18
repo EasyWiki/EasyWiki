@@ -4,12 +4,14 @@ import path from 'path';
 import express from 'express';
 import mustache from 'mustache';
 
+const dirPrefix = "../../..";
+
 class TemplateMiddleware
 {
     public static AttachTemplate(req: express.Request, res: express.Response, next: express.NextFunction)
     {
 
-        let folder = path.join(__dirname, "../..", "partials");
+        let folder = path.join(__dirname, dirPrefix, "partials");
         let body = fs.readFileSync(path.join(folder, "body.html")).toString();
         let head = fs.readFileSync(path.join(folder, "head.html")).toString();
         let header = fs.readFileSync(path.join(folder, "header.html")).toString();
@@ -59,7 +61,7 @@ class TemplateObject
 
     private RenderView(view: string, renderObj: any)
     {
-        let html = fs.readFileSync(path.join(__dirname, "../..", "views", view + ".html")).toString();
+        let html = fs.readFileSync(path.join(__dirname, dirPrefix, "views", view + ".html")).toString();
         renderObj["view"] = mustache.render(html, renderObj);
 
         return renderObj;

@@ -8,6 +8,8 @@ import createError from 'http-errors';
 import { LoggerMiddleware } from './Middleware/LoggerMiddleware';
 
 import {Config} from "../modules/Config";
+import { TemplateMiddleware } from './Middleware/TemplateMiddleware';
+import { Logger } from '../modules/Logger';
 
 class Web
 {
@@ -25,6 +27,8 @@ class Web
 
         this.RegisterMiddleware();
         this.RegisterRoutes();
+
+        Logger.Log("Web","The server started on port " + config.Get("Web.port") + ".");
     }
 
     /**
@@ -40,7 +44,8 @@ class Web
 
         this._app.use(cookieParser(this._config.Get("Web.cookieSecret")));
         
-        //this._app.use(DarkModeMiddleware.SetStyle);
+        this._app.use(TemplateMiddleware.AttachTemplate);
+        this._app.use(TemplateMiddleware.AttachTheme);
         
         this._app.use(express.static(path.join(__dirname, "../..", 'public')));
     }
