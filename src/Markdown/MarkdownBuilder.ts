@@ -24,7 +24,8 @@ class MarkdownBuilder
             highlight: function (code: string) {
                 return highlight.highlightAuto(code).value;
             },
-            renderer: this._rederer
+            renderer: this._rederer,
+            breaks: true
         });
     }
 
@@ -76,7 +77,7 @@ class MarkdownBuilder
         let compiled = kramed(markdownText, {});
         let newPath = path.join(__dirname, dirPrefix, "built-views", filePath.replace(".md",".html"));
 
-        compiled = "<section class=\"section is-size-4\"><div class=\"container\">" + compiled +
+        compiled = "<section class=\"section is-size-4\"><div class=\"container content\">" + compiled +
                    "</div></section>";
 
         fs.writeFileSync(newPath, compiled);

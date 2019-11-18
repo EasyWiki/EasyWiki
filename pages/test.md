@@ -1,9 +1,8 @@
 # [EI-Wiki](..)/[Object Georiënteerd Programmeren](Home)/Klasses
 ## Klasse(class) structuur
-Elke java klasses bevat de volgende structuur
+De conventie is dat klasse namen in java altijd met een hoofdletter beginnen.  
 
-De conventie is dat klasse namen in java altijd met een hoofdletter beginnen.
-
+Elke java klasses bevat de volgende structuur:  
 ```java
 // Library
 
@@ -22,32 +21,32 @@ Modifiers veranderen de definities van fields, methods, classes en constructors.
 
 ### Access Control Modifiers
 Deze modifiers bepalen de toegang tot fields, methods, classes en constructors.
-De keywords `private`, `public` en `protected` worden hiervoor gebruikt.
+De keywords `private`, `public` en `protected` worden hiervoor gebruikt.  <br/>
 
-**Private**: `private` zorgt ervoor dat men buiten de klasse niet aan de definitie kan.
+**Private**: `private` zorgt ervoor dat men buiten de klasse niet aan de definitie kan.  
 
-**Public**: `public` zorgt ervoor dat je de definitie van overal kan bereiken.
+**Public**: `public` zorgt ervoor dat je de definitie van overal kan bereiken.  
 
-**Protected**: `protected` zorgt ervoor dat enkel de package en subclasses aan de definitie kunnen.
+**Protected**: `protected` zorgt ervoor dat enkel de package en subclasses aan de definitie kunnen.  
 
-**Geen access modifier**: Enkel leden van de package kunne de definitie bereiken.
+**Geen access modifier**: Enkel leden van de package kunne de definitie bereiken.  
 
 ### Non-access Modifiers
 
-**Static**: De `static` modifier wordt gebruikt dat de definitie kan worden bereikt zonder dat de klasse geinitialseerd moet zijn.
+**Static**: De `static` modifier wordt gebruikt dat de definitie kan worden bereikt zonder dat de klasse geinitialseerd moet zijn.  
 
-**Final**: Het `final` keyword duidt dat een definitie gefinaliseerd is (of constant).
+**Final**: Het `final` keyword duidt dat een definitie gefinaliseerd is (of constant).  
 
-**Abstract**: `abstract` wordt gebruikt bij overerving (inheritance). De modifier zegt dat een bepaalde definitie in de child classes verder wordt gedefinieerd.
+**Abstract**: `abstract` wordt gebruikt bij overerving (inheritance). De modifier zegt dat een bepaalde definitie in de child classes verder wordt gedefinieerd.  
 
 ## Fields
 Fields zijn een soort variablen die voor heel de klasse scope gedefinieerd zijn.
-Ze hebben bijna altijd de modifier `private`. 
-In java is de eerste letter van een field nooit een hoofdletter. Echter is dit niet verplicht. Als je in anderen programmeertalen hebt geschreven gebruikt men vaak een bepaald character om aan te duiden wat type of welke toegang een field heeft. In java hoeft dit niet, soms kan je wel eens een `_` tegenkomen, om aan te duiden dat het een privaat veld is.
+Ze hebben bijna altijd de modifier `private`.  
+In java is de eerste letter van een field nooit een hoofdletter. Echter is dit niet verplicht. Als je in anderen programmeertalen hebt geschreven gebruikt men vaak een bepaald character om aan te duiden wat type of welke toegang een field heeft. In java hoeft dit niet, soms kan je wel eens een `_` tegenkomen, om aan te duiden dat het een privaat veld is.  
 
 ## Methods
 ### Methods
-Methods zijn functies die specifiek tot een bepaalde klasse horen. Ze kunnen dus enkel op geroepen worden in de context cand klasse waar ze toe behoren.
+Methods zijn functies die specifiek tot een bepaalde klasse horen. Ze kunnen dus enkel op geroepen worden in de context cand klasse waar ze toe behoren.  
 
 De conventie in java is dat de eerste letter van een method naam een kleine letter is. In andere talen kan dit soms verschillen (bv. C# gebruikt hoofdletters). Dit is natuurlijk compleet aan jou om te beslissen.
 
