@@ -44,9 +44,13 @@ class TemplateObject
         this.footer = footer;
     }
 
-    public RenderAndSend(res: express.Response, view: string, params: any = {})
+    public RenderAndSend(req: express.Request, res: express.Response, view: string, params: any = {})
     {
+        if(!params["theme"])
+            params["theme"] = req.theme;
+
         let renderObj = this.GetRenderObject(params);
+        
         renderObj = this.RenderView(view, renderObj); 
         res.send(mustache.render(this.body, renderObj));
     }

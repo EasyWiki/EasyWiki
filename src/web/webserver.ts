@@ -59,7 +59,7 @@ class Web
 
         this._app.all("/",function(req,res)
         {
-            req.templateObject.RenderAndSend(res, "index", {title: "EasyWiki"});
+            req.templateObject.RenderAndSend(req, res, "index", {title: "Home"});
         });
 
         this._app.use(function(req, res, next)
