@@ -41,10 +41,37 @@ class MarkdownBuilder
             return '<table class="table">' + body + "</table>";
         }
     }
-
+    
     public BuildAll() : void
     {
+        this.RemoveFolder("/", false);
         this.BuildFolder("/");
+    }
+
+    public RemoveFolder(folderpath: string, absolute: boolean = false) : void
+    {
+        if(!absolute) folderpath = path.join(__dirname, dirPrefix, "built-views", folderpath);
+        
+        if (fs.existsSync(folderpath))
+        {
+            var paths = fs.readdirSync(folderpath);
+
+            for(let i = 0; i < paths.length; i++)
+            {
+                const curPath = path.join(folderpath, paths[i]);
+
+                if (fs.lstatSync(curPath).isDirectory())
+                {
+                    this.RemoveFolder(curPath,true);
+                }
+                else
+                {
+                    fs.unlinkSync(curPath);
+                }
+            }
+
+            fs.rmdirSync(folderpath);
+        }
     }
 
     public BuildFolder(folderpath: string) : void
