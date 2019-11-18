@@ -100,3 +100,8 @@ $bulmaswatch-import-font: true !default;
 @import "../node_modules/bulmaswatch/lux/variables";
 @import "../node_modules/bulma/bulma.sass";
 @import "../node_modules/bulmaswatch/lux/overrides";
+
+h1, h2, h3, h4, h5, h6 {
+    text-transform: none !important;
+    letter-spacing: 3px;
+}
