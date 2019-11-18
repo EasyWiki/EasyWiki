@@ -1,0 +1,8 @@
+{
+    "id": "lux-dark",
+    "name": "Lux Dark",
+    "light": false,
+    "css":[
+        "lux-dark.css"
+    ]
+}

@@ -3,6 +3,7 @@ import path from 'path';
 
 import express from 'express';
 import mustache from 'mustache';
+import { Theme } from '../../modules/Theme';
 
 const dirPrefix = "../../..";
 
@@ -24,7 +25,7 @@ class TemplateMiddleware
 
     public static AttachTheme(req: express.Request, res: express.Response, next: express.NextFunction)
     {
-        req.theme = "light";
+        req.theme = Theme.themes[1];
         next();
     }
 }
@@ -47,7 +48,11 @@ class TemplateObject
     public RenderAndSend(req: express.Request, res: express.Response, view: string, params: any = {})
     {
         if(!params["theme"])
-            params["theme"] = req.theme;
+        {
+            params["theme"] = req.theme.GetName();
+            params["syntax"] = req.theme.IsLightmode() ? "syntax-light.css" : "syntax-dark.css";
+            params["css"] = req.theme.GetCss();
+        }
 
         let renderObj = this.GetRenderObject(params);
         

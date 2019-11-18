@@ -1,5 +1,6 @@
 import express from 'express';
 import { TemplateObject } from '../web/Middleware/TemplateMiddleware';
+import { Theme } from '../modules/Theme';
 
 declare global
 {
@@ -8,7 +9,7 @@ declare global
         interface Request
         {
             templateObject : TemplateObject;
-            theme: string;
+            theme: Theme;
         }
     }
 }
