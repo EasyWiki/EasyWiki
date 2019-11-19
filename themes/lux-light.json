@@ -3,6 +3,7 @@
     "name": "Lux",
     "light": true,
     "css":[
-        "lux-light.css"
+        "lux-light.css",
+        "syntax-light.css"
     ]
 }

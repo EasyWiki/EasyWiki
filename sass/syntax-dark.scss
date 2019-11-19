@@ -1,8 +1,19 @@
-$function-title :  rgb(116, 83, 31);
-$class-title: rgb(43, 144, 175);
-$keyword: rgb(89, 0, 255);
-$string:  rgb(163, 21, 21);
-$comment: rgb(0, 128, 25);
+$codetext :  #ffffff;
+$function-title :  rgb(217, 175, 108);
+$class-title: rgb(169, 183, 198);
+$keyword: rgb(89, 124, 194);
+$string:  rgb(128, 125, 110);
+$comment: rgb(121, 109, 84);
+
+code
+{
+    color: $codetext !important;
+}
+
+.hljs-title
+{
+    font-weight: bold;
+}
 
 .hljs-class .hljs-title
 {

@@ -51,7 +51,6 @@ class TemplateObject
         if(!params["theme"])
         {
             params["theme"] = req.theme.GetName();
-            params["syntax"] = req.theme.IsLightmode() ? "syntax-light.css" : "syntax-dark.css";
             params["css"] = req.theme.GetCss();
         }
 

@@ -1,0 +1,9 @@
+{
+    "id": "superhero",
+    "name": "Superhero",
+    "light": false,
+    "css":[
+        "superhero.css",
+        "syntax-dark.css"
+    ]
+}

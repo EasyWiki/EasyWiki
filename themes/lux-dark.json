@@ -3,6 +3,7 @@
     "name": "Lux Dark",
     "light": false,
     "css":[
-        "lux-dark.css"
+        "lux-dark.css",
+        "syntax-dark.css"
     ]
 }
