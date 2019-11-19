@@ -15,6 +15,7 @@ class MarkdownBuilder
     constructor()
     {
         this._rederer = new kramed.Renderer();
+
         this._menuJson = {};
 
         this.SetupRederer();

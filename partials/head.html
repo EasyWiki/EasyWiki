@@ -12,13 +12,29 @@
         <link href="/css/body.css" rel="Stylesheet" type="text/css">
         <link href="/css/{{syntax}}" rel="Stylesheet" type="text/css">
 
-        <!--link rel="stylesheet"
-            href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/styles/default.min.css"-->
+        <!-- Syntax Highlighting -->
         <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
 
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <!-- Font awesome -->
         <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-
+        
+        <!-- Latex -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+              tex2jax: {
+                  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+                  inlineMath: [
+                      ['\\(', '\\)']
+                  ],
+                  displayMath: [
+                      ['$$', '$$'],
+                      ['\\[', '\\]']
+                  ],
+              }
+            });
+          </script>
+          <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> 
     </head>
     <body>

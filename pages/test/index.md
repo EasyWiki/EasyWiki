@@ -1,2 +1,3 @@
 # Test pages
-* [all](/test/all)
+* [code](/test/code)
+* [latex](/test/latex)
