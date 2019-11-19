@@ -1,4 +1,9 @@
 {
+    "Style":
+    {
+        "title": "EasyWiki",
+        "theme": "lux-light"
+    },
     "Web":
     {
         "port": 443,

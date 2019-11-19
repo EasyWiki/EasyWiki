@@ -14,6 +14,11 @@ class Theme
         this._themeObj = JSON.parse(json);
     }
 
+    public GetId() : string
+    {
+        return this._themeObj.id;
+    }
+
     public GetName() : string
     {
         return this._themeObj.name;
@@ -55,15 +60,27 @@ class Theme
             }
         }
     }
+
+    public static GetTheme(id : string) : Theme
+    {
+        for(let i = 0; i < this.themes.length; i++)
+        {
+            if(this.themes[i].GetId() == id)
+            {
+                return this.themes[i];
+            }
+        }
+
+        return this.themes[0];
+    }
 }
 
 interface ITheme
 {
+    id: string;
     name: string;
     light: boolean;
     css: string[];
 }
 
-var Themes : Theme[] = [];
-
-export {Theme, ITheme, Themes};
+export {Theme, ITheme};

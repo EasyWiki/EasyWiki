@@ -4,6 +4,7 @@ import path from 'path';
 import express from 'express';
 import mustache from 'mustache';
 import { Theme } from '../../modules/Theme';
+import { Config } from '../../modules/Config';
 
 const dirPrefix = "../../..";
 
@@ -25,7 +26,7 @@ class TemplateMiddleware
 
     public static AttachTheme(req: express.Request, res: express.Response, next: express.NextFunction)
     {
-        req.theme = Theme.themes[1];
+        req.theme = Theme.GetTheme(Config.Config.Get("Style.theme"));
         next();
     }
 }
@@ -53,6 +54,8 @@ class TemplateObject
             params["syntax"] = req.theme.IsLightmode() ? "syntax-light.css" : "syntax-dark.css";
             params["css"] = req.theme.GetCss();
         }
+
+        params["sitetitle"] = Config.Config.Get("Style.title");
 
         let renderObj = this.GetRenderObject(params);
         

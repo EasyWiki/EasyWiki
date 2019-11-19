@@ -1,10 +1,14 @@
 import fs from 'fs';
 class Config
 {
+    public static Config : Config;
+
     private _config : any;
 
     constructor()
     {
+        Config.Config = this;
+        
         let configPath = "config.json";
         
         if(fs.existsSync("dev-config.json"))
