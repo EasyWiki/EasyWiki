@@ -15,22 +15,19 @@ class Web
 {
     private _app : express.Application;
     private _server : https.Server;
-    private _config : Config;
 
-    constructor(config : Config)
+    constructor()
     {
         Logger.Log("Web", "Starting web server...");
-        
-        this._config = config;
 
         this._app = express();
         this._server = https.createServer(this.GetSslCertificate(), 
-            this._app).listen(config.Get("Web.port"));
+            this._app).listen(Config.Config.Get("Web.port"));
 
         this.RegisterMiddleware();
         this.RegisterRoutes();
 
-        Logger.Log("Web","The server started on port " + config.Get("Web.port") + ".");
+        Logger.Log("Web","The server started on port " + Config.Config.Get("Web.port") + ".");
     }
 
     /**
@@ -44,7 +41,7 @@ class Web
         this._app.use(express.json());
         this._app.use(express.urlencoded({extended: false}));
 
-        this._app.use(cookieParser(this._config.Get("Web.cookieSecret")));
+        this._app.use(cookieParser(Config.Config.Get("Web.cookieSecret")));
         
         this._app.use(TemplateMiddleware.AttachTemplate);
         this._app.use(TemplateMiddleware.AttachTheme);
