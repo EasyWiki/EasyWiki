@@ -19,6 +19,8 @@ class Web
 
     constructor(config : Config)
     {
+        Logger.Log("Web", "Starting web server...");
+        
         this._config = config;
 
         this._app = express();

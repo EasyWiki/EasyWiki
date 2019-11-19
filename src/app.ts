@@ -2,9 +2,16 @@ import { Web } from "./web/webserver";
 import { Config } from "./modules/Config";
 import { MarkdownBuilder } from "./Markdown/MarkdownBuilder";
 import { Theme } from "./modules/Theme";
+import { Searcher } from "./Markdown/Searcher";
 
-var md = new MarkdownBuilder();
+const config = new Config();
+
+const md = new MarkdownBuilder();
 md.BuildAll();
 
+const search = new Searcher();
+search.IndexAll(true);
+
 Theme.LoadThemes();
-var web = new Web(new Config());
+
+const web = new Web();

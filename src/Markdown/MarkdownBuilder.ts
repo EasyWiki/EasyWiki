@@ -6,17 +6,19 @@ import { Logger } from '../modules/Logger';
 const kramed : any = require("kramed");
 
 const dirPrefix = "../..";
+const builtFolder = path.join(__dirname, dirPrefix, "built-views");
+const pageFolder = path.join(__dirname, dirPrefix, "pages");
 
 class MarkdownBuilder
 {
+    public static MarkdownBuilder : MarkdownBuilder;
     private _rederer : any
-    private _menuJson : any;
 
     constructor()
     {
+        MarkdownBuilder.MarkdownBuilder = this;
+        
         this._rederer = new kramed.Renderer();
-
-        this._menuJson = {};
 
         this.SetupRederer();
         this.SetupOptions();
@@ -37,7 +39,9 @@ class MarkdownBuilder
     {
         this._rederer.heading = function(text: string, level: number, raw:string) : string
         {
-            return "<h" + level + " class='title is-" + level + "'>" + text + "</h" + level + ">";
+            var id = text.toLowerCase().replace(/[^\w]+/g, '-');
+
+            return "<h" + level + " id='" + id + "' class='title is-" + level + "'>" + text + "</h" + level + ">";
         }
 
         this._rederer.table = function(header:string, body:string) : string
@@ -54,9 +58,9 @@ class MarkdownBuilder
         Logger.Log("MDB", "Built all markdown.");
     }
 
-    public RemoveFolder(folderpath: string, absolute: boolean = false) : void
+    private RemoveFolder(folderpath: string, absolute: boolean = false) : void
     {
-        if(!absolute) folderpath = path.join(__dirname, dirPrefix, "built-views", folderpath);
+        if(!absolute) folderpath = path.join(builtFolder, folderpath);
         
         if (fs.existsSync(folderpath))
         {
@@ -84,29 +88,29 @@ class MarkdownBuilder
     {
         var self = this;
 
-        if(!fs.existsSync(path.join(__dirname, dirPrefix, "built-views", folderpath)))
-            fs.mkdirSync(path.join(__dirname, dirPrefix, "built-views", folderpath));
+        if(!fs.existsSync(path.join(builtFolder, folderpath)))
+            fs.mkdirSync(path.join(builtFolder, folderpath));
 
-        let files = fs.readdirSync(path.join(__dirname, dirPrefix, "pages", folderpath));
+        let files = fs.readdirSync(path.join(pageFolder, folderpath));
 
         files.forEach(function(file)
         {
-            let filePath = path.join(__dirname, dirPrefix, "pages", folderpath, file);
+            let filePath = path.join(pageFolder, folderpath, file);
             
             if(fs.statSync(filePath).isDirectory())
             {
                 self.BuildFolder(path.join(folderpath, file));
             }
-            else
+            else if(path.extname(filePath) == ".md")
             {
                 self.BuildFile(path.join(folderpath, file));
             }
         });
     }
 
-    public BuildFile(filePath: string) : void
+    private BuildFile(filePath: string) : void
     {
-        let markdownText = fs.readFileSync(path.join(__dirname, dirPrefix, "pages", filePath)).toString();
+        let markdownText = fs.readFileSync(path.join(pageFolder, filePath)).toString();
 
         let compiled = kramed(markdownText, {});
         let newPath = path.join(__dirname, dirPrefix, "built-views", filePath.replace(".md",".html"));
@@ -115,6 +119,11 @@ class MarkdownBuilder
                    "</div>";
 
         fs.writeFileSync(newPath, compiled);
+    }
+
+    public BuildString(str : string): string
+    {
+        return kramed(str,{});
     }
 }
 
