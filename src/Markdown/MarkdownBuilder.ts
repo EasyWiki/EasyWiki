@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import highlight from "highlight.js";
+import { Logger } from '../modules/Logger';
 
 const kramed : any = require("kramed");
 
@@ -9,12 +10,14 @@ const dirPrefix = "../..";
 class MarkdownBuilder
 {
     private _rederer : any
+    private _menuJson : any;
 
     constructor()
     {
         this._rederer = new kramed.Renderer();
-        this.SetupRederer();
+        this._menuJson = {};
 
+        this.SetupRederer();
         this.SetupOptions();
     }
 
@@ -44,8 +47,10 @@ class MarkdownBuilder
     
     public BuildAll() : void
     {
+        Logger.Log("MDB", "Building all markdown.");
         this.RemoveFolder("/", false);
         this.BuildFolder("/");
+        Logger.Log("MDB", "Built all markdown.");
     }
 
     public RemoveFolder(folderpath: string, absolute: boolean = false) : void
@@ -101,11 +106,12 @@ class MarkdownBuilder
     public BuildFile(filePath: string) : void
     {
         let markdownText = fs.readFileSync(path.join(__dirname, dirPrefix, "pages", filePath)).toString();
+
         let compiled = kramed(markdownText, {});
         let newPath = path.join(__dirname, dirPrefix, "built-views", filePath.replace(".md",".html"));
 
-        compiled = "<section class=\"section is-size-4\"><div class=\"container content\">" + compiled +
-                   "</div></section>";
+        compiled = "<div class=\"container content is-size-4\">" + compiled +
+                   "</div>";
 
         fs.writeFileSync(newPath, compiled);
     }
