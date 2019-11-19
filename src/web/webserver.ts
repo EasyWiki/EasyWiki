@@ -93,8 +93,8 @@ class Web
 
     private GetSslCertificate() : https.ServerOptions
     {
-        var cert = fs.readFileSync(path.join(__dirname , "../.." , this._config.Get("Web.ssl.cert")));
-        var key = fs.readFileSync(path.join(__dirname ,  "../../" , this._config.Get("Web.ssl.key")));
+        var cert = fs.readFileSync(path.join(__dirname , "../.." , Config.Config.Get("Web.ssl.cert")));
+        var key = fs.readFileSync(path.join(__dirname ,  "../../" , Config.Config.Get("Web.ssl.key")));
 
         var options : https.ServerOptions = {key:key.toString(),cert:cert.toString(),"passphrase": ""};
 
