@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import highlight from "highlight.js";
 import { Logger } from '../modules/Logger';
+import { Searcher } from './Searcher';
 
 const kramed : any = require("kramed");
 
@@ -50,12 +51,18 @@ class MarkdownBuilder
         }
     }
     
-    public BuildAll() : void
+    public BuildAll(reindex: boolean = true) : void
     {
-        Logger.Log("MDB", "Building all markdown.");
+        Logger.Log("Markdown", "Building all markdown.");
         this.RemoveFolder("/", false);
         this.BuildFolder("/");
-        Logger.Log("MDB", "Built all markdown.");
+        Logger.Log("Markdown", "Built all markdown.");
+
+        if(reindex)
+        {
+            Logger.Log("Markdown", "Reindexing all files.");
+            Searcher.Searcher.IndexAll(true);
+        }
     }
 
     private RemoveFolder(folderpath: string, absolute: boolean = false) : void

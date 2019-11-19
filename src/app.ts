@@ -7,7 +7,7 @@ import { Searcher } from "./Markdown/Searcher";
 const config = new Config();
 
 const md = new MarkdownBuilder();
-md.BuildAll();
+md.BuildAll(false);
 
 const search = new Searcher();
 search.IndexAll(true);
