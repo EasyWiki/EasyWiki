@@ -68,3 +68,5 @@ public/css/
 dev-config.json
 ssl/
 built-views/
+pages-temp/
+pages/
