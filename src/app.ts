@@ -3,6 +3,7 @@ import { Config } from "./modules/Config";
 import { MarkdownBuilder } from "./Markdown/MarkdownBuilder";
 import { Theme } from "./modules/Theme";
 import { Searcher } from "./Markdown/Searcher";
+import { Gitter } from "./Markdown/Gitter";
 import { Timer } from "./modules/Timer";
 
 const config = new Config();

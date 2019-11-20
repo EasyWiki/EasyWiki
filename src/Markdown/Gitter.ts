@@ -12,3 +12,5 @@ class Gitter
         
     }
 }
+
+export {Gitter};
