@@ -14,15 +14,21 @@ class MarkdownBuilder
 {
     public static MarkdownBuilder : MarkdownBuilder;
     private _rederer : any
+    private _watcher : fs.FSWatcher;
+    private _isBuilding : boolean;
 
     constructor()
     {
         MarkdownBuilder.MarkdownBuilder = this;
         
+        this._isBuilding = false;
         this._rederer = new kramed.Renderer();
 
         this.SetupRederer();
         this.SetupOptions();
+
+        this._watcher = fs.watch(pageFolder, {recursive: true, encoding: 'utf8', persistent: true});
+        this.WatchFolder();
     }
 
     private SetupOptions()
@@ -51,8 +57,18 @@ class MarkdownBuilder
         }
     }
     
-    public BuildAll(reindex: boolean = true) : void
+    private WatchFolder()
     {
+        this._watcher.on("change", function(eventType, filename)
+        {
+            MarkdownBuilder.MarkdownBuilder.BuildAll(true);
+        });
+    }
+
+    public async BuildAll(reindex: boolean = true)
+    {
+        this._isBuilding = true;
+
         Logger.Log("Markdown", "Building all markdown.");
         this.RemoveFolder("/", false);
         this.BuildFolder("/");
@@ -63,6 +79,8 @@ class MarkdownBuilder
             Logger.Log("Markdown", "Reindexing all files.");
             Searcher.Searcher.IndexAll(true);
         }
+
+        this._isBuilding = false;
     }
 
     private RemoveFolder(folderpath: string, absolute: boolean = false) : void
@@ -91,7 +109,7 @@ class MarkdownBuilder
         }
     }
 
-    public BuildFolder(folderpath: string) : void
+    private BuildFolder(folderpath: string) : void
     {
         var self = this;
 
