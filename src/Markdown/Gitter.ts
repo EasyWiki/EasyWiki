@@ -3,9 +3,11 @@ import path from 'path';
 import { Config } from "../modules/Config";
 import fs from 'fs';
 import { FileSystem } from "../modules/FileSystem";
+import { Logger } from "../modules/Logger";
 
 const dirPrefix = "../..";
 const pageFolder = path.join(__dirname, dirPrefix, "pages");
+const mediaFolder = path.join(__dirname, dirPrefix, "public", "media");
 const tempFolder = path.join(__dirname, dirPrefix, "pages-temp");
 
 class Gitter
@@ -19,13 +21,21 @@ class Gitter
 
     public async CloneRepo()
     {
+        Logger.Log("Gitter", "Cloning repository...");
+
         await FileSystem.RemoveFolder(tempFolder);
 
-        let cloner = Clone.clone(Config.Config.Get("Gitter.repo"), tempFolder);
-        let repo = await cloner;
+        await Clone.clone(Config.Config.Get("Gitter.repo"), tempFolder);
 
-        await FileSystem.CopyInto(path.join(tempFolder, "pages"), pageFolder);
+        var p1 = FileSystem.CopyInto(path.join(tempFolder, "pages"), pageFolder);
+        var p2 = FileSystem.CopyInto(path.join(tempFolder, "media"), mediaFolder);
+
+        await p1;
+        await p2;
+
         FileSystem.RemoveFolder(tempFolder);
+
+        Logger.Log("Gitter", "Done cloning repository.");
     }
 }
 

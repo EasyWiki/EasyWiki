@@ -6,20 +6,25 @@ import { Searcher } from "./Markdown/Searcher";
 import { Gitter } from "./Markdown/Gitter";
 import { Timer } from "./modules/Timer";
 
-const config = new Config();
+StartServer();
 
-const md = new MarkdownBuilder();
-md.BuildAll(false);
+async function StartServer()
+{
+    const config = new Config();
 
-const search = new Searcher();
-search.IndexAll(true);
+    const gitter = new Gitter();
+    await gitter.CloneRepo();
 
-const gitter = new Gitter();
-gitter.CloneRepo();
+    const md = new MarkdownBuilder();
+    md.BuildAll(false);
 
-const gitTimer = new Timer(gitter.CloneRepo, 1000 * 60);
-gitTimer.Start();
+    const search = new Searcher();
+    search.IndexAll(true);
 
-Theme.LoadThemes();
+    const gitTimer = new Timer(gitter.CloneRepo, 1000 * 60);
+    gitTimer.Start();
 
-const web = new Web();
+    Theme.LoadThemes();
+
+    const web = new Web();
+}

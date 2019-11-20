@@ -3,6 +3,7 @@ import path from 'path';
 import highlight from "highlight.js";
 import { Logger } from '../modules/Logger';
 import { Searcher } from './Searcher';
+import { FileSystem } from '../modules/FileSystem';
 
 const kramed : any = require("kramed");
 
@@ -70,7 +71,7 @@ class MarkdownBuilder
         this._isBuilding = true;
 
         Logger.Log("Markdown", "Building all markdown.");
-        this.RemoveFolder("/", false);
+        await this.RemoveFolder("/", false);
         this.BuildFolder("/");
         Logger.Log("Markdown", "Built all markdown.");
 
@@ -83,30 +84,10 @@ class MarkdownBuilder
         this._isBuilding = false;
     }
 
-    private RemoveFolder(folderpath: string, absolute: boolean = false) : void
+    private async RemoveFolder(folderpath: string, absolute: boolean = false)
     {
         if(!absolute) folderpath = path.join(builtFolder, folderpath);
-        
-        if (fs.existsSync(folderpath))
-        {
-            var paths = fs.readdirSync(folderpath);
-
-            for(let i = 0; i < paths.length; i++)
-            {
-                const curPath = path.join(folderpath, paths[i]);
-
-                if (fs.lstatSync(curPath).isDirectory())
-                {
-                    this.RemoveFolder(curPath,true);
-                }
-                else
-                {
-                    fs.unlinkSync(curPath);
-                }
-            }
-
-            fs.rmdirSync(folderpath);
-        }
+        await FileSystem.RemoveFolder(folderpath);
     }
 
     private BuildFolder(folderpath: string) : void
