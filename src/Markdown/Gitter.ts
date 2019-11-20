@@ -1,7 +1,6 @@
 import {Clone} from "nodegit";
 import path from 'path';
 import { Config } from "../modules/Config";
-import fs from 'fs';
 import { FileSystem } from "../modules/FileSystem";
 import { Logger } from "../modules/Logger";
 

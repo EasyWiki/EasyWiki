@@ -16,9 +16,9 @@ async function StartServer()
     await gitter.CloneRepo();
 
     const md = new MarkdownBuilder();
-    md.BuildAll(false);
-
     const search = new Searcher();
+    
+    md.BuildAll(false);
     search.IndexAll(true);
 
     const gitTimer = new Timer(gitter.CloneRepo, 1000 * 60);
