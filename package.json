@@ -33,6 +33,7 @@
     "http-errors": "^1.7.3",
     "kramed": "^0.5.6",
     "mustache": "^3.1.0",
+    "nodegit": "^0.26.2",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
@@ -41,6 +42,7 @@
     "@types/highlight.js": "^9.12.3",
     "@types/http-errors": "^1.6.2",
     "@types/mustache": "^0.8.32",
+    "@types/nodegit": "^0.24.13",
     "@types/socket.io": "^2.1.4",
     "bulma": "^0.8.0",
     "bulma-extensions": "^6.2.7",

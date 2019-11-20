@@ -14,14 +14,8 @@
             "cert": "ssl/ssl.crt"
         }
     },
-    "Database":
+    "Gitter":
     {
-        "host":"localhost",
-        "port": 3306,
-        "user":"user",
-        "password":"password",
-
-        "database": "easywiki",
-        "multipleStatements": true
+        "repo": "https://github.com/WatcherWhale/EasyWiki-Testrepo.git"
     }
 }
