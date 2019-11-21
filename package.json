@@ -5,6 +5,7 @@
   "main": "app/app.js",
   "scripts": {
     "start": "node app/app.js",
+    "test": "npm run build && node app/app.js",
     "start-dev": "pm2-dev app/app.js",
     "build": "tsc --build",
     "watch": "tsc --build --watch",
