@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
+const logFolder = path.join(__dirname + "../../..", "logs");
+
 class FileSystem
 {
     public static async RemoveFolder(folderPath: string)
@@ -61,6 +63,41 @@ class FileSystem
             }
         }
 
+    }
+
+    public static MakeFolder(folderPath: string)
+    {
+        if(!fs.existsSync(folderPath)) fs.mkdirSync(folderPath);
+    }
+
+    public static MakeLogFile(time: string) : string
+    {
+        this.MakeFolder(logFolder);
+        time = time.substr(1, time.length - 3);
+        time = this.GetFileSafeName(time);
+
+        var p = path.join(logFolder, time + ".log");
+
+        
+        fs.writeFileSync(p, time + "\n");
+
+        return p;
+    }
+
+    public static async WriteLineToFile(filePath: string, data: string)
+    {
+        if(!fs.existsSync(filePath)) return;
+
+        fs.appendFileSync(filePath,data + "\n");
+    }
+
+    public static GetFileSafeName(fileName: string)
+    {
+        fileName = fileName.replace(new RegExp("/", 'g'), "-");
+        fileName = fileName.replace(new RegExp(" ", 'g'), "_");
+        fileName = fileName.replace(new RegExp(":", 'g'), "_");
+
+        return fileName;
     }
 }
 

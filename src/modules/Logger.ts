@@ -1,23 +1,33 @@
+import { FileSystem } from './FileSystem';
+import path from 'path';
+
 class Logger
 {
+    private static _logFile : string;
+
     public static Log(origin : string, message: string)
     {
-        console.log(this.GetTime() + "\x1b[33m" + origin + "\x1b[0m: " + message);
+        let colouredEntry = this.GetTime() + "\x1b[33m" + origin + "\x1b[0m: " + message;
+        let entry = this.GetTime() + origin + ": " + message;
+
+        console.log(colouredEntry);
+        FileSystem.WriteLineToFile(this._logFile, entry);
     }
 
     public static Error(origin : string, message: string, error: Error|undefined = undefined)
     {
+        let colouredEntry = this.GetTime() + "\x1b[31m" + origin + "\x1b[0m: " + message;
+        let entry = this.GetTime() + origin + ": " + message;
+
+        console.log(colouredEntry);
+        FileSystem.WriteLineToFile(this._logFile, entry);
+
         if(error)
-        {
-            console.log(this.GetTime() + "\x1b[31m" + origin + "\x1b[0m: " + message);
-            console.log(error.stack);
-        }
-        else
-        {
-            console.log(this.GetTime() + "\x1b[31m" + origin + "\x1b[0m: " + message);
+        {   
+            FileSystem.WriteLineToFile(this._logFile, error.stack as string);
         }
     }
-
+    
     public static GetTime() : string
     {
         let d : Date = new Date();
@@ -38,6 +48,11 @@ class Logger
             return "0" + i.toString();
         else
             return i.toString();
+    }
+
+    public static CreateLogFile()
+    {
+        this._logFile = FileSystem.MakeLogFile(this.GetTime());
     }
 }
 
