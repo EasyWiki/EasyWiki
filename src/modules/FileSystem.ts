@@ -79,7 +79,7 @@ class FileSystem
         var p = path.join(logFolder, time + ".log");
 
         
-        fs.writeFileSync(p, time + "\n");
+        fs.writeFileSync(p, time + ".log\n");
 
         return p;
     }
