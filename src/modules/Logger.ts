@@ -5,16 +5,16 @@ class Logger
         console.log(this.GetTime() + origin + ": " + message);
     }
 
-    public static Error(origin : string, message: string, error: Error|undefined)
+    public static Error(origin : string, message: string, error: Error|undefined = undefined)
     {
         if(error)
         {
-            console.log(origin + ": " + message + this.GetTime());
+            console.log(this.GetTime() + origin + ": " + message);
             console.log(error.stack);
         }
         else
         {
-            console.log(origin + ": " + message + this.GetTime());
+            console.log(this.GetTime() + origin + ": " + message);
         }
     }
 
