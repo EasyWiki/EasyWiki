@@ -10,6 +10,7 @@ import {Config} from "../modules/Config";
 import { TemplateMiddleware } from './Middleware/TemplateMiddleware';
 import { Logger } from '../modules/Logger';
 import { ErrorMiddleware } from './Middleware/ErrorMiddleware';
+import { Gitter } from '../Markdown/Gitter';
 
 class Web
 {
@@ -56,12 +57,18 @@ class Web
     {
         var self = this;
 
-        this._app.all("/", function(req,res)
+        this._app.all("/", async function(req,res)
         {
             req.templateObject.RenderAndSend(req, res, "index", {title: "Home"});
         });
+        
+        this._app.all("/refresh", async function(req,res)
+        {
+            await Gitter.Gitter.CloneRepo();
+            res.redirect("/");
+        });
 
-        this._app.all("/(:view)*", function(req,res)
+        this._app.all("/(:view)*", async function(req,res)
         {
             var view = req.params.view + req.params["0"];
             if(req.templateObject.ViewExists(view))
@@ -79,7 +86,7 @@ class Web
             
         });
 
-        this._app.all("*", function(req,res)
+        this._app.all("*", async function(req,res)
         {
             req.templateObject.RenderAndSend(req,res.status(404),"error",{
                 title: "Page not found",

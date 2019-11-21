@@ -13,13 +13,14 @@ async function StartServer()
     const config = new Config();
 
     const gitter = new Gitter();
-    await gitter.CloneRepo();
 
     const md = new MarkdownBuilder();
     const search = new Searcher();
     
-    md.BuildAll(false);
-    search.IndexAll(true);
+    await md.BuildAll(false);
+    await search.IndexAll(true);
+
+    await gitter.CloneRepo();
 
     const gitTimer = new Timer(gitter.CloneRepo, 1000 * 60);
     gitTimer.Start();

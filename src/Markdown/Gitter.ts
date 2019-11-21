@@ -3,6 +3,7 @@ import path from 'path';
 import { Config } from "../modules/Config";
 import { FileSystem } from "../modules/FileSystem";
 import { Logger } from "../modules/Logger";
+import { MarkdownBuilder } from "./MarkdownBuilder";
 
 const dirPrefix = "../..";
 const pageFolder = path.join(__dirname, dirPrefix, "pages");
@@ -20,21 +21,32 @@ class Gitter
 
     public async CloneRepo()
     {
-        Logger.Log("Gitter", "Cloning repository...");
+        try
+        {
+            Logger.Log("Gitter", "Cloning repository...");
 
-        await FileSystem.RemoveFolder(tempFolder);
+            MarkdownBuilder.MarkdownBuilder.UnwatchFolder();
 
-        await Clone.clone(Config.Config.Get("Gitter.repo"), tempFolder);
+            await FileSystem.RemoveFolder(tempFolder);
 
-        var p1 = FileSystem.CopyInto(path.join(tempFolder, "pages"), pageFolder);
-        var p2 = FileSystem.CopyInto(path.join(tempFolder, "media"), mediaFolder);
+            await Clone.clone(Config.Config.Get("Gitter.repo"), tempFolder);
 
-        await p1;
-        await p2;
+            var p1 = FileSystem.CopyInto(path.join(tempFolder, "pages"), pageFolder);
+            var p2 = FileSystem.CopyInto(path.join(tempFolder, "media"), mediaFolder);
 
-        FileSystem.RemoveFolder(tempFolder);
+            await p1;
+            await p2;
 
-        Logger.Log("Gitter", "Done cloning repository.");
+            FileSystem.RemoveFolder(tempFolder);
+
+            MarkdownBuilder.MarkdownBuilder.WatchFolder();
+
+            Logger.Log("Gitter", "Done cloning repository.");
+        }
+        catch
+        {
+            Logger.Error("Gitter", "Cloning has failed!");
+        }
     }
 }
 

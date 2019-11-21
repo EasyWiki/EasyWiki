@@ -15,7 +15,7 @@ class MarkdownBuilder
 {
     public static MarkdownBuilder : MarkdownBuilder;
     private _rederer : any
-    private _watcher : fs.FSWatcher;
+    private _watcher : fs.FSWatcher | undefined;
     private _isBuilding : boolean;
 
     constructor()
@@ -28,7 +28,6 @@ class MarkdownBuilder
         this.SetupRederer();
         this.SetupOptions();
 
-        this._watcher = fs.watch(pageFolder, {recursive: true, encoding: 'utf8', persistent: true});
         this.WatchFolder();
     }
 
@@ -58,12 +57,19 @@ class MarkdownBuilder
         }
     }
     
-    private WatchFolder()
+    public WatchFolder()
     {
+        this._watcher = fs.watch(pageFolder, {recursive: true, encoding: 'utf8', persistent: true});
+
         this._watcher.on("change", function(eventType, filename)
         {
             MarkdownBuilder.MarkdownBuilder.BuildAll(true);
         });
+    }
+
+    public UnwatchFolder()
+    {
+        (this._watcher as fs.FSWatcher).close();
     }
 
     public async BuildAll(reindex: boolean = true)
