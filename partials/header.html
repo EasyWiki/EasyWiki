@@ -3,13 +3,6 @@
         <a class="navbar-item" href="/">
             <h1 class="title is-3 has-text-white">{{sitetitle}}</h1>
         </a>
-        
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </a>
-
     </div>
     
     <div class="navbar-menu">
@@ -18,17 +11,41 @@
         </div>
     
         <div class="navbar-end">
-            <!--<div class="navbar-item">
-                <div class="control has-icons-left has-icons-right">
-                    <input class="input is-large" type="text" placeholder="Search">
+            <div class="navbar-item">
+                <div class="control has-icons-left has-icons-right search-bar">
+                    <input class="input" type="text" placeholder="Search">
                     <span class="icon is-small is-left">
                         <i class="fas fa-search"></i>
                     </span>
                 </div>
-            </div>-->
+            </div>
         </div>
     </div>
 </nav>
+
+<div class="box search-results is-hidden">
+    <table class="table is-striped is-hoverable is-fullwidth">
+        <tr>
+            <td class="result">
+                <p class="has-text-weight-bold is-size-5">/test/all</p>
+                <p>Latex</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="result">
+                <p class="has-text-weight-bold is-size-5">/test/latex</p>
+                <p>Latex</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="result">
+                <p class="has-text-weight-bold is-size-5">/test/latex</p>
+                <p>Latex</p>
+            </td>
+        </tr>
+    </table>
+</div>
+
 <section class="section">
     <div class="is-fluid columns">
         <div class="column is-2">

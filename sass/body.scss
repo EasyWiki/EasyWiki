@@ -1,0 +1,52 @@
+@media screen and (max-width: 1024px)
+{
+    .search-bar
+    {
+        display: none;
+    }
+    .search-results
+    {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 770px)
+{
+    .menu
+    {
+        display: none;
+    }
+}
+
+body
+{ 
+    display:flex; 
+    flex-direction:column; 
+    min-height: 100vh;
+}
+
+section
+{
+    flex: 1;
+}
+
+footer
+{
+    margin-top:auto; 
+}
+
+.search-bar
+{
+    width: 350px;
+}
+
+.search-results
+{
+    position: absolute;
+    right: 11px;
+    top: 53px;
+    z-index: 31;
+    width: 348px;
+    border-radius: 0px;
+    padding: 0;
+}
