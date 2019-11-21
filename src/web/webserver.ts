@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import express from "express";
 import https from "https";
+import http from "http";
 import cookieParser from "cookie-parser";
 
 import { LoggerMiddleware } from './Middleware/LoggerMiddleware';
@@ -16,6 +17,7 @@ class Web
 {
     private _app : express.Application;
     private _server : https.Server;
+    private _http : http.Server;
 
     constructor()
     {
@@ -24,6 +26,13 @@ class Web
         this._app = express();
         this._server = https.createServer(this.GetSslCertificate(), 
             this._app).listen(Config.Config.Get("Web.port"));
+        
+        this._http = http.createServer(function (req, res)
+        {
+            Logger.Log("Web","Redirecting " + req.socket.remoteAddress + " to https.");
+            res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+            res.end();
+        }).listen(Config.Config.Get("Web.httpport"));
 
         this.RegisterMiddleware();
         this.RegisterRoutes();
