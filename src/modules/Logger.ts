@@ -2,19 +2,19 @@ class Logger
 {
     public static Log(origin : string, message: string)
     {
-        console.log(this.GetTime() + origin + ": " + message);
+        console.log(this.GetTime() + "\x1b[33m" + origin + "\x1b[0m: " + message);
     }
 
     public static Error(origin : string, message: string, error: Error|undefined = undefined)
     {
         if(error)
         {
-            console.log(this.GetTime() + origin + ": " + message);
+            console.log(this.GetTime() + "\x1b[31m" + origin + "\x1b[0m: " + message);
             console.log(error.stack);
         }
         else
         {
-            console.log(this.GetTime() + origin + ": " + message);
+            console.log(this.GetTime() + "\x1b[31m" + origin + "\x1b[0m: " + message);
         }
     }
 

@@ -45,7 +45,7 @@ class Gitter
         }
         catch(e)
         {
-            Logger.Error("Gitter", "Cloning has failed!",e);
+            Logger.Error("Gitter", "Cloning has failed!");
         }
     }
 }
