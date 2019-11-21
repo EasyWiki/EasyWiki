@@ -25,7 +25,7 @@ class Gitter
         {
             Logger.Log("Gitter", "Cloning repository...");
 
-            MarkdownBuilder.MarkdownBuilder.UnwatchFolder();
+            if(MarkdownBuilder.MarkdownBuilder) MarkdownBuilder.MarkdownBuilder.UnwatchFolder();
 
             await FileSystem.RemoveFolder(tempFolder);
 
@@ -39,13 +39,13 @@ class Gitter
 
             FileSystem.RemoveFolder(tempFolder);
 
-            MarkdownBuilder.MarkdownBuilder.WatchFolder();
+            if(MarkdownBuilder.MarkdownBuilder) MarkdownBuilder.MarkdownBuilder.WatchFolder();
 
             Logger.Log("Gitter", "Done cloning repository.");
         }
-        catch
+        catch(e)
         {
-            Logger.Error("Gitter", "Cloning has failed!");
+            Logger.Error("Gitter", "Cloning has failed!",e);
         }
     }
 }

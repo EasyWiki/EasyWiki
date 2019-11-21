@@ -27,8 +27,6 @@ class MarkdownBuilder
 
         this.SetupRederer();
         this.SetupOptions();
-
-        this.WatchFolder();
     }
 
     private SetupOptions()
@@ -69,6 +67,8 @@ class MarkdownBuilder
 
     public UnwatchFolder()
     {
+        if(this._watcher == null) return;
+        
         (this._watcher as fs.FSWatcher).close();
     }
 
@@ -83,7 +83,6 @@ class MarkdownBuilder
 
         if(reindex)
         {
-            Logger.Log("Markdown", "Reindexing all files.");
             Searcher.Searcher.IndexAll(true);
         }
 

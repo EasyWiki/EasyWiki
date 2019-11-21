@@ -12,17 +12,14 @@ async function StartServer()
 {
     const config = new Config();
 
-    const gitter = new Gitter();
-
-    const md = new MarkdownBuilder();
     const search = new Searcher();
-    
-    await md.BuildAll(false);
-    await search.IndexAll(true);
+    const md = new MarkdownBuilder();
 
+    const gitter = new Gitter();
     await gitter.CloneRepo();
+    
 
-    const gitTimer = new Timer(gitter.CloneRepo, 1000 * 60);
+    const gitTimer = new Timer(gitter.CloneRepo, Config.Config.Get("Gitter.timeout"));
     gitTimer.Start();
 
     Theme.LoadThemes();

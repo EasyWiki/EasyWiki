@@ -16,6 +16,7 @@
     },
     "Gitter":
     {
-        "repo": "https://github.com/WatcherWhale/EasyWiki-Testrepo.git"
+        "repo": "https://github.com/WatcherWhale/EasyWiki-Testrepo.git",
+        "timeout": 600000
     }
 }
