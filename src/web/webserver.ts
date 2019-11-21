@@ -29,7 +29,7 @@ class Web
         
         this._http = http.createServer(function (req, res)
         {
-            Logger.Log("Web","Redirecting " + req.socket.remoteAddress + " to https.");
+            Logger.Log("Web",req.socket.remoteAddress + " -> https");
             res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
             res.end();
         }).listen(Config.Config.Get("Web.httpport"));
