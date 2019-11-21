@@ -22,12 +22,19 @@ class Searcher
 
     public IndexAll(clear: boolean = true)
     {
-        Logger.Log("Search", "Indexing all files...");
+        try
+        {
+            Logger.Log("Search", "Indexing all files...");
         
-        if(clear) this._pagedata = [];
-        this.IndexFolder("/");
+            if(clear) this._pagedata = [];
+            this.IndexFolder("/");
 
-        Logger.Log("Search", "Done indexing.");
+            Logger.Log("Search", "Done indexing.");
+        }
+        catch(ex)
+        {
+            Logger.Error("Searcher", "Indexing failed");
+        }
     }
 
     public async Find(query: string) : Promise<PageData[]>
