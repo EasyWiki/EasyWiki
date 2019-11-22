@@ -3,15 +3,20 @@
         <a class="navbar-item" href="/">
             {{{logo}}}
         </a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
     </div>
     
-    <div class="navbar-menu">
+    <div class="navbar-menu" id="navbar-menu">
         <div class="navbar-start">
             {{{navbar}}}
         </div>
     
         <div class="navbar-end">
-            <div class="navbar-item">
+            <div class="navbar-item is-hidden-tablet-only is-hidden-mobile">
                 <div class="control has-icons-left has-icons-right search-bar">
                     <input class="input" type="text" placeholder="Search">
                     <span class="icon is-small is-left">
@@ -23,7 +28,7 @@
     </div>
 </nav>
 
-<div class="box search-results is-hidden">
+<div class="box search-results is-hidden is-hidden-tablet-only is-hidden-mobile">
     <table class="table is-striped is-hoverable is-fullwidth">
         <tr>
             <td class="result">
@@ -48,8 +53,8 @@
 
 <section class="section">
     <div class="is-fluid columns">
-        <div class="column is-2">
+        <div class="column is-2 is-hidden-tablet-only is-hidden-mobile">
             {{{menu}}}
         </div>
-        <div class="column is-10">
+        <div class="column">
 
