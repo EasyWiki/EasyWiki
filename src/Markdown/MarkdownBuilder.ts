@@ -41,7 +41,7 @@ class MarkdownBuilder
                 return highlight.highlightAuto(code).value;
             },
             renderer: this._renderer,
-            breaks: true
+            breaks: false
         });
     }
 
