@@ -10,11 +10,13 @@ const kramed : any = require("kramed");
 const dirPrefix = "../..";
 const builtFolder = path.join(__dirname, dirPrefix, "built-views");
 const pageFolder = path.join(__dirname, dirPrefix, "pages");
+const partialFolder = path.join(__dirname, dirPrefix, "partials");
 
 class MarkdownBuilder
 {
     public static MarkdownBuilder : MarkdownBuilder;
-    private _rederer : any
+    private _renderer : any;
+    private _menuRenderer : any;
     private _watcher : fs.FSWatcher | undefined;
     private _isBuilding : boolean;
 
@@ -23,7 +25,8 @@ class MarkdownBuilder
         MarkdownBuilder.MarkdownBuilder = this;
         
         this._isBuilding = false;
-        this._rederer = new kramed.Renderer();
+        this._renderer = new kramed.Renderer();
+        this._menuRenderer = new kramed.Renderer();
 
         this.SetupRederer();
         this.SetupOptions();
@@ -35,23 +38,33 @@ class MarkdownBuilder
             highlight: function (code: string) {
                 return highlight.highlightAuto(code).value;
             },
-            renderer: this._rederer,
+            renderer: this._renderer,
             breaks: true
         });
     }
 
     private SetupRederer()
     {
-        this._rederer.heading = function(text: string, level: number, raw:string) : string
+        this._renderer.heading = function(text: string, level: number, raw:string) : string
         {
             var id = text.toLowerCase().replace(/[^\w]+/g, '-');
 
             return "<h" + level + " id='" + id + "' class='title is-" + level + "'>" + text + "</h" + level + ">";
         }
 
-        this._rederer.table = function(header:string, body:string) : string
+        this._renderer.table = function(header:string, body:string) : string
         {
             return '<table class="table">' + body + "</table>";
+        }
+
+        this._menuRenderer.list = function(body: string, ordered: boolean)
+        {
+            return "<ul class='menu-list'>" + body + "</ul>";
+        }
+
+        this._menuRenderer.listitem = function(text: string)
+        {
+            return "<li>" + text + "</li>";
         }
     }
     
@@ -96,12 +109,33 @@ class MarkdownBuilder
         }
     }
 
+    public async BuildMenu()
+    {
+        await FileSystem.RemoveFile(path.join(partialFolder, "menu.html"));
+
+        if(!fs.existsSync(path.join(partialFolder, "menu.md"))) return;
+        
+
+        var menuHtml = kramed(await FileSystem.ReadFile(path.join(partialFolder, "menu.md")), {
+            renderer: this._menuRenderer
+        });
+
+        menuHtml = "<aside class='menu'>" + menuHtml + "</aside>";
+
+        await FileSystem.WriteFile(path.join(partialFolder, "menu.html"), menuHtml);
+    }
+
+    public BuildString(str : string): string
+    {
+        return kramed(str,{});
+    }
+
     private async RemoveFolder(folderpath: string, absolute: boolean = false)
     {
         if(!absolute) folderpath = path.join(builtFolder, folderpath);
         await FileSystem.RemoveFolder(folderpath);
     }
-
+    
     private BuildFolder(folderpath: string) : void
     {
         var self = this;
@@ -137,11 +171,6 @@ class MarkdownBuilder
                    "</div>";
 
         fs.writeFileSync(newPath, compiled);
-    }
-
-    public BuildString(str : string): string
-    {
-        return kramed(str,{});
     }
 }
 

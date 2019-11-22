@@ -9,6 +9,7 @@ const dirPrefix = "../..";
 const pageFolder = path.join(__dirname, dirPrefix, "pages");
 const mediaFolder = path.join(__dirname, dirPrefix, "public", "media");
 const tempFolder = path.join(__dirname, dirPrefix, "pages-temp");
+const partialFolder = path.join(__dirname, dirPrefix, "partials");
 
 class Gitter
 {
@@ -38,10 +39,16 @@ class Gitter
 
             await p1;
             await p2;
-
+            
+            await FileSystem.CopyFile(path.join(tempFolder, "menu.md"), path.join(partialFolder, "menu.md"));
+            
             FileSystem.RemoveFolder(tempFolder);
-
-            if(MarkdownBuilder.MarkdownBuilder) MarkdownBuilder.MarkdownBuilder.WatchFolder();
+            
+            if(MarkdownBuilder.MarkdownBuilder)
+            {   
+                MarkdownBuilder.MarkdownBuilder.BuildMenu();
+                MarkdownBuilder.MarkdownBuilder.WatchFolder();
+            }
 
             Logger.Log("Gitter", "Done cloning repository.");
         }

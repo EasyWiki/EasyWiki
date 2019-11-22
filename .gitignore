@@ -67,6 +67,10 @@ public/css/
 # Developer configuration
 dev-config.json
 ssl/
+
+# Built files
 built-views/
 pages-temp/
 pages/
+partials/menu.md
+partials/menu.html
