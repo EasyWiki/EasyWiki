@@ -71,6 +71,11 @@ class MarkdownBuilder
         {
             return "<p class='menu-label'>" + text + "</p>";
         }
+
+        this._menuRenderer.heading = function(text: string, level: number, raw:string) : string
+        {
+            return "<h1 class='title is-4'>" + text + "</h1>";
+        }
     }
     
     public WatchFolder()
@@ -79,6 +84,8 @@ class MarkdownBuilder
 
         this._watcher.on("change", function(eventType, filename)
         {
+            if(eventType != "change") return;
+            
             MarkdownBuilder.MarkdownBuilder.BuildAll(true);
         });
     }
