@@ -66,6 +66,11 @@ class MarkdownBuilder
         {
             return "<li>" + text + "</li>";
         }
+
+        this._menuRenderer.paragraph = function(text: string)
+        {
+            return "<p class='menu-label'>" + text + "</p>";
+        }
     }
     
     public WatchFolder()
