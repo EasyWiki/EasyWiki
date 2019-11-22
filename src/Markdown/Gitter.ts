@@ -46,7 +46,8 @@ class Gitter
             
             if(MarkdownBuilder.MarkdownBuilder)
             {   
-                MarkdownBuilder.MarkdownBuilder.BuildMenu();
+                await MarkdownBuilder.MarkdownBuilder.BuildMenu();
+                await MarkdownBuilder.MarkdownBuilder.BuildAll(true);
                 MarkdownBuilder.MarkdownBuilder.WatchFolder();
             }
 
