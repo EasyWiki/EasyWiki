@@ -1,4 +1,4 @@
-socket.on("/",function(results)
+socket.on("search",function(results)
 {
     var elements = document.getElementsByClassName("search-results");
 
@@ -6,9 +6,21 @@ socket.on("/",function(results)
 
     var element = elements[0];
     element.innerHTML = results;
+    element.classList.toggle("is-hidden",false);
 });
 
-document.onload = function()
+window.onload = function()
 {
-    
+    const $searchbar = Array.prototype.slice.call(document.querySelectorAll('.search-bar input'), 0);
+    if ($searchbar.length > 0)
+    {
+        $searchbar.forEach(el => {
+
+            el.addEventListener('input', () =>
+            {
+                socket.emit("search", el.value);
+            });
+
+        });
+    }
 }

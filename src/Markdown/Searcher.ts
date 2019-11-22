@@ -11,7 +11,7 @@ class Searcher
     public static Searcher : Searcher;
 
     private _pagedata : PageData[];
-    private _maxResults : number = 3;
+    private _maxResults : number = 5;
 
     constructor()
     {
@@ -24,24 +24,23 @@ class Searcher
     {
         let data : PageData[] = [];
 
+        if(query.length > 0)
         for(let i = 0; i < this._pagedata.length && data.length < this._maxResults; i++)
         {
             const page = this._pagedata[i];
+            let outLine : string = "";
 
-            if(page.url.indexOf(query) !== -1)
+            if(page.data.toLowerCase().indexOf(query.toLowerCase()) != -1)
             {
-                let builtLine = page.data.substring(0, 50);
-                builtLine = MarkdownBuilder.MarkdownBuilder.BuildString(builtLine);
+                outLine = MarkdownBuilder.MarkdownBuilder.CleanString(page.data);
+                outLine = outLine.substr(outLine.indexOf(query), 50);
+                outLine = "**" + outLine;
+                outLine = outLine.substr(0, query.length + 2) + "**" + outLine.substr(query.length + 2);
+                outLine = MarkdownBuilder.MarkdownBuilder.BuildString(outLine);
+                outLine = outLine.replace("*", "");
+                outLine = outLine.replace("*", "");
 
-                let newPage: PageData = {url: page.url, data: builtLine};
-                data.push(newPage);
-            }
-            else if(page.data.indexOf(query) !== -1)
-            {
-                let builtLine = page.data.substring(page.data.indexOf(query), 50);
-                builtLine = MarkdownBuilder.MarkdownBuilder.BuildString(builtLine);
-
-                let newPage: PageData = {url: page.url, data: builtLine};
+                let newPage: PageData = {url: page.url, data: ""};
                 data.push(newPage);
             }
         }
@@ -105,3 +104,8 @@ interface PageData
 }
 
 export {Searcher, PageData};
+
+function spliceAdd(str: string, start:number, delCount:number, newSubStr:string)
+{
+    return str.slice(0, start) + newSubStr + str.slice(start + Math.abs(delCount));
+}
