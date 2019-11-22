@@ -72,6 +72,10 @@ ssl/
 built-views/
 pages-temp/
 pages/
+
 partials/menu.md
 partials/menu.html
+partials/navbar.md
+partials/navbar.html
+
 public/media/

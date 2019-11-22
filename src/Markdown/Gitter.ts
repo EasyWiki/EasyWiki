@@ -41,12 +41,14 @@ class Gitter
             await p2;
             
             await FileSystem.CopyFile(path.join(tempFolder, "menu.md"), path.join(partialFolder, "menu.md"));
+            await FileSystem.CopyFile(path.join(tempFolder, "navbar.md"), path.join(partialFolder, "navbar.md"));
             
             FileSystem.RemoveFolder(tempFolder);
             
             if(MarkdownBuilder.MarkdownBuilder)
             {   
                 await MarkdownBuilder.MarkdownBuilder.BuildMenu();
+                await MarkdownBuilder.MarkdownBuilder.BuildNavBar();
                 await MarkdownBuilder.MarkdownBuilder.BuildAll(true);
                 MarkdownBuilder.MarkdownBuilder.WatchFolder();
             }

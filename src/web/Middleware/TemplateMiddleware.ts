@@ -19,8 +19,9 @@ class TemplateMiddleware
         let header = fs.readFileSync(path.join(folder, "header.html")).toString();
         let footer = fs.readFileSync(path.join(folder, "footer.html")).toString();
         let menu = fs.readFileSync(path.join(folder, "menu.html")).toString();
+        let navbar = fs.readFileSync(path.join(folder, "navbar.html")).toString();
 
-        req.templateObject = new TemplateObject(body, head, header, footer, menu);
+        req.templateObject = new TemplateObject(body, head, header, footer, menu, navbar);
 
         next();
     }
@@ -34,19 +35,21 @@ class TemplateMiddleware
 
 class TemplateObject
 {
-    private body: string;
-    private head: string;
-    private header: string;
-    private footer: string;
+    private body : string;
+    private head : string;
+    private header : string;
+    private footer : string;
     private menu : string;
+    private navbar : string;
 
-    constructor(body: string, head: string, header: string, footer: string, menu: string)
+    constructor(body: string, head: string, header: string, footer: string, menu: string, navbar: string)
     {
         this.body = body;
         this.head = head;
         this.header = header;
         this.footer = footer;
         this.menu = menu;
+        this.navbar = navbar;
     }
 
     public RenderAndSend(req: express.Request, res: express.Response, view: string, params: any = {})
@@ -69,6 +72,7 @@ class TemplateObject
     {
         params["head"] = mustache.render(this.head, params);
         params["menu"] = mustache.render(this.menu, params);
+        params["navbar"] = mustache.render(this.navbar, params);
         params["header"] = mustache.render(this.header, params);
         params["footer"] = mustache.render(this.footer, params);
 

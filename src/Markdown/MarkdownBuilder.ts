@@ -17,6 +17,7 @@ class MarkdownBuilder
     public static MarkdownBuilder : MarkdownBuilder;
     private _renderer : any;
     private _menuRenderer : any;
+    private _navRenderer : any;
     private _watcher : fs.FSWatcher | undefined;
     private _isBuilding : boolean;
 
@@ -27,6 +28,7 @@ class MarkdownBuilder
         this._isBuilding = false;
         this._renderer = new kramed.Renderer();
         this._menuRenderer = new kramed.Renderer();
+        this._navRenderer = new kramed.Renderer();
 
         this.SetupRederer();
         this.SetupOptions();
@@ -75,6 +77,26 @@ class MarkdownBuilder
         this._menuRenderer.heading = function(text: string, level: number, raw:string) : string
         {
             return "<h1 class='title is-4'>" + text + "</h1>";
+        }
+
+        this._menuRenderer.br = function()
+        {
+            return "";
+        }
+
+        this._navRenderer.link = function(href: string, title: number, text:string) : string
+        {
+            return "<a class='navbar-item' href='" + href + "'>" + text + "</a>";
+        }
+
+        this._navRenderer.paragraph = function(text: string)
+        {
+            return text;
+        }
+
+        this._navRenderer.br = function()
+        {
+            return "";
         }
     }
     
@@ -129,12 +151,27 @@ class MarkdownBuilder
         
 
         var menuHtml = kramed(await FileSystem.ReadFile(path.join(partialFolder, "menu.md")), {
-            renderer: this._menuRenderer
+            renderer: this._menuRenderer,
+            breaks: true
         });
 
         menuHtml = "<aside class='menu'>" + menuHtml + "</aside>";
-
         await FileSystem.WriteFile(path.join(partialFolder, "menu.html"), menuHtml);
+    }
+
+    public async BuildNavBar()
+    {
+        await FileSystem.RemoveFile(path.join(partialFolder, "navbar.html"));
+
+        if(!fs.existsSync(path.join(partialFolder, "navbar.md"))) return;
+        
+
+        var navHtml = kramed(await FileSystem.ReadFile(path.join(partialFolder, "navbar.md")), {
+            renderer: this._navRenderer,
+            breaks: true
+        });
+
+        await FileSystem.WriteFile(path.join(partialFolder, "navbar.html"), navHtml);
     }
 
     public BuildString(str : string): string
