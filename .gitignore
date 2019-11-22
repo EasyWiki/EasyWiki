@@ -78,4 +78,7 @@ partials/menu.html
 partials/navbar.md
 partials/navbar.html
 
+# Media files
 public/media/
+public/logo.png
+public/favicon.png

@@ -60,6 +60,17 @@ class TemplateObject
             params["css"] = req.theme.GetCss();
         }
 
+        // Add logo
+        let logo = path.join(__dirname, dirPrefix, "public", Config.Config.Get("Style.logo"));
+        if(fs.existsSync(logo))
+            params["logo"] = "<img src='/" + Config.Config.Get("Style.logo") + "'>";
+        else
+            params["logo"] = "<h1 class='title is-3 has-text-white'>{{sitetitle}}</h1>";
+        
+        // Add favicon
+        let favicon = path.join(__dirname, dirPrefix, "public", Config.Config.Get("Style.favicon"));
+        if(fs.existsSync(favicon)) params["favicon"] = "<link rel='icon' type='image/png' href='/" + Config.Config.Get("Style.favicon") + "'>";
+
         params["sitetitle"] = Config.Config.Get("Style.title");
 
         let renderObj = this.GetRenderObject(params);

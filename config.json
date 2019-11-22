@@ -2,6 +2,8 @@
     "Style":
     {
         "title": "EasyWiki",
+        "logo": "logo.png",
+        "favicon": "favicon.png",
         "theme": "lux-light"
     },
     "Web":
