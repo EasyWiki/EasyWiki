@@ -1,9 +1,9 @@
-import {Clone} from "nodegit";
 import path from 'path';
 import { Config } from "../modules/Config";
 import { FileSystem } from "../modules/FileSystem";
 import { Logger } from "../modules/Logger";
 import { MarkdownBuilder } from "./MarkdownBuilder";
+import { execSync } from "child_process";
 
 const dirPrefix = "../..";
 const pageFolder = path.join(__dirname, dirPrefix, "pages");
@@ -29,7 +29,9 @@ class Gitter
 
             await FileSystem.RemoveFolder(tempFolder);
 
-            await Clone.clone(Config.Config.Get("Gitter.repo"), tempFolder);
+            execSync("git clone " + Config.Config.Get("Gitter.repo") + " " + tempFolder, {
+                stdio: "ignore"
+            });
 
             var p1 = FileSystem.CopyInto(path.join(tempFolder, "pages"), pageFolder);
             var p2 = FileSystem.CopyInto(path.join(tempFolder, "media"), mediaFolder);
@@ -45,7 +47,7 @@ class Gitter
         }
         catch(e)
         {
-            Logger.Error("Gitter", "Cloning has failed!");
+            Logger.Error("Gitter", "Cloning has failed!",e);
         }
     }
 }
