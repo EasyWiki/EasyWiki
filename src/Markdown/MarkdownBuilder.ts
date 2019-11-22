@@ -74,6 +74,8 @@ class MarkdownBuilder
 
     public async BuildAll(reindex: boolean = true)
     {
+        try
+        {
         this._isBuilding = true;
 
         Logger.Log("Markdown", "Building all markdown.");
@@ -87,6 +89,11 @@ class MarkdownBuilder
         }
 
         this._isBuilding = false;
+        }
+        catch (e)
+        {
+            Logger.Error("Markdown", "Building markdown has failed.", e);
+        }
     }
 
     private async RemoveFolder(folderpath: string, absolute: boolean = false)

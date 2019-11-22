@@ -20,23 +20,6 @@ class Searcher
         this._pagedata = [];
     }
 
-    public IndexAll(clear: boolean = true)
-    {
-        try
-        {
-            Logger.Log("Search", "Indexing all files...");
-        
-            if(clear) this._pagedata = [];
-            this.IndexFolder("/");
-
-            Logger.Log("Search", "Done indexing.");
-        }
-        catch(ex)
-        {
-            Logger.Error("Searcher", "Indexing failed");
-        }
-    }
-
     public async Find(query: string) : Promise<PageData[]>
     {
         let data : PageData[] = [];
@@ -64,6 +47,23 @@ class Searcher
         }
 
         return data;
+    }
+
+    public async IndexAll(clear: boolean = true)
+    {
+        try
+        {
+            Logger.Log("Search", "Indexing all files...");
+        
+            if(clear) this._pagedata = [];
+            this.IndexFolder("/");
+
+            Logger.Log("Search", "Done indexing.");
+        }
+        catch(e)
+        {
+            Logger.Error("Searcher", "Indexing failed", e);
+        }
     }
 
     private IndexFolder(folderpath: string) : void
