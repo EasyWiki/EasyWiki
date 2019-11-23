@@ -38,6 +38,8 @@ class FileSystem
 
     public static async ReadFile(filePath: string) : Promise<string>
     {
+        if(!fs.existsSync(filePath)) return "";
+
         return fs.readFileSync(filePath).toString();
     }
 

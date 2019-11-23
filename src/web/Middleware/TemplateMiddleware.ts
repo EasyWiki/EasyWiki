@@ -5,21 +5,22 @@ import express from 'express';
 import mustache from 'mustache';
 import { Theme } from '../../modules/Theme';
 import { Config } from '../../modules/Config';
+import { FileSystem } from '../../modules/FileSystem';
 
 const dirPrefix = "../../..";
 
 class TemplateMiddleware
 {
-    public static AttachTemplate(req: express.Request, res: express.Response, next: express.NextFunction)
+    public static async AttachTemplate(req: express.Request, res: express.Response, next: express.NextFunction)
     {
 
         let folder = path.join(__dirname, dirPrefix, "partials");
-        let body = fs.readFileSync(path.join(folder, "body.html")).toString();
-        let head = fs.readFileSync(path.join(folder, "head.html")).toString();
-        let header = fs.readFileSync(path.join(folder, "header.html")).toString();
-        let footer = fs.readFileSync(path.join(folder, "footer.html")).toString();
-        let menu = fs.readFileSync(path.join(folder, "menu.html")).toString();
-        let navbar = fs.readFileSync(path.join(folder, "navbar.html")).toString();
+        let body = await FileSystem.ReadFile(path.join(folder, "body.html"));
+        let head = await FileSystem.ReadFile(path.join(folder, "head.html"));
+        let header = await FileSystem.ReadFile(path.join(folder, "header.html"));
+        let footer = await FileSystem.ReadFile(path.join(folder, "footer.html"));
+        let menu = await FileSystem.ReadFile(path.join(folder, "menu.html"));
+        let navbar = await FileSystem.ReadFile(path.join(folder, "navbar.html"));
 
         req.templateObject = new TemplateObject(body, head, header, footer, menu, navbar);
 
@@ -32,7 +33,7 @@ class TemplateMiddleware
         {
             req.theme = Theme.GetTheme(req.cookies.theme);
 
-            res.cookie("theme",req.cookies.theme,{secure: true, maxAge: Config.Config.Get("Style.maxAge")});
+            res.cookie("theme",req.cookies.theme, {secure: true, maxAge: Config.Config.Get("Style.maxAge")});
         }
         else
         {
@@ -61,7 +62,7 @@ class TemplateObject
         this.navbar = navbar;
     }
 
-    public RenderAndSend(req: express.Request, res: express.Response, view: string, params: any = {})
+    public async RenderAndSend(req: express.Request, res: express.Response, view: string, params: any = {})
     {
         if(!params["theme"])
         {
@@ -84,7 +85,7 @@ class TemplateObject
 
         let renderObj = this.GetRenderObject(params);
         
-        renderObj = this.RenderView(view, renderObj); 
+        renderObj = await this.RenderView(view, renderObj); 
         res.send(mustache.render(this.body, renderObj));
     }
 
@@ -99,7 +100,7 @@ class TemplateObject
         return params;
     }
 
-    private RenderView(view: string, renderObj: any)
+    private async RenderView(view: string, renderObj: any)
     {
         let viewPath = path.join(__dirname, dirPrefix, "views", view + ".html");
         let builtViewPath = path.join(__dirname, dirPrefix, "built-views", view + ".html");
@@ -109,15 +110,15 @@ class TemplateObject
 
         if(fs.existsSync(builtViewPath))
         {
-            html = fs.readFileSync(builtViewPath).toString();
+            html = await FileSystem.ReadFile(builtViewPath);
         }
         else if(fs.existsSync(builtViewFolderPath))
         {
-            html = fs.readFileSync(path.join(builtViewFolderPath,"index.html")).toString();
+            html = await FileSystem.ReadFile(path.join(builtViewFolderPath,"index.html"));
         }
         else
         {
-            html = fs.readFileSync(viewPath).toString();
+            html = await FileSystem.ReadFile(viewPath);
         }
 
         renderObj["view"] = mustache.render(html, renderObj);
