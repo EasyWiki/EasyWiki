@@ -28,7 +28,16 @@ class TemplateMiddleware
 
     public static AttachTheme(req: express.Request, res: express.Response, next: express.NextFunction)
     {
-        req.theme = Theme.GetTheme(Config.Config.Get("Style.theme"));
+        if(req.cookies.theme)
+        {
+            req.theme = Theme.GetTheme(req.cookies.theme);
+
+            res.cookie("theme",req.cookies.theme,{secure: true, maxAge: Config.Config.Get("Style.maxAge")});
+        }
+        else
+        {
+            req.theme = Theme.GetTheme(Config.Config.Get("Style.theme"));
+        }
         next();
     }
 }

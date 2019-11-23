@@ -4,7 +4,8 @@
         "title": "EasyWiki",
         "logo": "logo.png",
         "favicon": "favicon.png",
-        "theme": "lux-light"
+        "theme": "lux-light",
+        "maxAge": 864000000
     },
     "Web":
     {

@@ -5,6 +5,7 @@ import socketio from "socket.io";
 import https from "https";
 import http from "http";
 import cookieParser from "cookie-parser";
+//import bodyParser from "body-parser";
 
 import { LoggerMiddleware } from './Middleware/LoggerMiddleware';
 
@@ -14,6 +15,7 @@ import { Logger } from '../modules/Logger';
 import { ErrorMiddleware } from './Middleware/ErrorMiddleware';
 import { Gitter } from '../Markdown/Gitter';
 import { Searcher } from '../Markdown/Searcher';
+import { Theme } from '../modules/Theme';
 
 class Web
 {
@@ -61,6 +63,7 @@ class Web
         this._app.use(express.json());
         this._app.use(express.urlencoded({extended: false}));
 
+        //this._app.use(bodyParser());
         this._app.use(cookieParser(Config.Config.Get("Web.cookieSecret")));
         
         this._app.use(TemplateMiddleware.AttachTemplate);
@@ -79,6 +82,41 @@ class Web
         this._app.all("/", async function(req,res)
         {
             req.templateObject.RenderAndSend(req, res, "index", {title: "Home"});
+        });
+
+        this._app.get("/themes", async function(req, res)
+        {
+            const themes = Theme.themes;
+            let html = '';
+
+            for(let i = 0; i < themes.length; i++)
+            {
+                const theme = themes[i];
+
+                html += '<div class="radio-control">';
+                html += '<input class="is-checkradio is-medium" id="' + 
+                    theme.GetId() + '" type="radio" name="theme" value="' + theme.GetId() + '" ';
+                if(theme.GetId() == req.theme.GetId())
+                    html += 'checked="checked"';
+                html += '>'
+                html += '<label for="' + theme.GetId() + '">';
+                html += theme.GetName() + ' ';
+
+                if(theme.IsLightmode())
+                    html += '<span class="tag is-light">Light</span>';
+                else
+                    html += '<span class="tag is-dark">Dark</span>';
+
+                html += '</label></div>';
+            }
+
+            req.templateObject.RenderAndSend(req, res, "themes", {title: "Theme", themes: html});
+        });
+
+        this._app.post("/themes", async function(req, res)
+        {
+            res.cookie("theme",req.body.theme,{secure: true, maxAge: Config.Config.Get("Style.maxAge")});
+            res.redirect("/themes");
         });
         
         this._app.all("/refresh", async function(req,res)
