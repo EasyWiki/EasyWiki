@@ -1,0 +1,69 @@
+body
+{ 
+    display:flex; 
+    flex-direction:column; 
+    min-height: 100vh;
+}
+
+section
+{
+    flex: 1;
+}
+
+footer
+{
+    margin-top:auto; 
+}
+
+.search-bar
+{
+    width: 350px;
+    color: black;
+}
+
+.search-bar input
+{
+    width: 350px;
+    color: black;
+}
+
+.search-bar input::placeholder
+{
+    color: gray;
+}
+
+.search-bar .control.has-icons-left .input:focus ~ .icon, .control.has-icons-left .select:focus ~ .icon, .control.has-icons-right .input:focus ~ .icon, .control.has-icons-right .select:focus ~ .icon
+{
+    color: black;
+}
+
+.search-results
+{
+    position: absolute;
+    right: 11px;
+    top: 53px;
+    z-index: 31;
+    width: 348px;
+    border-radius: 0px;
+    padding: 0;
+}
+
+.is-maxed
+{
+    max-height: 200px;
+}
+
+.navbar-item img
+{
+    max-height: 55px !important;
+}
+
+.search-results .result a
+{
+    color: white;
+}
+
+.radio-control
+{
+    margin-bottom: 1em;
+}

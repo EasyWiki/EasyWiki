@@ -4,6 +4,7 @@
     "light": false,
     "css":[
         "lux-dark.css",
-        "syntax-dark.css"
+        "syntax-dark.css",
+        "body-dark.css"
     ]
 }

@@ -4,6 +4,7 @@
     "light": true,
     "css":[
         "lux-light.css",
-        "syntax-light.css"
+        "syntax-light.css",
+        "body.css"
     ]
 }
