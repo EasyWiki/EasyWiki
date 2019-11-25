@@ -190,6 +190,19 @@ class MarkdownBuilder
         await FileSystem.WriteFile(path.join(partialFolder, "navbar.html"), navHtml);
     }
 
+    public async BuildFooter()
+    {
+        await FileSystem.RemoveFile(path.join(partialFolder, "footer.html"));
+        if(!fs.existsSync(path.join(partialFolder, "footer.md"))) return;
+        
+
+        var footHtml = kramed(await FileSystem.ReadFile(path.join(partialFolder, "footer.md")), {});
+        footHtml = "</div></div></section><footer class='footer'>" +
+        "<div class='content'>" + footHtml + "</div></footer>";
+
+        await FileSystem.WriteFile(path.join(partialFolder, "footer.html"), footHtml);
+    }
+
     public BuildString(str : string): string
     {
         return kramed(str,{});
