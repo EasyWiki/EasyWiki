@@ -61,7 +61,7 @@ class FileSystem
         if(!fs.existsSync(srcFolder)) return;
 
         await this.RemoveFolder(destFolder);
-        fs.mkdirSync(destFolder);
+        fs.mkdirSync(destFolder.toLowerCase());
 
         let files = fs.readdirSync(srcFolder);
 
@@ -72,11 +72,11 @@ class FileSystem
 
             if(fs.statSync(absPath).isDirectory())
             {
-                await this.CopyInto(absPath, path.join(destFolder,file));
+                await this.CopyInto(absPath, path.join(destFolder,file.toLowerCase()));
             }
             else
             {
-                fs.copyFileSync(absPath, path.join(destFolder,file));
+                fs.copyFileSync(absPath, path.join(destFolder,file.toLowerCase()));
             }
         }
 
@@ -88,7 +88,7 @@ class FileSystem
         
         await this.RemoveFile(destFile);
 
-        fs.copyFileSync(srcFile, destFile);
+        fs.copyFileSync(srcFile, destFile.toLowerCase());
     }
 
     public static MakeFolder(folderPath: string)

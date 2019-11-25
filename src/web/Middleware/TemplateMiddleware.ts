@@ -102,6 +102,7 @@ class TemplateObject
 
     private async RenderView(view: string, renderObj: any)
     {
+        view = view.toLowerCase();
         let viewPath = path.join(__dirname, dirPrefix, "views", view + ".html");
         let builtViewPath = path.join(__dirname, dirPrefix, "built-views", view + ".html");
         let builtViewFolderPath = path.join(__dirname, dirPrefix, "built-views", view);
@@ -128,6 +129,7 @@ class TemplateObject
 
     public ViewExists(view: string) : boolean
     {
+        view = view.toLowerCase();
         let viewPath = path.join(__dirname, dirPrefix, "views", view + ".html");
         let builtViewPath = path.join(__dirname, dirPrefix, "built-views", view + ".html");
         let builtViewFolderPath = path.join(__dirname, dirPrefix, "built-views", view, "index.html");

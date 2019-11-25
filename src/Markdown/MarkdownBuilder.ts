@@ -213,9 +213,9 @@ class MarkdownBuilder
     private BuildFolder(folderpath: string) : void
     {
         var self = this;
-
-        if(!fs.existsSync(path.join(builtFolder, folderpath)))
-            fs.mkdirSync(path.join(builtFolder, folderpath));
+        
+        if(!fs.existsSync(path.join(builtFolder, folderpath.toLowerCase())))
+            fs.mkdirSync(path.join(builtFolder, folderpath.toLowerCase()));
 
         let files = fs.readdirSync(path.join(pageFolder, folderpath));
 
@@ -239,7 +239,7 @@ class MarkdownBuilder
         let markdownText = fs.readFileSync(path.join(pageFolder, filePath)).toString();
 
         let compiled = kramed(markdownText, {});
-        let newPath = path.join(__dirname, dirPrefix, "built-views", filePath.replace(".md",".html"));
+        let newPath = path.join(__dirname, dirPrefix, "built-views", filePath.replace(".md",".html").toLowerCase());
 
         compiled = "<div class=\"container content is-size-4\">" + compiled +
                    "</div>";
