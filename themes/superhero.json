@@ -4,7 +4,7 @@
     "light": false,
     "css":[
         "superhero.css",
-        "syntax-dark.css",
+        "syntax/prism-night.css",
         "body-dark.css"
     ]
 }

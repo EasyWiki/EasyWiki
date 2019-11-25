@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import highlight from "highlight.js";
 import { Logger } from '../modules/Logger';
 import { Searcher } from './Searcher';
 import { FileSystem } from '../modules/FileSystem';
@@ -39,9 +38,6 @@ class MarkdownBuilder
     private SetupOptions()
     {
         kramed.setOptions({
-            highlight: function (code: string) {
-                return highlight.highlightAuto(code).value;
-            },
             renderer: this._renderer,
             breaks: false
         });

@@ -4,7 +4,7 @@
     "light": true,
     "css":[
         "lux-light.css",
-        "syntax-light.css",
+        "syntax/prism-default.css",
         "body.css"
     ]
 }
