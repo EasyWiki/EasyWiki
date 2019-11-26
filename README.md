@@ -1,5 +1,5 @@
 # EasyWiki
-EasyWiki is wiki software designed with simplicity and easy.
+EasyWiki is the wiki software designed with simplicity and easy.
 
 It is powered by git, bulma and nodejs, and has a very easy setup process.
 
