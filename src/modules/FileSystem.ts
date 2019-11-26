@@ -1,10 +1,17 @@
 import fs from 'fs';
 import path from 'path';
+import NodeCahce from 'node-cache'
+import { Config } from './Config';
 
 const logFolder = path.join(__dirname + "../../..", "logs");
 
 class FileSystem
 {
+    public static cacheStore : NodeCahce = new NodeCahce({
+        stdTTL: 120,
+        checkperiod: 120,
+    });
+
     public static async RemoveFolder(folderPath: string)
     {
         if(!fs.existsSync(folderPath)) return;
@@ -41,6 +48,22 @@ class FileSystem
         if(!fs.existsSync(filePath)) return "";
 
         return fs.readFileSync(filePath).toString();
+    }
+
+    public static async ReadFileCached(filePath: string) : Promise<string>
+    {
+        var value = this.cacheStore.get(filePath);
+
+        if(value)
+        {
+            return value as string;
+        }
+        else
+        {
+            var content = await this.ReadFile(filePath);
+            this.cacheStore.set(filePath, content, Config.Config.Get("Web.cacheTTL"));
+            return content;
+        }
     }
 
     public static async WriteFile(filePath: string, data: string)

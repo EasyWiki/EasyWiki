@@ -15,12 +15,12 @@ class TemplateMiddleware
     {
 
         let folder = path.join(__dirname, dirPrefix, "partials");
-        let body = await FileSystem.ReadFile(path.join(folder, "body.html"));
-        let head = await FileSystem.ReadFile(path.join(folder, "head.html"));
-        let header = await FileSystem.ReadFile(path.join(folder, "header.html"));
-        let footer = await FileSystem.ReadFile(path.join(folder, "footer.html"));
-        let menu = await FileSystem.ReadFile(path.join(folder, "menu.html"));
-        let navbar = await FileSystem.ReadFile(path.join(folder, "navbar.html"));
+        let body = await FileSystem.ReadFileCached(path.join(folder, "body.html"));
+        let head = await FileSystem.ReadFileCached(path.join(folder, "head.html"));
+        let header = await FileSystem.ReadFileCached(path.join(folder, "header.html"));
+        let footer = await FileSystem.ReadFileCached(path.join(folder, "footer.html"));
+        let menu = await FileSystem.ReadFileCached(path.join(folder, "menu.html"));
+        let navbar = await FileSystem.ReadFileCached(path.join(folder, "navbar.html"));
 
         req.templateObject = new TemplateObject(body, head, header, footer, menu, navbar);
 
@@ -111,15 +111,15 @@ class TemplateObject
 
         if(fs.existsSync(builtViewPath))
         {
-            html = await FileSystem.ReadFile(builtViewPath);
+            html = await FileSystem.ReadFileCached(builtViewPath);
         }
         else if(fs.existsSync(builtViewFolderPath))
         {
-            html = await FileSystem.ReadFile(path.join(builtViewFolderPath,"index.html"));
+            html = await FileSystem.ReadFileCached(path.join(builtViewFolderPath,"index.html"));
         }
         else
         {
-            html = await FileSystem.ReadFile(viewPath);
+            html = await FileSystem.ReadFileCached(viewPath);
         }
 
         renderObj["view"] = mustache.render(html, renderObj);

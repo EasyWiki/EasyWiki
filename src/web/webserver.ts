@@ -61,7 +61,7 @@ class Web
         
         this._app.use(express.json());
         this._app.use(express.urlencoded({extended: false}));
-        
+
         this._app.use(cookieParser(Config.Config.Get("Web.cookieSecret")));
         
         this._app.use(TemplateMiddleware.AttachTemplate);

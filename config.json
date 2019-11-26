@@ -16,7 +16,8 @@
         {
             "key": "ssl/ssl.key",
             "cert": "ssl/ssl.crt"
-        }
+        },
+        "cacheTTL": 120
     },
     "Gitter":
     {
