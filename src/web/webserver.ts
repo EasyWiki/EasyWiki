@@ -128,7 +128,7 @@ class Web
             var view = req.params.view + req.params["0"];
             if(req.templateObject.ViewExists(view))
             {
-                req.templateObject.RenderAndSend(req, res, view, {title: "Home"});
+                req.templateObject.RenderAndSend(req, res, view, {});
             }
             else
             {

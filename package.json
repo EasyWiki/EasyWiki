@@ -1,12 +1,13 @@
 {
   "name": "easywiki",
-  "version": "0.4.0",
-  "description": "The software that powers the EI-Wiki.",
+  "version": "0.4.1",
+  "description": "EasyWiki is the wiki software designed with simplicity and easy.",
   "main": "app/app.js",
   "scripts": {
-    "start": "node app/app.js",
+    "start": "pm2 start --env production",
+    "start-dev": "pm2 start",
+    "start-node": "node app/app.js",
     "test": "npm run build && node app/app.js",
-    "start-dev": "pm2-dev app/app.js",
     "build": "tsc --build",
     "watch": "tsc --build --watch",
     "clean": "tsc --build --clean",
@@ -19,7 +20,9 @@
     "url": "git+https://github.com/WatcherWhale/EasyWiki.git"
   },
   "keywords": [
-    "wiki"
+    "wiki",
+    "easywiki",
+    "easy"
   ],
   "author": "Mathias Maes",
   "license": "MIT",
@@ -31,6 +34,7 @@
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
     "http-errors": "^1.7.3",
+    "jsdom": "^15.2.1",
     "kramed": "^0.5.6",
     "mustache": "^3.1.0",
     "node-cache": "^5.0.2",
@@ -40,6 +44,7 @@
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.2",
     "@types/http-errors": "^1.6.2",
+    "@types/jsdom": "^12.2.4",
     "@types/mustache": "^0.8.32",
     "@types/node-cache": "^4.2.5",
     "@types/socket.io": "^2.1.4",

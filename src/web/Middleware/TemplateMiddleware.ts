@@ -6,6 +6,7 @@ import mustache from 'mustache';
 import { Theme } from '../../modules/Theme';
 import { Config } from '../../modules/Config';
 import { FileSystem } from '../../modules/FileSystem';
+import { JSDOM } from 'jsdom';
 
 const dirPrefix = "../../..";
 
@@ -64,6 +65,9 @@ class TemplateObject
 
     public async RenderAndSend(req: express.Request, res: express.Response, view: string, params: any = {})
     {
+        params["path"] = req.url;
+        console.log(req.url);
+
         if(!params["theme"])
         {
             params["theme"] = req.theme.GetName();
@@ -82,11 +86,9 @@ class TemplateObject
         if(fs.existsSync(favicon)) params["favicon"] = "<link rel='icon' type='image/png' href='/" + Config.Config.Get("Style.favicon") + "'>";
 
         params["sitetitle"] = Config.Config.Get("Style.title");
-
-        let renderObj = this.GetRenderObject(params);
         
-        renderObj = await this.RenderView(view, renderObj); 
-        res.send(mustache.render(this.body, renderObj));
+        params = await this.RenderView(view, params); 
+        res.send(mustache.render(this.body, params));
     }
 
     public GetRenderObject(params: any = {}): any
@@ -100,7 +102,7 @@ class TemplateObject
         return params;
     }
 
-    private async RenderView(view: string, renderObj: any)
+    private async RenderView(view: string, params: any)
     {
         view = view.toLowerCase();
         let viewPath = path.join(__dirname, dirPrefix, "views", view + ".html");
@@ -122,6 +124,20 @@ class TemplateObject
             html = await FileSystem.ReadFileCached(viewPath);
         }
 
+        if(!params["title"])
+        {
+            let doc = new JSDOM(html);
+            let title = doc.window.document.querySelector(".title");
+
+            if(title) params["title"] = title.textContent;
+            else
+            {
+                let split = params["path"].split("/");
+                params["title"] = split[split.length -1];
+            }
+        }
+
+        let renderObj = this.GetRenderObject(params);
         renderObj["view"] = mustache.render(html, renderObj);
 
         return renderObj;
