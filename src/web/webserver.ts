@@ -5,7 +5,6 @@ import socketio from "socket.io";
 import https from "https";
 import http from "http";
 import cookieParser from "cookie-parser";
-//import bodyParser from "body-parser";
 
 import { LoggerMiddleware } from './Middleware/LoggerMiddleware';
 
@@ -62,8 +61,7 @@ class Web
         
         this._app.use(express.json());
         this._app.use(express.urlencoded({extended: false}));
-
-        //this._app.use(bodyParser());
+        
         this._app.use(cookieParser(Config.Config.Get("Web.cookieSecret")));
         
         this._app.use(TemplateMiddleware.AttachTemplate);
