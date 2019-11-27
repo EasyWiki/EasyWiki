@@ -12,6 +12,7 @@
     "watch": "tsc --build --watch",
     "clean": "tsc --build --clean",
     "build-css": "node-sass -r -x sass -o public/css",
+    "watch-css": "node-sass --watch -r -x sass -o public/css",
     "build-md": "node app/buildMarkdown.js",
     "build-all": "npm run build && npm run build-css && npm run build-md"
   },

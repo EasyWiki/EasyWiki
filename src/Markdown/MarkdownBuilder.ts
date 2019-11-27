@@ -47,9 +47,11 @@ class MarkdownBuilder
     {
         this._renderer.heading = function(text: string, level: number, raw:string) : string
         {
-            var id = text.toLowerCase().replace(/[^\w]+/g, '-');
-
-            return "<h" + level + " id='" + id + "' class='title is-" + level + "'>" + text + "</h" + level + ">";
+            let id = text.toLowerCase().replace(/[^\w]+/g, '-');
+            let size = level + 1;
+            if(size >= 7) level = 6;
+            
+            return "<h" + level + " id='" + id + "' class='title is-" + size + "'>" + text + "</h" + level + ">";
         }
 
         this._renderer.table = function(header:string, body:string) : string
@@ -250,7 +252,7 @@ class MarkdownBuilder
         let compiled = kramed(markdownText, {});
         let newPath = path.join(__dirname, dirPrefix, "built-views", filePath.replace(".md",".html").toLowerCase());
 
-        compiled = "<div class=\"container content is-size-4\">" + compiled +
+        compiled = "<div class=\"container content is-size-5\">" + compiled +
                    "</div>";
 
         fs.writeFileSync(newPath, compiled);
