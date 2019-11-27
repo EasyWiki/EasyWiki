@@ -30,7 +30,7 @@ class Gitter
 
             await FileSystem.RemoveFolder(tempFolder);
 
-            execSync("git clone " + Config.Config.Get("Gitter.repo") + " " + tempFolder, {
+            execSync("git clone \"" + Config.Config.Get("Gitter.repo") + "\" \"" + tempFolder + "\"", {
                 stdio: "ignore"
             });
 
