@@ -5,6 +5,7 @@
     "css":[
         "lux-light.css",
         "syntax/prism-default.css",
-        "body.css"
+        "body.css",
+        "overrides.css"
     ]
 }
