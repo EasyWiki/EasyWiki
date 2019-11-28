@@ -27,5 +27,7 @@ async function StartServer()
 
     Theme.LoadThemes();
 
+    search.Find("std");
+
     const web = new Web();
 }
