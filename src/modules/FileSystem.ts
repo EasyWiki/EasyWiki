@@ -54,7 +54,7 @@ class FileSystem
     {
         var value = this.cacheStore.get(filePath);
 
-        if(value)
+        if(value && !Config.Config.Get("Web.disableCache"))
         {
             return value as string;
         }
