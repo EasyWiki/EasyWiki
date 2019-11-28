@@ -3,6 +3,7 @@ import path from 'path';
 import { Logger } from '../modules/Logger';
 import { RootNode } from './SearchTree';
 import { FileSystem } from '../modules/FileSystem';
+import { MarkdownBuilder } from './MarkdownBuilder';
 
 const dirPrefix = "../..";
 const pageFolder = path.join(__dirname, dirPrefix, "pages");
@@ -42,48 +43,10 @@ class Searcher
         });
 
         let pageUrls : string[] = [];
+        scoreMap.forEach((score, key) => pageUrls.push(key));
+        pageUrls.sort((a,b) => (scoreMap.get(b) as number) - (scoreMap.get(a) as number));
 
-        // Get max scoring pages
-        scoreMap.forEach(function(score, key)
-        {
-            if(pageUrls.length == 0)
-            {
-                pageUrls.push(key);
-            }
-            else for(let i = pageUrls.length - 1; i >= 0; i--)
-            {
-                if(scoreMap.get(pageUrls[i]) as number >= score && pageUrls.length < self._maxResults)
-                {
-                    pageUrls.push(key);
-                }
-                else if(scoreMap.get(pageUrls[i]) as number > score)
-                {
-                    break;
-                }
-                else if(pageUrls.length < self._maxResults)
-                {
-                    pageUrls.push("");
-                    
-                    for(let j = pageUrls.length - 2; j >= i; j--)
-                    {
-                        pageUrls[j + 1] = pageUrls[j];
-                    }
-
-                    pageUrls[i] = key;
-                }
-                else
-                {
-                    for(let j = pageUrls.length - 2; j >= i; j--)
-                    {
-                        pageUrls[j + 1] = pageUrls[j];
-                    }
-
-                    pageUrls[i] = key;
-                }
-            }
-        });
-
-        console.log(pageUrls);
+        pageUrls.forEach((key) => console.log(key + ": " + scoreMap.get(key)));
     }
 
     public async IndexAll(clear: boolean = true)
@@ -135,7 +98,8 @@ class Searcher
 
         const url = filePath.substr(0, filePath.length - 3);
         const fullPath = path.join(pageFolder, filePath);
-        const data = fs.readFileSync(fullPath).toString().toLowerCase();
+        const data = MarkdownBuilder.MarkdownBuilder
+            .CleanString(fs.readFileSync(fullPath).toString()).toLowerCase();
         
         SplitInWords(url).forEach(function(str)
         {
