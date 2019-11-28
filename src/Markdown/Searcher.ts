@@ -1,52 +1,89 @@
 import fs from 'fs';
 import path from 'path';
 import { Logger } from '../modules/Logger';
-import { MarkdownBuilder } from './MarkdownBuilder';
+import { RootNode } from './SearchTree';
+import { FileSystem } from '../modules/FileSystem';
 
 const dirPrefix = "../..";
 const pageFolder = path.join(__dirname, dirPrefix, "pages");
+const searchFolder = path.join(__dirname, dirPrefix, "searchIndex");
 
 class Searcher
 {
     public static Searcher : Searcher;
-
-    private _pagedata : PageData[];
     private _maxResults : number = 5;
+    private _pageNodes : Map<string, RootNode>;
 
     constructor()
     {
         Searcher.Searcher = this;
-
-        this._pagedata = [];
+        this._pageNodes = new Map<string, RootNode>()
     }
 
-    public async Find(query: string) : Promise<PageData[]>
+    public async Find(query: string)
     {
-        let data : PageData[] = [];
+        const self = this;
 
-        if(query.length > 0)
-        for(let i = 0; i < this._pagedata.length && data.length < this._maxResults; i++)
+        let scoreMap = new Map<string, number>();
+
+        // Calculate search scores
+        SplitInWords(query.toLowerCase()).forEach(function(str)
         {
-            const page = this._pagedata[i];
-            let outLine : string = "";
-            
-            if(page.url.indexOf(query.toLowerCase()) != -1 ||
-                page.data.toLowerCase().indexOf(query.toLowerCase()) != -1)
+            self._pageNodes.forEach(function(node, key)
             {
-                outLine = MarkdownBuilder.MarkdownBuilder.CleanString(page.data);
-                outLine = outLine.substr(outLine.indexOf(query), 50);
-                outLine = "**" + outLine;
-                outLine = outLine.substr(0, query.length + 2) + "**" + outLine.substr(query.length + 2);
-                outLine = MarkdownBuilder.MarkdownBuilder.BuildString(outLine);
-                outLine = outLine.replace("*", "");
-                outLine = outLine.replace("*", "");
+                const score =  node.CalculateScore(str.split(''));
+                const prevScore = scoreMap.get(key);
 
-                let newPage: PageData = {url: page.url, data: ""};
-                data.push(newPage);
+                if(prevScore)
+                    scoreMap.set(key, score + prevScore);
+                else
+                    scoreMap.set(key, score);
+            });
+        });
+
+        let pageUrls : string[] = [];
+
+        // Get max scoring pages
+        scoreMap.forEach(function(score, key)
+        {
+            if(pageUrls.length == 0)
+            {
+                pageUrls.push(key);
             }
-        }
+            else for(let i = pageUrls.length - 1; i >= 0; i--)
+            {
+                if(scoreMap.get(pageUrls[i]) as number >= score && pageUrls.length < self._maxResults)
+                {
+                    pageUrls.push(key);
+                }
+                else if(scoreMap.get(pageUrls[i]) as number > score)
+                {
+                    break;
+                }
+                else if(pageUrls.length < self._maxResults)
+                {
+                    pageUrls.push("");
+                    
+                    for(let j = pageUrls.length - 2; j >= i; j--)
+                    {
+                        pageUrls[j + 1] = pageUrls[j];
+                    }
 
-        return data;
+                    pageUrls[i] = key;
+                }
+                else
+                {
+                    for(let j = pageUrls.length - 2; j >= i; j--)
+                    {
+                        pageUrls[j + 1] = pageUrls[j];
+                    }
+
+                    pageUrls[i] = key;
+                }
+            }
+        });
+
+        console.log(pageUrls);
     }
 
     public async IndexAll(clear: boolean = true)
@@ -54,8 +91,10 @@ class Searcher
         try
         {
             Logger.Log("Search", "Indexing all files...");
-        
-            if(clear) this._pagedata = [];
+            
+            await FileSystem.RemoveFolder("searchIndex");
+            await FileSystem.MakeFolder(searchFolder);
+
             this.IndexFolder("/");
 
             Logger.Log("Search", "Done indexing.");
@@ -81,32 +120,40 @@ class Searcher
             }
             else
             {
-                self.IndexFile(path.join(folderpath, file));
+                const p = path.join(folderpath, file);
+                if(path.extname(p) == ".md")
+                {
+                    self._pageNodes.set(p, self.IndexFile(p));
+                }
             }
         });
     }
 
-    private IndexFile(filePath : string)
+    private IndexFile(filePath : string) : RootNode
     {
-        if(path.extname(filePath) != ".md") return;
+        const node = new RootNode();
 
         const url = filePath.substr(0, filePath.length - 3);
         const fullPath = path.join(pageFolder, filePath);
-        const data = fs.readFileSync(fullPath).toString();
+        const data = fs.readFileSync(fullPath).toString().toLowerCase();
+        
+        SplitInWords(url).forEach(function(str)
+        {
+            node.Insert(str.split(''));
+        });
 
-        this._pagedata.push({url: url, data: data});
+        SplitInWords(data).forEach(function(str)
+        {
+            node.Insert(str.split(''));
+        });
+
+        return node;
     }
 }
 
-interface PageData
-{
-    url: string;
-    data: string;
-}
+export {Searcher};
 
-export {Searcher, PageData};
-
-function spliceAdd(str: string, start:number, delCount:number, newSubStr:string)
+function SplitInWords(str: string) : string[]
 {
-    return str.slice(0, start) + newSubStr + str.slice(start + Math.abs(delCount));
+    return str.split(/[ ,;.?!\(\)\{\}\[\]\"\'\\\/\n\r]+/);
 }
