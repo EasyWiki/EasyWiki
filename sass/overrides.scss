@@ -1,0 +1,25 @@
+.navbar-item img
+{
+    max-height: 55px !important;
+}
+
+.menu
+{
+    font-size: 1.2rem;
+}
+
+.menu-container
+{
+    transition: all 1s;
+}
+
+.hide-menu
+{
+    width: 0px !important;
+    opacity: 0 !important;
+}
+
+.hide-menu .menu
+{
+    display: none;
+}
