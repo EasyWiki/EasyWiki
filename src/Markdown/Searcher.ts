@@ -29,8 +29,9 @@ class Searcher
         {
             const page = this._pagedata[i];
             let outLine : string = "";
-
-            if(page.data.toLowerCase().indexOf(query.toLowerCase()) != -1)
+            
+            if(page.url.indexOf(query.toLowerCase()) != -1 ||
+                page.data.toLowerCase().indexOf(query.toLowerCase()) != -1)
             {
                 outLine = MarkdownBuilder.MarkdownBuilder.CleanString(page.data);
                 outLine = outLine.substr(outLine.indexOf(query), 50);
