@@ -157,7 +157,7 @@ class Web
     {
         this._io.on("connect", async function(socket)
         {
-            socket.on("search", async function(query)
+            /*socket.on("search", async function(query)
             {
                 const data = await Searcher.Searcher.Find(query);
                 let html = "<table class='table is-striped is-hoverable is-fullwidth'>";
@@ -172,7 +172,7 @@ class Web
                 }
 
                 socket.emit("search", html);
-            });
+            });*/
         });
     }
 
