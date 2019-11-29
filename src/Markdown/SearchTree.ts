@@ -39,6 +39,11 @@ class Node
     {
         let score = 0;
 
+        this._nodes.forEach(function(node, key)
+        {
+            score += node.CalculateScore(charSeq);
+        });
+
         if(this._char == charSeq[0])
         {
             score += this._occurences;
@@ -48,6 +53,7 @@ class Node
                 score += node.CalculateScore(charSeq.splice(1, charSeq.length - 1));
             });
         }
+        
 
         return score;
     }
@@ -85,7 +91,7 @@ class RootNode
 
         this._nodes.forEach(function(node, key)
         {
-            score += node.CalculateScore(charSeq.splice(1, charSeq.length - 1));
+            score += node.CalculateScore(charSeq);
         });
 
         return score;

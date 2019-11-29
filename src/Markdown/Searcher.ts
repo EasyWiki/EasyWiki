@@ -34,7 +34,7 @@ class Searcher
             {
                 const score =  node.CalculateScore(str.split(''));
                 const prevScore = scoreMap.get(key);
-
+                
                 if(prevScore)
                     scoreMap.set(key, score + prevScore);
                 else
