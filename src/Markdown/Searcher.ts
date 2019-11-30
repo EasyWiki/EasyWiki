@@ -32,7 +32,7 @@ class Searcher
         {
             self._pageNodes.forEach(function(node, key)
             {
-                const score =  node.CalculateScore(str.split(''));
+                const score = node.CalculateScore(str.split(''));
                 const prevScore = scoreMap.get(key);
                 
                 if(prevScore)
@@ -86,6 +86,7 @@ class Searcher
                 const p = path.join(folderpath, file);
                 if(path.extname(p) == ".md")
                 {
+                    FileSystem.MakeFolder(path.join(searchFolder, folderpath));
                     self._pageNodes.set(p, self.IndexFile(p));
                 }
             }
@@ -99,17 +100,25 @@ class Searcher
         const url = filePath.substr(0, filePath.length - 3);
         const fullPath = path.join(pageFolder, filePath);
         const data = MarkdownBuilder.MarkdownBuilder
-            .CleanString(fs.readFileSync(fullPath).toString()).toLowerCase();
-        
-        SplitInWords(url).forEach(function(str)
+            .CleanString(fs.readFileSync(fullPath).toString().toLowerCase());
+
+        SplitInWords(url.toLowerCase()).forEach(function(str)
         {
+            if(str.length == 0) return;
+
             node.Insert(str.split(''));
         });
 
-        SplitInWords(data).forEach(function(str)
+        SplitInWords(data.toLowerCase()).forEach(function(str)
         {
+            if(str.length == 0) return;
+            
             node.Insert(str.split(''));
         });
+
+        node.CalculateMaxScore();
+
+        FileSystem.WriteFile(path.join(searchFolder, url + ".json"), JSON.stringify(node.ToJson()));
 
         return node;
     }
