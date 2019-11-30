@@ -21,7 +21,7 @@ class Searcher
         this._pageNodes = new Map<string, RootNode>()
     }
 
-    public async Find(query: string)
+    public async Find(query: string) : Promise<string[]>
     {
         const self = this;
 
@@ -43,10 +43,12 @@ class Searcher
         });
 
         let pageUrls : string[] = [];
-        scoreMap.forEach((score, key) => pageUrls.push(key));
+        scoreMap.forEach((score, key) => {
+            if(score > 0) pageUrls.push(key)
+        });
         pageUrls.sort((a,b) => (scoreMap.get(b) as number) - (scoreMap.get(a) as number));
 
-        pageUrls.forEach((key) => console.log(key + ": " + scoreMap.get(key)));
+        return pageUrls.splice(0, this._maxResults);
     }
 
     public async IndexAll(clear: boolean = true)
