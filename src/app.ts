@@ -20,14 +20,14 @@ async function StartServer()
 
     const gitter = new Gitter();
     await gitter.CloneRepo();
-    
+    await search.IndexAll();
 
     const gitTimer = new Timer(gitter.CloneRepo, Config.Config.Get("Gitter.timeout"));
     gitTimer.Start();
 
     Theme.LoadThemes();
 
-    search.Find("std");
-
     const web = new Web();
+
+    return;
 }
