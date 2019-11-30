@@ -164,11 +164,11 @@ class Web
                 
                 for(let i = 0; i < data.length; i++)
                 {
-                    const page = data[i];
+                    const page = data[i].split('.md')[0];
 
-                    html += "<tr class='result'><td><a href='" + page.url + "'>";
-                    html += "<p class='has-text-weight-bold is-size-5'>" + page.url + "</p>";
-                    html += "<p>" + page.data + "</p></a></td>";
+                    html += "<tr class='result'><td><a href='" + page + "'>";
+                    html += "<p class='has-text-weight-bold is-size-5'>" + page + "</p>";
+                    //html += "<p>" + page.data + "</p></a></td>";
                 }
 
                 socket.emit("search", html);
