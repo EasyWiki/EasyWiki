@@ -157,22 +157,22 @@ class Web
     {
         this._io.on("connect", async function(socket)
         {
-            /*socket.on("search", async function(query)
+            socket.on("search", async function(query)
             {
                 const data = await Searcher.Searcher.Find(query);
                 let html = "<table class='table is-striped is-hoverable is-fullwidth'>";
                 
                 for(let i = 0; i < data.length; i++)
                 {
-                    const page = data[i];
+                    const page = data[i].split('.md')[0];
 
-                    html += "<tr class='result'><td><a href='" + page.url + "'>";
-                    html += "<p class='has-text-weight-bold is-size-5'>" + page.url + "</p>";
-                    html += "<p>" + page.data + "</p></a></td>";
+                    html += "<tr class='result'><td><a href='" + page + "'>";
+                    html += "<p class='has-text-weight-bold is-size-5'>" + page + "</p>";
+                    //html += "<p>" + page.data + "</p></a></td>";
                 }
 
                 socket.emit("search", html);
-            });*/
+            });
         });
     }
 
