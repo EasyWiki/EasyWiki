@@ -93,23 +93,23 @@ class MarkdownBuilder
 
         this._navRenderer.br = Clean;
 
-        this._cleanRenderer.code = Clean;
-        this._cleanRenderer.blockquote = function(quote:string){return quote};
+        this._cleanRenderer.code = function(code:string, lang:string){return code + " "};
+        this._cleanRenderer.blockquote = function(quote:string){return quote + " "};
         this._cleanRenderer.html = Clean;
-        this._cleanRenderer.heading = function(text: string, level: number, raw:string){return text};;
+        this._cleanRenderer.heading = function(text: string, level: number, raw:string){return text + " "};
         this._cleanRenderer.hr = Clean;
-        this._cleanRenderer.list = function(body: string, ordered: boolean){return body};
-        this._cleanRenderer.listitem = function(txt:string){return txt};
+        this._cleanRenderer.list = function(body: string, ordered: boolean){return body + " "};
+        this._cleanRenderer.listitem = function(txt:string){return txt + " "};
         this._cleanRenderer.paragraph = function(txt:string){return txt + " "};
-        this._cleanRenderer.table = function(txt:string,txt2:string){return txt2};
-        this._cleanRenderer.tablerow = function(txt:string){return txt};
-        this._cleanRenderer.tablecell = function(txt:string,flags:object){return txt};
-        this._cleanRenderer.strong = function(txt:string){return txt};
-        this._cleanRenderer.em = function(txt:string){return txt};
-        this._cleanRenderer.codespan = function(txt:string){return txt};
+        this._cleanRenderer.table = function(txt:string,txt2:string){return txt2 + " "};
+        this._cleanRenderer.tablerow = function(txt:string){return txt + " "};
+        this._cleanRenderer.tablecell = function(txt:string,flags:object){return txt + " "};
+        this._cleanRenderer.strong = function(txt:string){return txt + " "};
+        this._cleanRenderer.em = function(txt:string){return txt + " "};
+        this._cleanRenderer.codespan = function(txt:string){return txt + " "};
         this._cleanRenderer.br = function(txt:string){return txt + " "};
-        this._cleanRenderer.del = function(txt:string){return txt};
-        this._cleanRenderer.link = function(txt:string,txt2:string,txt3:string){return txt3};
+        this._cleanRenderer.del = function(txt:string){return txt + " "};
+        this._cleanRenderer.link = function(txt:string,txt2:string,txt3:string){return txt3 + " "};
         this._cleanRenderer.image = Clean;
 
         function Clean(a:any = undefined,b:any = undefined,c:any = undefined)
