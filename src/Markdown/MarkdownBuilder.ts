@@ -56,7 +56,7 @@ class MarkdownBuilder
 
         this._renderer.table = function(header:string, body:string) : string
         {
-            return '<table class="table is-striped">' + body + "</table>";
+            return '<table class="table is-striped">' + header + body + "</table>";
         }
 
         this._menuRenderer.list = function(body: string, ordered: boolean)
