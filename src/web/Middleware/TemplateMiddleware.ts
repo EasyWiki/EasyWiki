@@ -66,7 +66,7 @@ class TemplateObject
     public async RenderAndSend(req: express.Request, res: express.Response, view: string, params: any = {})
     {
         params["path"] = req.url;
-        console.log(req.url);
+        params["sitetitle"] = Config.Config.Get("Style.title");
 
         if(!params["theme"])
         {
@@ -74,18 +74,25 @@ class TemplateObject
             params["css"] = req.theme.GetCss();
         }
 
+        let titleText = mustache.render("<h1 class='title is-3 has-text-white'>{{sitetitle}}</h1>" ,params);
+
         // Add logo
-        let logo = path.join(__dirname, dirPrefix, "public", Config.Config.Get("Style.logo"));
-        if(fs.existsSync(logo))
-            params["logo"] = "<img src='/" + Config.Config.Get("Style.logo") + "'>";
-        else
-            params["logo"] = "<h1 class='title is-3 has-text-white'>{{sitetitle}}</h1>";
+        if(Config.Config.Get("Style.logo"))
+        {
+            let logo = path.join(__dirname, dirPrefix, "public", Config.Config.Get("Style.logo"));
+            
+            if(fs.existsSync(logo))
+            {
+                params["logo"] = "<img src='/" + Config.Config.Get("Style.logo") + "'>";
+                params["logo"] += titleText;
+            }
+        }
+
+        if(!params["logo"]) params["logo"] = titleText;
         
         // Add favicon
         let favicon = path.join(__dirname, dirPrefix, "public", Config.Config.Get("Style.favicon"));
         if(fs.existsSync(favicon)) params["favicon"] = "<link rel='icon' type='image/png' href='/" + Config.Config.Get("Style.favicon") + "'>";
-
-        params["sitetitle"] = Config.Config.Get("Style.title");
         
         params = await this.RenderView(view, params); 
         res.send(mustache.render(this.body, params));
