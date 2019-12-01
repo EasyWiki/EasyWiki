@@ -19,11 +19,12 @@ class TemplateMiddleware
         let body = await FileSystem.ReadFileCached(path.join(folder, "body.html"));
         let head = await FileSystem.ReadFileCached(path.join(folder, "head.html"));
         let header = await FileSystem.ReadFileCached(path.join(folder, "header.html"));
+        let imageViewer = await FileSystem.ReadFileCached(path.join(folder, "imageViewer.html"));
         let footer = await FileSystem.ReadFileCached(path.join(folder, "footer.html"));
         let menu = await FileSystem.ReadFileCached(path.join(folder, "menu.html"));
         let navbar = await FileSystem.ReadFileCached(path.join(folder, "navbar.html"));
 
-        req.templateObject = new TemplateObject(body, head, header, footer, menu, navbar);
+        req.templateObject = new TemplateObject(body, head, header, imageViewer, footer, menu, navbar);
 
         next();
     }
@@ -49,15 +50,18 @@ class TemplateObject
     private body : string;
     private head : string;
     private header : string;
+    private imageViewer : string;
     private footer : string;
     private menu : string;
     private navbar : string;
 
-    constructor(body: string, head: string, header: string, footer: string, menu: string, navbar: string)
+    constructor(body: string, head: string, header: string, imageViewer: string,
+        footer: string, menu: string, navbar: string)
     {
         this.body = body;
         this.head = head;
         this.header = header;
+        this.imageViewer = imageViewer;
         this.footer = footer;
         this.menu = menu;
         this.navbar = navbar;
@@ -104,6 +108,7 @@ class TemplateObject
         params["menu"] = mustache.render(this.menu, params);
         params["navbar"] = mustache.render(this.navbar, params);
         params["header"] = mustache.render(this.header, params);
+        params["image-viewer"] = mustache.render(this.imageViewer, params);
         params["footer"] = mustache.render(this.footer, params);
 
         return params;
