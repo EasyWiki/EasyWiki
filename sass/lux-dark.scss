@@ -111,3 +111,16 @@ h1, h2, h3, h4, h5, h6 {
 code {
     color: $primary;
 }
+
+pre[class*="language-"] {
+    background: #282f2f !important;
+}
+
+span.token.function {
+    color: #DF691A;
+}
+
+span.token.keyword {
+    color: #539EEA;
+}
+
