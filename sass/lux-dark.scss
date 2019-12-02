@@ -46,12 +46,6 @@ $box-color: $text;
 $box-background-color: $grey-dark;
 $box-shadow: none;
 
-$link: $turquoise;
-$link-hover: lighten($link, 5);
-$link-focus: darken($link, 5);
-$link-active: darken($link, 5);
-$link-focus-border: $grey-light;
-
 $button-color: $primary;
 $button-hover-color: darken($text, 5); // text-dark
 $button-focus: darken($text, 5); // text-dark
@@ -71,10 +65,25 @@ $table-row-hover-background-color: $grey-darker;
 $table-striped-row-even-background-color: $grey-darker;
 $table-striped-row-even-hover-background-color: lighten($grey-darker, 2);
 
+$navbar-height: 4rem;
+
+$dropdown-content-background-color: $background;
+$dropdown-item-color: $text;
+
+$progress-value-background-color: $grey-lighter;
+
+$bulmaswatch-import-font: true !default;
+
+@import "../node_modules/bulmaswatch/lux/variables";
+
+$link: $primary;
+$link-hover: lighten($link, 5);
+$link-focus: darken($link, 5);
+$link-active: darken($link, 5);
+$link-focus-border: $grey-light;
+
 $pagination-color: $link;
 $pagination-border-color: $border;
-
-$navbar-height: 4rem;
 
 $navbar-background-color: $primary;
 $navbar-item-color: $text;
@@ -90,19 +99,15 @@ $navbar-dropdown-item-hover-background-color: transparent;
 $navbar-dropdown-item-active-background-color: transparent;
 $navbar-dropdown-item-active-color: $link;
 
-$dropdown-content-background-color: $background;
-$dropdown-item-color: $text;
-
-$progress-value-background-color: $grey-lighter;
-
-$bulmaswatch-import-font: true !default;
-
-@import "../node_modules/bulmaswatch/lux/variables";
 @import "../node_modules/bulma/bulma.sass";
 @import "../node_modules/bulma-extensions/src/sass/index.sass";
 @import "../node_modules/bulmaswatch/lux/overrides";
 
 h1, h2, h3, h4, h5, h6 {
     text-transform: none !important;
-    letter-spacing: 3px;
+    letter-spacing: 3px; 
+}
+
+code {
+    color: $primary;
 }

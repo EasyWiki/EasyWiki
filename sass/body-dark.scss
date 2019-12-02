@@ -21,20 +21,32 @@ footer
     color: black;
 }
 
+// Text colour
 .search-bar input
 {
     width: 350px;
-    color: black;
+    color: #fff;
+    background-color: black;
+    border-color: transparent;
 }
 
+.search-bar input:hover 
+{
+    border-color: transparent !important;
+}
+
+// "Search" colour
 .search-bar input::placeholder
 {
-    color: gray;
+    color: #fff;
 }
 
-.search-bar .control.has-icons-left .input:focus ~ .icon, .control.has-icons-left .select:focus ~ .icon, .control.has-icons-right .input:focus ~ .icon, .control.has-icons-right .select:focus ~ .icon
+.search-bar
+
+// Lookinglass on the side
+.search-bar .icon
 {
-    color: black;
+    color: #DF691A !important;
 }
 
 .search-results
@@ -46,6 +58,11 @@ footer
     width: 348px;
     border-radius: 0px;
     padding: 0;
+    box-shadow: 0 0 0 1px black;
+}
+
+.search-results .result td {
+    font-size: 1em !important;
 }
 
 .is-maxed
@@ -58,9 +75,11 @@ footer
     max-height: 55px !important;
 }
 
+// Search results
 .search-results .result a
 {
-    color: white;
+    color: #fff;
+    font-weight: 500;
 }
 
 .radio-control
