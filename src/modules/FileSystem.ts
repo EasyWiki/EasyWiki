@@ -148,6 +148,11 @@ class FileSystem
 
         return fileName;
     }
+
+    public static async ClearAllCache()
+    {
+        this.cacheStore.del(this.cacheStore.keys());
+    }
 }
 
 export {FileSystem};

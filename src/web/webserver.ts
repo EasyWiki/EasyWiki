@@ -15,6 +15,8 @@ import { ErrorMiddleware } from './Middleware/ErrorMiddleware';
 import { Gitter } from '../Markdown/Gitter';
 import { Searcher } from '../Markdown/Searcher';
 import { Theme } from '../modules/Theme';
+import { FileSystem } from '../modules/FileSystem';
+import AuthenticationMiddleware from './Middleware/AuthenticationMiddleware';
 
 class Web
 {
@@ -66,6 +68,8 @@ class Web
         
         this._app.use(TemplateMiddleware.AttachTemplate);
         this._app.use(TemplateMiddleware.AttachTheme);
+        
+        this._app.use(AuthenticationMiddleware.Authenticate);
         
         this._app.use(express.static(path.join(__dirname, "../..", 'public')));
     }
@@ -120,6 +124,7 @@ class Web
         this._app.all("/refresh", async function(req,res)
         {
             await Gitter.Gitter.CloneRepo();
+            FileSystem.ClearAllCache();
             res.redirect("/");
         });
 

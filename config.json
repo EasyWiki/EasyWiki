@@ -18,7 +18,10 @@
             "cert": "ssl/ssl.crt"
         },
         "disableCache": false,
-        "cacheTTL": 120
+        "cacheTTL": 120,
+        "users": {
+            "easy": "wiki"
+        }
     },
     "Gitter":
     {

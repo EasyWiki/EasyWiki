@@ -67,7 +67,7 @@ class TemplateObject
         this.navbar = navbar;
     }
 
-    public async RenderAndSend(req: express.Request, res: express.Response, view: string, params: any = {})
+    public async Render(req: express.Request, view: string, params: any = {})
     {
         params["path"] = req.url;
         params["sitetitle"] = Config.Config.Get("Style.title");
@@ -99,7 +99,12 @@ class TemplateObject
         if(fs.existsSync(favicon)) params["favicon"] = "<link rel='icon' type='image/png' href='/" + Config.Config.Get("Style.favicon") + "'>";
         
         params = await this.RenderView(view, params); 
-        res.send(mustache.render(this.body, params));
+        return mustache.render(this.body, params);
+    }
+
+    public async RenderAndSend(req: express.Request, res: express.Response, view: string, params: any = {})
+    {
+        res.send(await this.Render(req,view,params));
     }
 
     public GetRenderObject(params: any = {}): any
