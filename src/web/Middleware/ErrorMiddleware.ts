@@ -1,5 +1,6 @@
 import express from 'express';
 import { Logger } from '../../modules/Logger';
+import { Config } from '../../modules/Config';
 
 class ErrorMiddleware
 {
@@ -7,12 +8,9 @@ class ErrorMiddleware
     {
         Logger.Error("web",err.message,err);
 
-        req.templateObject.RenderAndSend(req, res.status(500), "error",{
-            title: "Error",
-            "description": "An error has occured!",
-            "subtext": "If this error keeps happening, contact an admin."
-        });
-
+        req.templateObject.RenderAndSend(req, res.status(500), "error",
+            Config.Config.Get("Web.errorPages.404"));
+            
         next();   
     }
 }

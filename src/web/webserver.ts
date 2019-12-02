@@ -137,22 +137,16 @@ class Web
             }
             else
             {
-                req.templateObject.RenderAndSend(req,res.status(404),"error",{
-                    title: "Page not found",
-                    "description": "<i class=\"far fa-frown\"></i> Page not found!",
-                    "subtext": "Whoops, this page doesn't exist."
-                });
+                req.templateObject.RenderAndSend(req,res.status(404),"error",
+                    Config.Config.Get("Web.errorPages.404"));
             }
             
         });
 
         this._app.all("*", async function(req,res)
         {
-            req.templateObject.RenderAndSend(req,res.status(404),"error",{
-                title: "Page not found",
-                "description": "<i class=\"far fa-frown\"></i> Page not found!",
-                "subtext": "Whoops, this page doesn't exist."
-            });
+            req.templateObject.RenderAndSend(req,res.status(404),"error",
+                    Config.Config.Get("Web.errorPages.404"));
         });
 
         this._app.use(ErrorMiddleware.HandleError);
