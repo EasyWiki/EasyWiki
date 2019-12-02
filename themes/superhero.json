@@ -5,6 +5,6 @@
     "css":[
         "superhero.css",
         "syntax/prism-night.css",
-        "body-dark.css"
+        "body-superhero.css"
     ]
 }
