@@ -35,8 +35,8 @@ class Logger
                       this.AddLeadingZero(d.getMinutes()) + ":" +
                       this.AddLeadingZero(d.getSeconds());
 
-        let dateStr = this.AddLeadingZero(d.getDay()) + "/" +
-                      this.AddLeadingZero(d.getMonth()) + "/" +
+        let dateStr = this.AddLeadingZero(d.getDay() + 1) + "/" +
+                      this.AddLeadingZero(d.getMonth() + 1) + "/" +
                       this.AddLeadingZero(d.getFullYear());
 
         return "[" + dateStr + " " + timeStr + "] ";
