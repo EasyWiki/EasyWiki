@@ -5,6 +5,11 @@ class Logger
 {
     private static _logFile : string;
 
+    /**
+     * Log a message
+     * @param origin The origin the log comes from
+     * @param message The log message
+     */
     public static Log(origin : string, message: string)
     {
         let colouredEntry = this.GetTime() + "\x1b[33m" + origin + "\x1b[0m: " + message;
@@ -14,6 +19,12 @@ class Logger
         FileSystem.WriteLineToFile(this._logFile, entry);
     }
 
+    /**
+     * Log an error
+     * @param origin The origin the log come from
+     * @param message The error log message
+     * @param error The error itself
+     */
     public static Error(origin : string, message: string, error: Error|undefined = undefined)
     {
         let colouredEntry = this.GetTime() + "\x1b[31m" + origin + "\x1b[0m: " + message;
@@ -28,6 +39,10 @@ class Logger
         }
     }
     
+    /**
+     * Get a time string
+     * @returns A time string
+     */
     public static GetTime() : string
     {
         let d : Date = new Date();
@@ -42,6 +57,10 @@ class Logger
         return "[" + dateStr + " " + timeStr + "] ";
     }
 
+    /**
+     * Add a leading zero to a number
+     * @param i A number
+     */
     public static AddLeadingZero(i : number) : string
     {
         if(i.toString().length < 2)
@@ -50,6 +69,9 @@ class Logger
             return i.toString();
     }
 
+    /**
+     * Create a log file
+     */
     public static CreateLogFile()
     {
         this._logFile = FileSystem.MakeLogFile(this.GetTime());
