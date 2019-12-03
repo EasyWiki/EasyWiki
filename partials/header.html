@@ -53,18 +53,17 @@
 
 <div class="cookie message is-hidden" id="cookie-message">
     <div class="message-header">
-        <p>This website uses cookies</p>
+        <p>{{cookie.title}}</p>
     </div>
     <div class="message-body">
-        We use cookies to improve your experience.
-        We use them to collect analytical data and to save your site preferences.
+        {{cookie.message}}
         <hr>
         <div class="level">
             <div class="level-left">
-                <p class="level-item"><a class="button is-info" href="/privacy">Read more</a></p>
+                <p class="level-item"><a class="button is-info" href="{{cookie.link}}">{{cookie.readmore}}</a></p>
             </div>
             <div class="level-right">
-                <p class="level-item"><a id="accept" class="button is-success">Accept</a></p>
+                <p class="level-item"><a id="accept" class="button is-success">{{cookie.accept}}</a></p>
             </div>
         </div>      
     </div>

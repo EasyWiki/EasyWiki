@@ -76,6 +76,14 @@ class TemplateObject
     {
         params["path"] = req.url;
         params["sitetitle"] = Config.Config.Get("Style.title");
+
+        params["cookie"] = {};
+        params["cookie"]["title"] = Config.Config.Get("Web.cookieNotice.title");
+        params["cookie"]["message"] = Config.Config.Get("Web.cookieNotice.message");
+        params["cookie"]["accept"] = Config.Config.Get("Web.cookieNotice.accept");
+        params["cookie"]["readmore"] = Config.Config.Get("Web.cookieNotice.readmore");
+        params["cookie"]["link"] = Config.Config.Get("Web.cookieNotice.link");
+
         params["analytics"] = Config.Config.Get("Web.analytics");
 
         if(!params["theme"])

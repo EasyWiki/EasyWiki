@@ -37,6 +37,14 @@
                 "text": ""
             }
         },
+        "cookieNotice":
+        {
+            "title": "This website uses cookies",
+            "message": "We use cookies to improve your experience. We use them to collect analytical data and to save your site preferences.",
+            "accept": "Accept",
+            "readmore": "Read More",
+            "link": "/privacy"
+        },
         "analytics": ""
     },
     "Gitter":
