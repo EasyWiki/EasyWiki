@@ -21,6 +21,10 @@ class Searcher
         this._pageNodes = new Map<string, RootNode>()
     }
 
+    /**
+     * Find the best page for a search query
+     * @param query The search query
+     */
     public async Find(query: string) : Promise<string[]>
     {
         const self = this;
@@ -51,6 +55,10 @@ class Searcher
         return pageUrls.splice(0, this._maxResults);
     }
 
+    /**
+     * Index all pages
+     * @param clear If true will remove all previously create index files
+     */
     public async IndexAll(clear: boolean = true)
     {
         try
@@ -70,6 +78,10 @@ class Searcher
         }
     }
 
+    /**
+     * Index all files in this folder and subfolders
+     * @param folderpath The path to the folder to index
+     */
     private IndexFolder(folderpath: string) : void
     {
         var self = this;
@@ -95,6 +107,10 @@ class Searcher
         });
     }
 
+    /**
+     * Index file
+     * @param filePath The path to the file to index
+     */
     private IndexFile(filePath : string) : RootNode
     {
         const node = new RootNode();
@@ -128,6 +144,10 @@ class Searcher
 
 export {Searcher};
 
+/**
+ * Split string into words
+ * @param str String to split
+ */
 function SplitInWords(str: string) : string[]
 {
     return str.split(/[ ,;.?!\(\)\{\}\[\]\"\'\\\/\n\r]+/);

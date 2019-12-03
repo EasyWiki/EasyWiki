@@ -24,6 +24,10 @@ class Config
         this.WatchFile();
     }
 
+    /**
+     * Get a config setting from a given path
+     * @param path The config path
+     */
     public Get(path : string) : any
     {
         let pathArr = path.split('.');
@@ -37,6 +41,9 @@ class Config
         return currConf;
     }
 
+    /**
+     * Reload the config
+     */
     public Reload()
     {
         Logger.Log("Config", "Reloading config.");
@@ -49,6 +56,9 @@ class Config
         this._config = JSON.parse(json);
     }
 
+    /**
+     * Watch the file for changes
+     */
     private WatchFile()
     {
         this._watcher.on("change", function(eventType, filename)

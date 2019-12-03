@@ -152,6 +152,9 @@ class Web
         this._app.use(ErrorMiddleware.HandleError);
     }
 
+    /**
+     * Register all Socket io events
+     */
     private RegisterSocketIO() : void
     {
         this._io.on("connect", async function(socket)
@@ -175,6 +178,9 @@ class Web
         });
     }
 
+    /**
+     * Read the ssl certificates
+     */
     private GetSslCertificate() : https.ServerOptions
     {
         var cert = fs.readFileSync(path.join(__dirname , "../.." , Config.Config.Get("Web.ssl.cert")));

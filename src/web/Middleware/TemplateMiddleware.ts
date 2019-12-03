@@ -12,9 +12,11 @@ const dirPrefix = "../../..";
 
 class TemplateMiddleware
 {
+    /**
+     * Attach a template to the express request
+     */
     public static async AttachTemplate(req: express.Request, res: express.Response, next: express.NextFunction)
     {
-
         let folder = path.join(__dirname, dirPrefix, "partials");
         let body = await FileSystem.ReadFileCached(path.join(folder, "body.html"));
         let head = await FileSystem.ReadFileCached(path.join(folder, "head.html"));
@@ -29,6 +31,9 @@ class TemplateMiddleware
         next();
     }
 
+    /**
+     * Attach a theme to the express request
+     */
     public static AttachTheme(req: express.Request, res: express.Response, next: express.NextFunction)
     {
         if(req.cookies.theme)
