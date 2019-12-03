@@ -76,6 +76,7 @@ class TemplateObject
     {
         params["path"] = req.url;
         params["sitetitle"] = Config.Config.Get("Style.title");
+        params["analytics"] = Config.Config.Get("Web.analytics");
 
         if(!params["theme"])
         {
