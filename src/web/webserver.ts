@@ -168,9 +168,9 @@ class Web
                 {
                     const page = data[i].split('.md')[0];
 
-                    html += "<tr class='result'><td><a href='" + page + "'>";
-                    html += "<p class='has-text-weight-bold is-size-5'>" + page + "</p>";
-                    //html += "<p>" + page.data + "</p></a></td>";
+                    html += "<tr class='result'><td><a href='" + page.url + "'>";
+                    html += "<p class='search-title'>" + page.url + "</p>";
+                    html += "<p class='search-text'>" + page.data + "</p></a></td>";
                 }
 
                 socket.emit("search", html);
