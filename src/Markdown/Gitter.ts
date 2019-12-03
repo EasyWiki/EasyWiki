@@ -5,6 +5,8 @@ import { Logger } from "../modules/Logger";
 import { MarkdownBuilder } from "./MarkdownBuilder";
 import { execSync } from "child_process";
 
+
+// Create constants to the special folders
 const dirPrefix = "../..";
 const pageFolder = path.join(__dirname, dirPrefix, "pages");
 const mediaFolder = path.join(__dirname, dirPrefix, "public", "media");
@@ -20,6 +22,9 @@ class Gitter
         Gitter.Gitter = this;
     }
 
+    /**
+     * Clone the repository and build the markdown files
+     */
     public async CloneRepo()
     {
         try
@@ -34,6 +39,7 @@ class Gitter
                 stdio: "ignore"
             });
 
+            // Copy all special files
             var p1 = FileSystem.CopyInto(path.join(tempFolder, "pages"), pageFolder);
             var p2 = FileSystem.CopyInto(path.join(tempFolder, "media"), mediaFolder);
 
@@ -44,8 +50,10 @@ class Gitter
             await FileSystem.CopyFile(path.join(tempFolder, "navbar.md"), path.join(partialFolder, "navbar.md"));
             await FileSystem.CopyFile(path.join(tempFolder, "footer.md"), path.join(partialFolder, "footer.md"));
             
+            // Remove the temp folder
             FileSystem.RemoveFolder(tempFolder);
             
+            // Build all markdown
             if(MarkdownBuilder.MarkdownBuilder)
             {   
                 await MarkdownBuilder.MarkdownBuilder.BuildMenu();

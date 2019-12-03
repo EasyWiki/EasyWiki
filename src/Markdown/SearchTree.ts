@@ -7,6 +7,10 @@ abstract class TreeNode
         this._nodes = new Map<string, TreeNode>();
     }
 
+    /**
+     *  Insert a charsequence into the tree
+     * @param charSeq The char sequence to insert
+     */
     public Insert(charSeq: string[]) : void
     {
         if(charSeq.length <= 0) return; 
@@ -27,6 +31,11 @@ abstract class TreeNode
         }
     }
 
+    /**
+     * Calculate the score for this node from a given char sequence
+     * @param charSeq The charsequence
+     * @param depth The depth of the node
+     */
     public CalculateScore(charSeq: string[], depth : number = 1) : number
     {
         let score = 0;
@@ -45,6 +54,9 @@ abstract class TreeNode
         return score;
     }
 
+    /**
+     * Convert the node to json
+     */
     public ToJson() : any
     {
         var obj : any = {};
@@ -58,6 +70,9 @@ abstract class TreeNode
         return obj;
     }
 
+    /**
+     * Calculate all occurences in the tree
+     */
     public CalculateMaxScore() : number
     {
         let maxScore = 0;
@@ -83,6 +98,9 @@ class Node extends TreeNode
         this._occurences = 1;
     }
 
+    /**
+     * Add occurence to the node
+     */
     public AddOccurence() : void
     {
         this._occurences++;
