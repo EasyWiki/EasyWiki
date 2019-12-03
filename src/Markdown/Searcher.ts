@@ -1,60 +1,73 @@
 import fs from 'fs';
 import path from 'path';
 import { Logger } from '../modules/Logger';
+import { RootNode } from './SearchTree';
+import { FileSystem } from '../modules/FileSystem';
 import { MarkdownBuilder } from './MarkdownBuilder';
 
 const dirPrefix = "../..";
 const pageFolder = path.join(__dirname, dirPrefix, "pages");
+const searchFolder = path.join(__dirname, dirPrefix, "searchIndex");
 
 class Searcher
 {
     public static Searcher : Searcher;
-
-    private _pagedata : PageData[];
     private _maxResults : number = 5;
+    private _pageNodes : Map<string, RootNode>;
 
     constructor()
     {
         Searcher.Searcher = this;
-
-        this._pagedata = [];
+        this._pageNodes = new Map<string, RootNode>()
     }
 
-    public async Find(query: string) : Promise<PageData[]>
+    /**
+     * Find the best page for a search query
+     * @param query The search query
+     */
+    public async Find(query: string) : Promise<string[]>
     {
-        let data : PageData[] = [];
+        const self = this;
 
-        if(query.length > 0)
-        for(let i = 0; i < this._pagedata.length && data.length < this._maxResults; i++)
+        let scoreMap = new Map<string, number>();
+
+        // Calculate search scores
+        SplitInWords(query.toLowerCase()).forEach(function(str)
         {
-            const page = this._pagedata[i];
-            let outLine : string = "";
-
-            if(page.data.toLowerCase().indexOf(query.toLowerCase()) != -1)
+            self._pageNodes.forEach(function(node, key)
             {
-                outLine = MarkdownBuilder.MarkdownBuilder.CleanString(page.data);
-                outLine = outLine.substr(outLine.indexOf(query), 50);
-                outLine = "**" + outLine;
-                outLine = outLine.substr(0, query.length + 2) + "**" + outLine.substr(query.length + 2);
-                outLine = MarkdownBuilder.MarkdownBuilder.BuildString(outLine);
-                outLine = outLine.replace("*", "");
-                outLine = outLine.replace("*", "");
+                const score = node.CalculateScore(str.split(''));
+                const prevScore = scoreMap.get(key);
+                
+                if(prevScore)
+                    scoreMap.set(key, score + prevScore);
+                else
+                    scoreMap.set(key, score);
+            });
+        });
 
-                let newPage: PageData = {url: page.url, data: ""};
-                data.push(newPage);
-            }
-        }
+        let pageUrls : string[] = [];
+        scoreMap.forEach((score, key) => {
+            if(score > 0) pageUrls.push(key)
+        });
+        pageUrls.sort((a,b) => (scoreMap.get(b) as number) - (scoreMap.get(a) as number));
 
-        return data;
+        return pageUrls.splice(0, this._maxResults);
     }
 
+    /**
+     * Index all pages
+     * @param clear If true will remove all previously create index files
+     */
     public async IndexAll(clear: boolean = true)
     {
         try
         {
             Logger.Log("Search", "Indexing all files...");
-        
-            if(clear) this._pagedata = [];
+            
+            await FileSystem.RemoveFolder("searchIndex");
+            await FileSystem.MakeFolder(searchFolder);
+
             this.IndexFolder("/");
 
             Logger.Log("Search", "Done indexing.");
@@ -65,6 +78,10 @@ class Searcher
         }
     }
 
+    /**
+     * Index all files in this folder and subfolders
+     * @param folderpath The path to the folder to index
+     */
     private IndexFolder(folderpath: string) : void
     {
         var self = this;
@@ -80,32 +97,58 @@ class Searcher
             }
             else
             {
-                self.IndexFile(path.join(folderpath, file));
+                const p = path.join(folderpath, file);
+                if(path.extname(p) == ".md")
+                {
+                    FileSystem.MakeFolder(path.join(searchFolder, folderpath));
+                    self._pageNodes.set(p, self.IndexFile(p));
+                }
             }
         });
     }
 
-    private IndexFile(filePath : string)
+    /**
+     * Index file
+     * @param filePath The path to the file to index
+     */
+    private IndexFile(filePath : string) : RootNode
     {
-        if(path.extname(filePath) != ".md") return;
+        const node = new RootNode();
 
         const url = filePath.substr(0, filePath.length - 3);
         const fullPath = path.join(pageFolder, filePath);
-        const data = fs.readFileSync(fullPath).toString();
+        const data = MarkdownBuilder.MarkdownBuilder
+            .CleanString(fs.readFileSync(fullPath).toString().toLowerCase());
 
-        this._pagedata.push({url: url, data: data});
+        SplitInWords(url.toLowerCase()).forEach(function(str)
+        {
+            if(str.length == 0) return;
+
+            node.Insert(str.split(''));
+        });
+
+        SplitInWords(data.toLowerCase()).forEach(function(str)
+        {
+            if(str.length == 0) return;
+            
+            node.Insert(str.split(''));
+        });
+
+        node.CalculateMaxScore();
+
+        FileSystem.WriteFile(path.join(searchFolder, url + ".json"), JSON.stringify(node.ToJson()));
+
+        return node;
     }
 }
 
-interface PageData
-{
-    url: string;
-    data: string;
-}
+export {Searcher};
 
-export {Searcher, PageData};
-
-function spliceAdd(str: string, start:number, delCount:number, newSubStr:string)
+/**
+ * Split string into words
+ * @param str String to split
+ */
+function SplitInWords(str: string) : string[]
 {
-    return str.slice(0, start) + newSubStr + str.slice(start + Math.abs(delCount));
+    return str.split(/[ ,;.?!\(\)\{\}\[\]\"\'\\\/\n\r]+/);
 }

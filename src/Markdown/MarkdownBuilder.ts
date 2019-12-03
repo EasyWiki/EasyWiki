@@ -35,6 +35,9 @@ class MarkdownBuilder
         this.SetupOptions();
     }
 
+    /**
+     * Setup all kramed options
+     */
     private SetupOptions()
     {
         kramed.setOptions({
@@ -43,6 +46,9 @@ class MarkdownBuilder
         });
     }
 
+    /**
+     * Setup all kramed renderers
+     */
     private SetupRederer()
     {
         this._renderer.heading = function(text: string, level: number, raw:string) : string
@@ -56,7 +62,7 @@ class MarkdownBuilder
 
         this._renderer.table = function(header:string, body:string) : string
         {
-            return '<table class="table">' + body + "</table>";
+            return '<table class="table is-striped">' + header + body + "</table>";
         }
 
         this._menuRenderer.list = function(body: string, ordered: boolean)
@@ -93,23 +99,23 @@ class MarkdownBuilder
 
         this._navRenderer.br = Clean;
 
-        this._cleanRenderer.code = Clean;
-        this._cleanRenderer.blockquote = function(quote:string){return quote};
+        this._cleanRenderer.code = function(code:string, lang:string){return code + " "};
+        this._cleanRenderer.blockquote = function(quote:string){return quote + " "};
         this._cleanRenderer.html = Clean;
-        this._cleanRenderer.heading = function(text: string, level: number, raw:string){return text};;
+        this._cleanRenderer.heading = function(text: string, level: number, raw:string){return text + " "};
         this._cleanRenderer.hr = Clean;
-        this._cleanRenderer.list = function(body: string, ordered: boolean){return body};
-        this._cleanRenderer.listitem = function(txt:string){return txt};
+        this._cleanRenderer.list = function(body: string, ordered: boolean){return body + " "};
+        this._cleanRenderer.listitem = function(txt:string){return txt + " "};
         this._cleanRenderer.paragraph = function(txt:string){return txt + " "};
-        this._cleanRenderer.table = function(txt:string,txt2:string){return txt2};
-        this._cleanRenderer.tablerow = function(txt:string){return txt};
-        this._cleanRenderer.tablecell = function(txt:string,flags:object){return txt};
-        this._cleanRenderer.strong = function(txt:string){return txt};
-        this._cleanRenderer.em = function(txt:string){return txt};
-        this._cleanRenderer.codespan = function(txt:string){return txt};
+        this._cleanRenderer.table = function(txt:string,txt2:string){return txt2 + " "};
+        this._cleanRenderer.tablerow = function(txt:string){return txt + " "};
+        this._cleanRenderer.tablecell = function(txt:string,flags:object){return txt + " "};
+        this._cleanRenderer.strong = function(txt:string){return txt + " "};
+        this._cleanRenderer.em = function(txt:string){return txt + " "};
+        this._cleanRenderer.codespan = function(txt:string){return txt + " "};
         this._cleanRenderer.br = function(txt:string){return txt + " "};
-        this._cleanRenderer.del = function(txt:string){return txt};
-        this._cleanRenderer.link = function(txt:string,txt2:string,txt3:string){return txt3};
+        this._cleanRenderer.del = function(txt:string){return txt + " "};
+        this._cleanRenderer.link = function(txt:string,txt2:string,txt3:string){return txt3 + " "};
         this._cleanRenderer.image = Clean;
 
         function Clean(a:any = undefined,b:any = undefined,c:any = undefined)
@@ -118,6 +124,9 @@ class MarkdownBuilder
         }
     }
     
+    /**
+     * Watch the pages folder for changes, if changes occur rebuild markdown files
+     */
     public WatchFolder()
     {
         this._watcher = fs.watch(pageFolder, {recursive: true, encoding: 'utf8', persistent: true});
@@ -130,6 +139,9 @@ class MarkdownBuilder
         });
     }
 
+    /**
+     * Unwatch the pages folder
+     */
     public UnwatchFolder()
     {
         if(this._watcher == null) return;
@@ -137,23 +149,29 @@ class MarkdownBuilder
         (this._watcher as fs.FSWatcher).close();
     }
 
+    /**
+     * Build all markdown files in the pages folder
+     * @param reindex If true the searcher will reindex all files
+     */
     public async BuildAll(reindex: boolean = true)
     {
         try
         {
-        this._isBuilding = true;
+            this._isBuilding = true;
 
-        Logger.Log("Markdown", "Building all markdown.");
-        await this.RemoveFolder("/", false);
-        this.BuildFolder("/");
-        Logger.Log("Markdown", "Built all markdown.");
+            Logger.Log("Markdown", "Building all markdown.");
 
-        if(reindex)
-        {
-            Searcher.Searcher.IndexAll(true);
-        }
+            await this.RemoveFolder("/", false);
+            this.BuildFolder("/");
 
-        this._isBuilding = false;
+            Logger.Log("Markdown", "Built all markdown.");
+
+            if(reindex)
+            {
+                Searcher.Searcher.IndexAll(true);
+            }
+
+            this._isBuilding = false;
         }
         catch (e)
         {
@@ -161,6 +179,9 @@ class MarkdownBuilder
         }
     }
 
+    /**
+     * Build the menu
+     */
     public async BuildMenu()
     {
         await FileSystem.RemoveFile(path.join(partialFolder, "menu.html"));
@@ -177,6 +198,9 @@ class MarkdownBuilder
         await FileSystem.WriteFile(path.join(partialFolder, "menu.html"), menuHtml);
     }
 
+    /**
+     * Build the navbar
+     */
     public async BuildNavBar()
     {
         await FileSystem.RemoveFile(path.join(partialFolder, "navbar.html"));
@@ -192,6 +216,9 @@ class MarkdownBuilder
         await FileSystem.WriteFile(path.join(partialFolder, "navbar.html"), navHtml);
     }
 
+    /**
+     * Build the footer
+     */
     public async BuildFooter()
     {
         await FileSystem.RemoveFile(path.join(partialFolder, "footer.html"));
@@ -205,22 +232,39 @@ class MarkdownBuilder
         await FileSystem.WriteFile(path.join(partialFolder, "footer.html"), footHtml);
     }
 
+    /**
+     * Build a given string
+     * @param str The string to build
+     */
     public BuildString(str : string): string
     {
         return kramed(str,{});
     }
 
+    /**
+     * Clean markdown tags from string
+     * @param str The string to clean.
+     */
     public CleanString(str : string): string
     {
         return kramed(str,{renderer: this._cleanRenderer});
     }
 
+    /**
+     * Remove a folder
+     * @param folderpath The path to the folder to remove
+     * @param absolute If the path is an absolute path
+     */
     private async RemoveFolder(folderpath: string, absolute: boolean = false)
     {
         if(!absolute) folderpath = path.join(builtFolder, folderpath);
         await FileSystem.RemoveFolder(folderpath);
     }
     
+    /**
+     * Build all markdown files in folder or subfolders
+     * @param folderpath The folder to build
+     */
     private BuildFolder(folderpath: string) : void
     {
         var self = this;
@@ -245,6 +289,10 @@ class MarkdownBuilder
         });
     }
 
+    /**
+     * Build a file
+     * @param filePath The file to build
+     */
     private BuildFile(filePath: string) : void
     {
         let markdownText = fs.readFileSync(path.join(pageFolder, filePath)).toString();

@@ -17,7 +17,27 @@
             "key": "ssl/ssl.key",
             "cert": "ssl/ssl.crt"
         },
-        "cacheTTL": 120
+        "disableCache": false,
+        "cacheTTL": 120,
+        "users": {
+            "easy": "wiki"
+        },
+        "errorPages":
+        {
+            "404": {
+                "title": "Page not found",
+                "description": "<i class=\"far fa-frown\"></i> Page not found!",
+                "subtitle": "Whoops, this page doesn't exist.",
+                "text": ""
+            },
+            "500": {
+                "title": "Error",
+                "description": "An error has occured!",
+                "subtitle": "If this error keeps happening, contact an admin.",
+                "text": ""
+            }
+        },
+        "analytics": ""
     },
     "Gitter":
     {

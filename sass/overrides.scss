@@ -1,0 +1,49 @@
+.navbar-item img
+{
+    max-height: 55px !important;
+}
+
+.menu
+{
+    font-size: 1.2rem;
+}
+
+.menu-container
+{
+    transition: all 1s;
+}
+
+.hide-menu
+{
+    width: 0px !important;
+    opacity: 0 !important;
+}
+
+.hide-menu .menu
+{
+    display: none;
+}
+
+.navbar-brand img
+{
+    margin-right: 20px;
+}
+
+.container.content img
+{
+    cursor: pointer;
+}
+
+.token.number
+{
+    align-items: left;
+    background-color: transparent;
+    border-radius: 0px;
+    display: inline;
+    justify-content: left;
+    margin-right:0rem;
+    min-width: 0em;
+    padding: 0rem 0rem;
+    text-align: left;
+    vertical-align: top;
+}

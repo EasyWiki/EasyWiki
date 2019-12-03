@@ -72,6 +72,7 @@ ssl/
 built-views/
 pages-temp/
 pages/
+searchIndex/
 
 partials/menu.md
 partials/menu.html

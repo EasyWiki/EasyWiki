@@ -5,6 +5,7 @@
     "css":[
         "lux-dark.css",
         "syntax/prism-night.css",
-        "body-dark.css"
+        "body-dark.css",
+        "overrides.css"
     ]
 }

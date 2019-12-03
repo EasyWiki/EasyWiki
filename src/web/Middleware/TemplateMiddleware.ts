@@ -12,22 +12,28 @@ const dirPrefix = "../../..";
 
 class TemplateMiddleware
 {
+    /**
+     * Attach a template to the express request
+     */
     public static async AttachTemplate(req: express.Request, res: express.Response, next: express.NextFunction)
     {
-
         let folder = path.join(__dirname, dirPrefix, "partials");
         let body = await FileSystem.ReadFileCached(path.join(folder, "body.html"));
         let head = await FileSystem.ReadFileCached(path.join(folder, "head.html"));
         let header = await FileSystem.ReadFileCached(path.join(folder, "header.html"));
+        let imageViewer = await FileSystem.ReadFileCached(path.join(folder, "imageViewer.html"));
         let footer = await FileSystem.ReadFileCached(path.join(folder, "footer.html"));
         let menu = await FileSystem.ReadFileCached(path.join(folder, "menu.html"));
         let navbar = await FileSystem.ReadFileCached(path.join(folder, "navbar.html"));
 
-        req.templateObject = new TemplateObject(body, head, header, footer, menu, navbar);
+        req.templateObject = new TemplateObject(body, head, header, imageViewer, footer, menu, navbar);
 
         next();
     }
 
+    /**
+     * Attach a theme to the express request
+     */
     public static AttachTheme(req: express.Request, res: express.Response, next: express.NextFunction)
     {
         if(req.cookies.theme)
@@ -49,24 +55,28 @@ class TemplateObject
     private body : string;
     private head : string;
     private header : string;
+    private imageViewer : string;
     private footer : string;
     private menu : string;
     private navbar : string;
 
-    constructor(body: string, head: string, header: string, footer: string, menu: string, navbar: string)
+    constructor(body: string, head: string, header: string, imageViewer: string,
+        footer: string, menu: string, navbar: string)
     {
         this.body = body;
         this.head = head;
         this.header = header;
+        this.imageViewer = imageViewer;
         this.footer = footer;
         this.menu = menu;
         this.navbar = navbar;
     }
 
-    public async RenderAndSend(req: express.Request, res: express.Response, view: string, params: any = {})
+    public async Render(req: express.Request, view: string, params: any = {})
     {
         params["path"] = req.url;
-        console.log(req.url);
+        params["sitetitle"] = Config.Config.Get("Style.title");
+        params["analytics"] = Config.Config.Get("Web.analytics");
 
         if(!params["theme"])
         {
@@ -74,21 +84,33 @@ class TemplateObject
             params["css"] = req.theme.GetCss();
         }
 
+        let titleText = mustache.render("<h1 class='title is-3 has-text-white'>{{sitetitle}}</h1>" ,params);
+
         // Add logo
-        let logo = path.join(__dirname, dirPrefix, "public", Config.Config.Get("Style.logo"));
-        if(fs.existsSync(logo))
-            params["logo"] = "<img src='/" + Config.Config.Get("Style.logo") + "'>";
-        else
-            params["logo"] = "<h1 class='title is-3 has-text-white'>{{sitetitle}}</h1>";
+        if(Config.Config.Get("Style.logo"))
+        {
+            let logo = path.join(__dirname, dirPrefix, "public", Config.Config.Get("Style.logo"));
+            
+            if(fs.existsSync(logo))
+            {
+                params["logo"] = "<img src='/" + Config.Config.Get("Style.logo") + "'>";
+                params["logo"] += titleText;
+            }
+        }
+
+        if(!params["logo"]) params["logo"] = titleText;
         
         // Add favicon
         let favicon = path.join(__dirname, dirPrefix, "public", Config.Config.Get("Style.favicon"));
         if(fs.existsSync(favicon)) params["favicon"] = "<link rel='icon' type='image/png' href='/" + Config.Config.Get("Style.favicon") + "'>";
-
-        params["sitetitle"] = Config.Config.Get("Style.title");
         
         params = await this.RenderView(view, params); 
-        res.send(mustache.render(this.body, params));
+        return mustache.render(this.body, params);
+    }
+
+    public async RenderAndSend(req: express.Request, res: express.Response, view: string, params: any = {})
+    {
+        res.send(await this.Render(req,view,params));
     }
 
     public GetRenderObject(params: any = {}): any
@@ -97,6 +119,7 @@ class TemplateObject
         params["menu"] = mustache.render(this.menu, params);
         params["navbar"] = mustache.render(this.navbar, params);
         params["header"] = mustache.render(this.header, params);
+        params["image-viewer"] = mustache.render(this.imageViewer, params);
         params["footer"] = mustache.render(this.footer, params);
 
         return params;

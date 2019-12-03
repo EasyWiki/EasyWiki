@@ -15,6 +15,8 @@ import { ErrorMiddleware } from './Middleware/ErrorMiddleware';
 import { Gitter } from '../Markdown/Gitter';
 import { Searcher } from '../Markdown/Searcher';
 import { Theme } from '../modules/Theme';
+import { FileSystem } from '../modules/FileSystem';
+import AuthenticationMiddleware from './Middleware/AuthenticationMiddleware';
 
 class Web
 {
@@ -66,6 +68,8 @@ class Web
         
         this._app.use(TemplateMiddleware.AttachTemplate);
         this._app.use(TemplateMiddleware.AttachTheme);
+        
+        this._app.use(AuthenticationMiddleware.Authenticate);
         
         this._app.use(express.static(path.join(__dirname, "../..", 'public')));
     }
@@ -120,6 +124,7 @@ class Web
         this._app.all("/refresh", async function(req,res)
         {
             await Gitter.Gitter.CloneRepo();
+            FileSystem.ClearAllCache();
             res.redirect("/");
         });
 
@@ -132,27 +137,24 @@ class Web
             }
             else
             {
-                req.templateObject.RenderAndSend(req,res.status(404),"error",{
-                    title: "Page not found",
-                    "description": "<i class=\"far fa-frown\"></i> Page not found!",
-                    "subtext": "Whoops, this page doesn't exist."
-                });
+                req.templateObject.RenderAndSend(req,res.status(404),"error",
+                    Config.Config.Get("Web.errorPages.404"));
             }
             
         });
 
         this._app.all("*", async function(req,res)
         {
-            req.templateObject.RenderAndSend(req,res.status(404),"error",{
-                title: "Page not found",
-                "description": "<i class=\"far fa-frown\"></i> Page not found!",
-                "subtext": "Whoops, this page doesn't exist."
-            });
+            req.templateObject.RenderAndSend(req,res.status(404),"error",
+                    Config.Config.Get("Web.errorPages.404"));
         });
 
         this._app.use(ErrorMiddleware.HandleError);
     }
 
+    /**
+     * Register all Socket io events
+     */
     private RegisterSocketIO() : void
     {
         this._io.on("connect", async function(socket)
@@ -164,7 +166,7 @@ class Web
                 
                 for(let i = 0; i < data.length; i++)
                 {
-                    const page = data[i];
+                    const page = data[i].split('.md')[0];
 
                     html += "<tr class='result'><td><a href='" + page.url + "'>";
                     html += "<p class='search-title'>" + page.url + "</p>";
@@ -176,6 +178,9 @@ class Web
         });
     }
 
+    /**
+     * Read the ssl certificates
+     */
     private GetSslCertificate() : https.ServerOptions
     {
         var cert = fs.readFileSync(path.join(__dirname , "../.." , Config.Config.Get("Web.ssl.cert")));

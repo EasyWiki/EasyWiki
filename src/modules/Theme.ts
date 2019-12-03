@@ -43,6 +43,9 @@ class Theme
         return this._themeObj.light;
     }
 
+    /**
+     * Load all themes
+     */
     public static LoadThemes()
     {
         this.themes = [];
@@ -61,6 +64,10 @@ class Theme
         }
     }
 
+    /**
+     * Get a thme by its id 
+     * @param id Theme id
+     */
     public static GetTheme(id : string) : Theme
     {
         for(let i = 0; i < this.themes.length; i++)
