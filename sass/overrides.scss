@@ -47,3 +47,18 @@
     text-align: left;
     vertical-align: top;
 }
+
+.cookie
+{
+    position: fixed;
+
+    bottom: 0;
+    left: 50%;
+    
+    transform: translate(-50%,0);
+
+    width: 500px;
+    height: auto;
+
+    z-index: 999;
+}
