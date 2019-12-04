@@ -40,12 +40,25 @@ class TemplateMiddleware
         {
             req.theme = Theme.GetTheme(req.cookies.theme);
 
-            res.cookie("theme",req.cookies.theme, {secure: true, maxAge: Config.Config.Get("Style.maxAge")});
+            res.cookie("theme", req.cookies.theme, {secure: true, maxAge: Config.Config.Get("Style.maxAge")});
+
+            if(req.cookies.accent)
+            {
+                req.accent = req.cookies.accent;
+                res.cookie("accent", req.cookies.accent, {secure: true, maxAge: Config.Config.Get("Style.maxAge")});
+            }
+            else
+            {
+                req.accent = req.theme.GetDefaultAccent();
+            }
+
         }
         else
         {
             req.theme = Theme.GetTheme(Config.Config.Get("Style.theme"));
+            req.accent = req.theme.GetDefaultAccent();
         }
+
         next();
     }
 }
@@ -89,7 +102,7 @@ class TemplateObject
         if(!params["theme"])
         {
             params["theme"] = req.theme.GetName();
-            params["css"] = req.theme.GetCss();
+            params["css"] = req.theme.GetCss(req.accent);
         }
 
         let titleText = mustache.render("<h1 class='title is-3 has-text-white'>{{sitetitle}}</h1>" ,params);

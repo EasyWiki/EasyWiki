@@ -89,35 +89,56 @@ class Web
         this._app.get("/themes", async function(req, res)
         {
             const themes = Theme.themes;
-            let html = '';
+            let themeHtml = '';
 
             for(let i = 0; i < themes.length; i++)
             {
                 const theme = themes[i];
 
-                html += '<div class="radio-control">';
-                html += '<input class="is-checkradio is-medium" id="' + 
+                themeHtml += '<div class="radio-control">';
+                themeHtml += '<input class="is-checkradio is-medium" id="' + 
                     theme.GetId() + '" type="radio" name="theme" value="' + theme.GetId() + '" ';
                 if(theme.GetId() == req.theme.GetId())
-                    html += 'checked="checked"';
-                html += '>'
-                html += '<label for="' + theme.GetId() + '">';
-                html += theme.GetName() + ' ';
+                    themeHtml += 'checked="checked"';
+                themeHtml += '>'
+                themeHtml += '<label for="' + theme.GetId() + '">';
+                themeHtml += theme.GetName() + ' ';
 
                 if(theme.IsLightmode())
-                    html += '<span class="tag is-light">Light</span>';
+                    themeHtml += '<span class="tag is-light">Light</span>';
                 else
-                    html += '<span class="tag is-dark">Dark</span>';
+                    themeHtml += '<span class="tag is-dark">Dark</span>';
 
-                html += '</label></div>';
+                themeHtml += '</label></div>';
             }
 
-            req.templateObject.RenderAndSend(req, res, "themes", {title: "Theme", themes: html});
+            let accents = themes[0].GetAccents();
+
+            let accentHtml = "";
+            for(let i = 0; i < accents.length; i++)
+            {
+                const accent = accents[i];
+
+                accentHtml += '<div class="radio-control">';
+                accentHtml += '<input class="is-checkradio is-medium" id="' + 
+                    accent + '" type="radio" name="accent" value="' + accent + '" ';
+                if(accent == req.accent)
+                    accentHtml += 'checked="checked"';
+                accentHtml += '>'
+                accentHtml += '<label for="' + accent + '">';
+                accentHtml += accent + ' ';
+
+                accentHtml += '</label></div>';
+            }
+
+            req.templateObject.RenderAndSend(req, res, "themes", {title: "Theme", themes: themeHtml, accent: accentHtml});
         });
 
         this._app.post("/themes", async function(req, res)
         {
             res.cookie("theme",req.body.theme,{secure: true, maxAge: Config.Config.Get("Style.maxAge")});
+            res.cookie("accent",req.body.accent,{secure: true, maxAge: Config.Config.Get("Style.maxAge")});
+
             res.redirect("/themes");
         });
         
@@ -169,7 +190,7 @@ class Web
                     const page = data[i].split('.md')[0];
 
                     html += "<tr class='result'><td><a href='" + page + "'>";
-                    html += "<p class='has-text-weight-bold is-size-5 search-title'>" + page + "</p>";
+                    html += "<p class='has-text-weight-bold search-title'>" + page + "</p>";
                     //html += "<p class='search-text'>" + page.data + "</p></a></td>";
                 }
 

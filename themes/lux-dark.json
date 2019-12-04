@@ -2,10 +2,31 @@
     "id": "lux-dark",
     "name": "Lux Dark",
     "light": false,
-    "css":[
-        "lux-dark.css",
-        "syntax/prism-night.css",
-        "body-dark.css",
-        "overrides.css"
-    ]
+    "defaults":
+    {
+        "accent": "Blue",
+        "css":
+        [
+            "syntax/prism-night.css",
+            "body-dark.css",
+            "overrides.css"
+        ]
+    },
+    "accents":
+    {
+        "Blue":
+        [
+            "lux-dark/blue.css"
+        ],
+
+        "Orange":
+        [
+            "lux-dark/orange.css"
+        ],
+
+        "Black":
+        [
+            "lux-dark/black.css"
+        ]
+    }
 }

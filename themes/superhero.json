@@ -2,10 +2,31 @@
     "id": "superhero",
     "name": "Superhero",
     "light": false,
-    "css":[
-        "superhero.css",
-        "syntax/prism-night.css",
-        "body-superhero.css",
-        "overrides.css"
-    ]
+    "defaults":
+    {
+        "accent": "Blue",
+        "css":
+        [
+            "syntax/prism-night.css",
+            "body-superhero.css",
+            "overrides.css"
+        ]
+    },
+    "accents":
+    {
+        "Blue":
+        [
+            "superhero/blue.css"
+        ],
+
+        "Orange":
+        [
+            "superhero/orange.css"
+        ],
+
+        "Black":
+        [
+            "superhero/black.css"
+        ]
+    }  
 }
