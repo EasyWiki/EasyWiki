@@ -24,18 +24,29 @@ class Theme
         return this._themeObj.name;
     }
 
-    public GetCss() : string
+    public GetCss(accent: string) : string
     {
         let html = "";
 
-        for(let i = 0; i < this._themeObj.css.length; i++)
-        {
-            const cssFile = this._themeObj.css[i];
+        let cssFiles = this._themeObj.defaults.css;
 
-            html += "<link href='/css/" + cssFile +"' type='text/css' rel='Stylesheet'>";
-        }
+        this._themeObj.accents[accent].forEach( (css: string) =>
+        {
+            cssFiles.push(css);
+        });
+
+
+        cssFiles.forEach((file) =>
+        {
+            html += "<link href='/css/" + file +"' type='text/css' rel='Stylesheet'>";
+        });
 
         return html;
+    }
+
+    public GetDefaultAccent()
+    {
+        return this._themeObj.defaults.accent;
     }
 
     public IsLightmode() : boolean
@@ -87,7 +98,12 @@ interface ITheme
     id: string;
     name: string;
     light: boolean;
-    css: string[];
+    defaults: {
+        "accent": string,
+        css: string[]
+    };
+
+    accents: any;
 }
 
 export {Theme, ITheme};

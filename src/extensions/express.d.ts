@@ -10,6 +10,7 @@ declare global
         {
             templateObject : TemplateObject;
             theme: Theme;
+            accent: string;
         }
     }
 }
