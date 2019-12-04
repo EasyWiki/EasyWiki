@@ -15,24 +15,18 @@ footer
     margin-top:auto; 
 }
 
-.navbar-item
-{
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
 .search-bar
 {
     width: 350px;
-    color: #1f2d3b;
+    color: black;
 }
 
 // Text colour
 .search-bar input
 {
-    width: 350px; 
-    color: #bdcbdb;
-    background-color: #1f2d3b;
+    width: 350px;
+    color: #fff;
+    background-color: #1f2424;
     border-color: transparent;
 }
 
@@ -44,15 +38,7 @@ footer
 // "Search" colour
 .search-bar input::placeholder
 {
-    color: #bdcbdb;
-}
-
-.search-bar
-
-// Lookinglass on the side
-.search-bar .icon
-{
-    color: #DF691A !important;
+    color: #fff;
 }
 
 .search-results
@@ -64,7 +50,7 @@ footer
     width: 348px;
     border-radius: 0px;
     padding: 0;
-    box-shadow: 0 0 0 1px #1f2d3b;
+    box-shadow: 0 0 0 1px black;
 }
 
 .search-results .result td {
@@ -84,7 +70,7 @@ footer
 // Search results
 .search-results .result a
 {
-    color: #bdcbdb;
+    color: #fff;
     font-weight: 500;
 }
 

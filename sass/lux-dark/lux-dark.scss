@@ -117,10 +117,15 @@ pre[class*="language-"] {
 }
 
 span.token.function {
-    color: #DF691A;
+    color: $primary;
 }
 
 span.token.keyword {
     color: #539EEA;
+}
+
+.search-bar .icon
+{
+    color: $primary !important;
 }
 
