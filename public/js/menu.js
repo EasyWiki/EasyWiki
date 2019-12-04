@@ -11,7 +11,7 @@ OnWindowLoad(function()
     if(window.scrollY > menuTop)
         $col.classList.toggle("hide-menu", true);
 
-    window.onscroll = function(e)
+    OnScroll(function(e)
     {
         let scroll = window.scrollY;
 
@@ -23,5 +23,5 @@ OnWindowLoad(function()
         {
             $col.classList.toggle("hide-menu", true);
         }        
-    }
+    });
 });
