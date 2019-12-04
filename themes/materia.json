@@ -1,0 +1,11 @@
+{
+    "id": "materia",
+    "name": "Materia",
+    "light": true,
+    "css":[
+        "materia.css",
+        "syntax/prism-default.css",
+        "body.css",
+        "overrides.css"
+    ]
+}
