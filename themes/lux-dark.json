@@ -37,6 +37,11 @@
         "Purple":
         [
             "lux-dark/purple.css"
+        ],
+
+        "Pony Pink":
+        [
+            "lux-dark/pink.css"
         ]
     }
 }

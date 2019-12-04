@@ -37,6 +37,11 @@
         "Purple":
         [
             "superhero/purple.css"
+        ],
+
+        "Pony Pink":
+        [
+            "superhero/pink.css"
         ]
     }  
 }
