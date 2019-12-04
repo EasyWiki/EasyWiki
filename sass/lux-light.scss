@@ -3,6 +3,10 @@
 
 @import "../node_modules/bulmaswatch/lux/variables";
 $link: #7f7ffb;
+$link-hover: darken($link, 10);
+$link-focus: darken($link, 10);
+$link-active: darken($link, 10);
+$link-focus-border: $grey-light;
 
 @import "../node_modules/bulma/bulma.sass";
 @import "../node_modules/bulma-extensions/src/sass/index.sass";
