@@ -14,14 +14,19 @@
     },
     "accents":
     {
-        "blue":
+        "Blue":
         [
             "lux-dark/blue.css"
         ],
 
-        "orange":
+        "Orange":
         [
             "lux-dark/orange.css"
+        ],
+
+        "Black":
+        [
+            "lux-dark/black.css"
         ]
     }
 }

@@ -14,14 +14,19 @@
     },
     "accents":
     {
-        "blue":
+        "Blue":
         [
             "superhero/blue.css"
         ],
 
-        "orange":
+        "Orange":
         [
             "superhero/orange.css"
+        ],
+
+        "Black":
+        [
+            "superhero/black.css"
         ]
     }  
 }
