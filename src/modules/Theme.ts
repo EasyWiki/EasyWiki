@@ -49,6 +49,11 @@ class Theme
         return this._themeObj.defaults.accent;
     }
 
+    public GetAccents()
+    {
+        return Object.keys(this._themeObj.accents);
+    }
+
     public IsLightmode() : boolean
     {
         return this._themeObj.light;
