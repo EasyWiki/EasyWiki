@@ -4,7 +4,7 @@
     "light": true,
     "defaults":
     {
-        "accent": "blue",
+        "accent": "Blue",
         "css":
         [
             "syntax/prism-default.css",
