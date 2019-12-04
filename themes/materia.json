@@ -14,6 +14,11 @@
     },
     "accents":
     {
+        "Festive":
+        [
+            "materia/festive.css"
+        ],
+
         "Blue": 
         [
             "materia/blue.css"

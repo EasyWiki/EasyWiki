@@ -14,6 +14,11 @@
     },
     "accents":
     {
+        "Festive":
+        [
+            "superhero/festive.css"
+        ],
+        
         "Blue":
         [
             "superhero/blue.css"
