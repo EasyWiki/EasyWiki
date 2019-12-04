@@ -19,10 +19,4 @@
             "materia/blue.css"
         ]
     }
-
-    "defaultAccent": "blue",
-    "css":[
-        "materia.css",
-        
-    ]
 }
