@@ -1,0 +1,22 @@
+{
+    "id": "materia",
+    "name": "Materia",
+    "light": true,
+    "defaults":
+    {
+        "accent": "blue",
+        "css":
+        [
+            "syntax/prism-default.css",
+            "body.css",
+            "overrides.css"
+        ]
+    },
+    "accents":
+    {
+        "blue": 
+        [
+            "materia/blue.css"
+        ]
+    }
+}
