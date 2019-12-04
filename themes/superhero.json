@@ -5,6 +5,7 @@
     "css":[
         "superhero.css",
         "syntax/prism-night.css",
-        "body-superhero.css"
+        "body-superhero.css",
+        "overrides.css"
     ]
 }
