@@ -190,7 +190,7 @@ class Web
                     const page = data[i].split('.md')[0];
 
                     html += "<tr class='result'><td><a href='" + page + "'>";
-                    html += "<p class='has-text-weight-bold is-size-5 search-title'>" + page + "</p>";
+                    html += "<p class='has-text-weight-bold search-title'>" + page + "</p>";
                     //html += "<p class='search-text'>" + page.data + "</p></a></td>";
                 }
 

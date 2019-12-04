@@ -54,9 +54,9 @@ footer
     top: 53px;
     z-index: 31;
     width: 348px;
-    border-radius: 0px;
-    padding: 0;
-    box-shadow: 0 0 0 1px #1f2d3b;
+    border-radius: 0px !important;
+    padding: 0 !important;
+    box-shadow: 0 0 0 1px #1f2d3b !important;
 }
 
 .search-results .result td {
