@@ -16,7 +16,7 @@ $blue: #3498db;
 $purple: #8e44ad;
 $red: #e74c3c;
 $white-ter: #ecf0f1;
-$primary: #DF691A !default;
+$primary: $blue !default;
 $yellow-invert: #fff;
 
 $family-sans-serif: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -76,7 +76,7 @@ $progress-value-background-color: $grey-lighter;
 
 $bulmaswatch-import-font: true !default;
 
-@import "../node_modules/bulmaswatch/superhero/variables";
+@import "../../node_modules/bulmaswatch/superhero/variables";
 
 $link: $primary;
 $link-hover: lighten($link, 5);
@@ -101,9 +101,9 @@ $navbar-dropdown-item-hover-background-color: transparent;
 $navbar-dropdown-item-active-background-color: transparent;
 $navbar-dropdown-item-active-color: $link;
 
-@import "../node_modules/bulma/bulma.sass";
-@import "../node_modules/bulma-extensions/src/sass/index.sass";
-@import "../node_modules/bulmaswatch/superhero/overrides";
+@import "../../node_modules/bulma/bulma.sass";
+@import "../../node_modules/bulma-extensions/src/sass/index.sass";
+@import "../../node_modules/bulmaswatch/superhero/overrides";
 
 h1, h2, h3, h4, h5, h6 {
     text-transform: none !important;

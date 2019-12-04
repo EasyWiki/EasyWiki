@@ -2,10 +2,26 @@
     "id": "lux-light",
     "name": "Lux",
     "light": true,
-    "css":[
-        "lux-light.css",
-        "syntax/prism-default.css",
-        "body.css",
-        "overrides.css"
-    ]
+    "defaults":
+    {
+        "accent": "blue",
+        "css":
+        [
+            "syntax/prism-default.css",
+            "body.css",
+            "overrides.css"
+        ]
+    },
+    "accents":
+    {
+        "blue":
+        [
+            "lux-light/blue.css"
+        ],
+
+        "orange":
+        [
+            "lux-light/orange.css"
+        ]
+    }
 }

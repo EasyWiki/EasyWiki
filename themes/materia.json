@@ -17,6 +17,11 @@
         "blue": 
         [
             "materia/blue.css"
+        ],
+
+        "orange":
+        [
+            "materia/orange.css"
         ]
     }
 }
