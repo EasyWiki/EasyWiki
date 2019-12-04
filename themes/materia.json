@@ -27,6 +27,16 @@
         "Black":
         [
             "materia/black.css"
+        ],
+
+        "Red":
+        [
+            "materia/red.css"
+        ],
+
+        "Purple":
+        [
+            "materia/purple.css"
         ]
     }
 }

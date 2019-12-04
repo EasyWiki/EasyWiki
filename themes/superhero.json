@@ -27,6 +27,16 @@
         "Black":
         [
             "superhero/black.css"
+        ],
+
+        "Red":
+        [
+            "superhero/red.css"
+        ],
+
+        "Purple":
+        [
+            "superhero/purple.css"
         ]
     }  
 }

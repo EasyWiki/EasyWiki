@@ -27,6 +27,16 @@
         "Black":
         [
             "lux-light/black.css"
+        ],
+
+        "Red":
+        [
+            "lux-light/red.css"
+        ],
+
+        "Purple":
+        [
+            "lux-light/purple.css"
         ]
     }
 }
