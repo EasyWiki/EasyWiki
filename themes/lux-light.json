@@ -47,6 +47,11 @@
         "Pony Pink":
         [
             "lux-light/pink.css"
+        ],
+
+        "Green":
+        [
+            "lux-light/green.css"
         ]
     }
 }

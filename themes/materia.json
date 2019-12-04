@@ -47,6 +47,11 @@
         "Pony Pink":
         [
             "materia/pink.css"
+        ],
+
+        "Green":
+        [
+            "materia/green.css"
         ]
     }
 }

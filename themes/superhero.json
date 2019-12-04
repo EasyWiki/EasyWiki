@@ -47,6 +47,11 @@
         "Pony Pink":
         [
             "superhero/pink.css"
+        ],
+
+        "Green":
+        [
+            "superhero/green.css"
         ]
     }  
 }
