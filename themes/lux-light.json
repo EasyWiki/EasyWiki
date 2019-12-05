@@ -14,6 +14,11 @@
     },
     "accents":
     {
+        "Festive":
+        [
+            "lux-light/festive.css"
+        ],
+        
         "Blue":
         [
             "lux-light/blue.css"
@@ -27,6 +32,26 @@
         "Black":
         [
             "lux-light/black.css"
+        ],
+
+        "Red":
+        [
+            "lux-light/red.css"
+        ],
+
+        "Purple":
+        [
+            "lux-light/purple.css"
+        ],
+
+        "Pony Pink":
+        [
+            "lux-light/pink.css"
+        ],
+
+        "Green":
+        [
+            "lux-light/green.css"
         ]
     }
 }

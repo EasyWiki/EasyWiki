@@ -1,3 +1,5 @@
+// TODO: is there a body.scss file for superhero?
+
 @charset "utf-8";
 
 $grey-lighter: #dbdee0;
@@ -14,7 +16,7 @@ $blue: #3498db;
 $purple: #8e44ad;
 $red: #e74c3c;
 $white-ter: #ecf0f1;
-$primary: $blue !default;
+$primary: $green !default;
 $yellow-invert: #fff;
 
 $family-sans-serif: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -74,7 +76,7 @@ $progress-value-background-color: $grey-lighter;
 
 $bulmaswatch-import-font: true !default;
 
-@import "../../node_modules/bulmaswatch/lux/variables";
+@import "../../node_modules/bulmaswatch/superhero/variables";
 
 $link: $primary;
 $link-hover: lighten($link, 5);
@@ -101,11 +103,11 @@ $navbar-dropdown-item-active-color: $link;
 
 @import "../../node_modules/bulma/bulma.sass";
 @import "../../node_modules/bulma-extensions/src/sass/index.sass";
-@import "../../node_modules/bulmaswatch/lux/overrides";
+@import "../../node_modules/bulmaswatch/superhero/overrides";
 
 h1, h2, h3, h4, h5, h6 {
     text-transform: none !important;
-    letter-spacing: 3px; 
+    letter-spacing: 3px;
 }
 
 code {
@@ -113,15 +115,11 @@ code {
 }
 
 pre[class*="language-"] {
-    background: #282f2f !important;
+    background: #2B3E50 !important;
 }
 
 span.token.function {
     color: $primary;
-}
-
-span.token.keyword {
-    color: #539EEA;
 }
 
 .search-bar .icon
@@ -133,4 +131,3 @@ span.token.keyword {
     background-image: none !important;
     background-color: $primary !important;
 }
-

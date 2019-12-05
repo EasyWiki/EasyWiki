@@ -14,7 +14,7 @@ $blue: #3498db;
 $purple: #8e44ad;
 $red: #e74c3c;
 $white-ter: #ecf0f1;
-$primary: $blue !default;
+$primary: #f0f !default;
 $yellow-invert: #fff;
 
 $family-sans-serif: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -130,7 +130,5 @@ span.token.keyword {
 }
 
 .navbar {
-    background-image: none !important;
-    background-color: $primary !important;
+    background-image: url("https://www.thehoothoots.com/wp-content/uploads/2015/01/Rainbow-background-website-hoot-11.jpg") !important;
 }
-

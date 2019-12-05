@@ -14,6 +14,11 @@
     },
     "accents":
     {
+        "Festive":
+        [
+            "materia/festive.css"
+        ],
+
         "Blue": 
         [
             "materia/blue.css"
@@ -27,6 +32,26 @@
         "Black":
         [
             "materia/black.css"
+        ],
+
+        "Red":
+        [
+            "materia/red.css"
+        ],
+
+        "Purple":
+        [
+            "materia/purple.css"
+        ],
+
+        "Pony Pink":
+        [
+            "materia/pink.css"
+        ],
+
+        "Green":
+        [
+            "materia/green.css"
         ]
     }
 }
