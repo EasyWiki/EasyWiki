@@ -28,15 +28,12 @@ class Theme
     {
         let html = "";
 
-        let cssFiles = this._themeObj.defaults.css;
-
-        this._themeObj.accents[accent].forEach( (css: string) =>
+        this._themeObj.defaults.css.forEach((file: string) =>
         {
-            cssFiles.push(css);
+            html += "<link href='/css/" + file +"' type='text/css' rel='Stylesheet'>";
         });
 
-
-        cssFiles.forEach((file) =>
+        this._themeObj.accents[accent].forEach( (file: string) =>
         {
             html += "<link href='/css/" + file +"' type='text/css' rel='Stylesheet'>";
         });
