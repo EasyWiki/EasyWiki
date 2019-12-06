@@ -3,15 +3,18 @@ module.exports = {
     {
         name: 'EasyWiki',
         script: 'app/app.js',
-        instances: 1,
         autorestart: true,
         watch: ["config.json", "dev-config.json", "app"],
         max_memory_restart: '1G',
         env: {
-            NODE_ENV: 'development'
+            NODE_ENV: 'development',
+            watch: ["dev-config.json", "app"],
+            instances: 1
         },
         env_production: {
-            NODE_ENV: 'production'
+            NODE_ENV: 'production',
+            watch: ["app"],
+            instances: 4
         }
     }]
 };
