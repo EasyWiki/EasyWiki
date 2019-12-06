@@ -87,6 +87,9 @@ class TemplateObject
 
     public async Render(req: express.Request, view: string, params: any = {})
     {
+        //Deep copy
+        params = Object.create(params);
+
         params["path"] = req.url;
         params["sitetitle"] = Config.Config.Get("Style.title");
 
@@ -129,9 +132,9 @@ class TemplateObject
         return mustache.render(this.body, params);
     }
 
-    public async RenderAndSend(req: express.Request, res: express.Response, view: string, params: any = {})
+    public async RenderAndSend(req: express.Request, res: express.Response, view: string, params: any = {}, code = 200)
     {
-        res.send(await this.Render(req,view,params));
+        res.status(code).send(await this.Render(req,view,params));
     }
 
     public GetRenderObject(params: any = {}): any
