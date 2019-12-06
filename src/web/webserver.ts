@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import express from "express";
-import socketio from "socket.io";
 import https from "https";
 import http from "http";
 import cookieParser from "cookie-parser";
@@ -23,7 +22,6 @@ class Web
     private _app : express.Application;
     private _server : https.Server;
     private _http : http.Server;
-    private _io : socketio.Server;
 
     constructor()
     {
@@ -33,9 +31,6 @@ class Web
         this._app = express();
         this._server = https.createServer(this.GetSslCertificate(), 
             this._app).listen(Config.Config.Get("Web.port"));
-        
-        // Start the socket server
-        this._io = socketio(this._server);
 
         // Start the http redirect server
         this._http = http.createServer(function (req, res)
@@ -48,7 +43,6 @@ class Web
         // Register
         this.RegisterMiddleware();
         this.RegisterRoutes();
-        this.RegisterSocketIO();
 
         Logger.Log("Web","The server started on port " + Config.Config.Get("Web.port") + ".");
     }
@@ -149,6 +143,24 @@ class Web
             res.redirect("/");
         });
 
+        this._app.post("/search", async function(req, res)
+        {
+            const query = decodeURIComponent(req.body["query"]);
+
+            const data = await Searcher.Searcher.Find(query);
+            let html = "<table class='table is-striped is-hoverable is-fullwidth'>";
+            
+            for(let i = 0; i < data.length; i++)
+            {
+                const page = data[i].split('.md')[0];
+
+                html += "<tr class='result'><td><a href='" + page + "'>";
+                html += "<p class='has-text-weight-bold search-title'>" + page + "</p>";
+                //html += "<p class='search-text'>" + page.data + "</p></a></td>";
+            }
+            res.send(html);
+        });
+
         this._app.all("/(:view)*", async function(req,res)
         {
             var view = req.params.view + req.params["0"];
@@ -171,32 +183,6 @@ class Web
         });
 
         this._app.use(ErrorMiddleware.HandleError);
-    }
-
-    /**
-     * Register all Socket io events
-     */
-    private RegisterSocketIO() : void
-    {
-        this._io.on("connect", async function(socket)
-        {
-            socket.on("search", async function(query)
-            {
-                const data = await Searcher.Searcher.Find(query);
-                let html = "<table class='table is-striped is-hoverable is-fullwidth'>";
-                
-                for(let i = 0; i < data.length; i++)
-                {
-                    const page = data[i].split('.md')[0];
-
-                    html += "<tr class='result'><td><a href='" + page + "'>";
-                    html += "<p class='has-text-weight-bold search-title'>" + page + "</p>";
-                    //html += "<p class='search-text'>" + page.data + "</p></a></td>";
-                }
-
-                socket.emit("search", html);
-            });
-        });
     }
 
     /**

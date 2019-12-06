@@ -1,14 +1,3 @@
-socket.on("search",function(results)
-{
-    var elements = document.getElementsByClassName("search-results");
-
-    if(elements.length == 0) return;
-
-    var element = elements[0];
-    element.innerHTML = results;
-    element.classList.toggle("is-hidden",false);
-});
-
 OnWindowLoad(function()
 {
     const $searchbar = Array.prototype.slice.call(document.querySelectorAll('.search-bar input'), 0);
@@ -16,9 +5,18 @@ OnWindowLoad(function()
     if ($searchbar.length > 0)
     {
         $searchbar.forEach(el => {
-            el.addEventListener('input', () =>
+            el.addEventListener('input', (e) =>
             {
-                socket.emit("search", el.value);
+                DoSearch(el.value, (results) =>
+                {
+                    let elements = document.getElementsByClassName("search-results");
+
+                    if(elements.length == 0) return;
+
+                    const element = elements[0];
+                    element.innerHTML = results;
+                    element.classList.toggle("is-hidden",false);
+                });
             });
 
             el.onkeypress = function(e)
@@ -34,3 +32,20 @@ OnWindowLoad(function()
         });
     }
 });
+
+function DoSearch(query, callback)
+{
+    const url = "/search";
+    const params = "query=" + encodeURIComponent(query);
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhr.send(params);
+
+    xhr.addEventListener("loadend",function(e)
+    {
+        callback(xhr.responseText);
+    });
+}
