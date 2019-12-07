@@ -1,9 +1,11 @@
 import { FileSystem } from './FileSystem';
 import path from 'path';
+import { Config } from './Config';
 
 class Logger
 {
     private static _logFile : string;
+    private static _logCount : number = 0;
 
     /**
      * Log a message
@@ -12,11 +14,15 @@ class Logger
      */
     public static Log(origin : string, message: string)
     {
+        this._logCount++;
+
         let colouredEntry = this.GetTime() + "\x1b[33m" + origin + "\x1b[0m: " + message;
         let entry = this.GetTime() + origin + ": " + message;
 
         console.log(colouredEntry);
         FileSystem.WriteLineToFile(this._logFile, entry);
+
+        this.CheckLogCount();
     }
 
     /**
@@ -27,6 +33,8 @@ class Logger
      */
     public static Error(origin : string, message: string, error: Error|undefined = undefined)
     {
+        this._logCount++;
+
         let colouredEntry = this.GetTime() + "\x1b[31m" + origin + "\x1b[0m: " + message;
         let entry = this.GetTime() + origin + ": " + message;
 
@@ -36,6 +44,16 @@ class Logger
         if(error)
         {   
             FileSystem.WriteLineToFile(this._logFile, error.stack as string);
+        }
+
+        this.CheckLogCount();
+    }
+
+    public static async CheckLogCount() : Promise<void>
+    {
+        if(this._logCount >= Config.Config.Get("Logger.max"))
+        {
+            this.CreateLogFile();
         }
     }
     
