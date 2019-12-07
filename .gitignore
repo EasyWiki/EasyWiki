@@ -66,6 +66,7 @@ public/css/
 
 # Developer configuration
 dev-config.json
+dev-translation.json
 ssl/
 
 # Built files

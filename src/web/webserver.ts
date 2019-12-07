@@ -171,7 +171,7 @@ class Web
             else
             {
                 req.templateObject.RenderAndSend(req, res, "error",
-                    Config.Config.Get("Web.errorPages.404"),404);
+                    Config.Translation.Get("ErrorPages.404"),404);
             }
             
         });

@@ -9,7 +9,7 @@ class ErrorMiddleware
         Logger.Error("web",err.message,err);
 
         req.templateObject.RenderAndSend(req, res.status(500), "error",
-            Config.Config.Get("Web.errorPages.404"));
+            Config.Translation.Get("ErrorPages.500"));
             
         next();   
     }

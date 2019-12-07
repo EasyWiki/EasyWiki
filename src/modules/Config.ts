@@ -4,23 +4,18 @@ import { Logger } from './Logger';
 class Config
 {
     public static Config : Config;
+    public static Translation : Config;
 
     private _config : any;
     private _watcher : fs.FSWatcher;
 
-    constructor()
+    constructor(path: string)
     {
-        Config.Config = this;
         
-        let configPath = "config.json";
-        
-        if(fs.existsSync("dev-config.json"))
-            configPath = "dev-config.json";
-        
-        let json = fs.readFileSync(configPath).toString();
+        let json = fs.readFileSync(path).toString();
         this._config = JSON.parse(json);
 
-        this._watcher = fs.watch(configPath,{persistent: true, recursive: false});
+        this._watcher = fs.watch(path, {persistent: true, recursive: false});
         this.WatchFile();
     }
 
@@ -70,6 +65,28 @@ class Config
         {
             Logger.Error("Config","An error has occured while watching the config file.", err);
         });
+    }
+
+    public static LoadConfig() : Config
+    {
+        let configPath = "config.json";
+        
+        if(fs.existsSync("dev-config.json"))
+            configPath = "dev-config.json";
+
+        Config.Config = new Config(configPath);
+        return Config.Config;
+    }
+
+    public static LoadTranslation() : Config
+    {
+        let configPath = "translation.json";
+        
+        if(fs.existsSync("dev-translation.json"))
+            configPath = "dev-translation.json";
+
+        Config.Translation = new Config(configPath);
+        return Config.Translation;
     }
 }
 

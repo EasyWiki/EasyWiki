@@ -19,7 +19,8 @@ async function StartServer()
     Logger.CreateLogFile();
     
     // Load the config
-    const config = new Config();
+    Config.LoadConfig();
+    Config.LoadTranslation();
 
     // Create the searcher and markdownbuilder objects
     const search = new Searcher();
