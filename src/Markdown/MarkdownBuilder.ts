@@ -298,6 +298,7 @@ class MarkdownBuilder
     private BuildFile(filePath: string) : void
     {
         let markdownText = fs.readFileSync(path.join(pageFolder, filePath)).toString();
+        const tags = this.GetTags(markdownText);
 
         let compiled = kramed(markdownText, {});
         let newPath = path.join(__dirname, dirPrefix, "built-views", filePath.replace(".md",".html").toLowerCase());
@@ -308,8 +309,8 @@ class MarkdownBuilder
         
         const dom = new JSDOM(compiled);
         const document = dom.window.document;
-        
-        if(index != "")
+
+        if(index != "" && !tags["noindex"])
         {
             const title = document.getElementsByTagName("h1")[0];
             const $index = document.createElement('div');
@@ -320,6 +321,18 @@ class MarkdownBuilder
         }
 
         fs.writeFileSync(newPath, document.documentElement.innerHTML);
+    }
+
+    private GetTags(fileText: string)
+    {
+        if(fileText.substr(0,"<!--".length) == "<!--")
+        {
+            let tagStr = fileText.substr("<!--".length).split("-->")[0];
+            Logger.Log("tag",tagStr);
+            return JSON.parse(tagStr);
+        }
+
+        return {};
     }
 }
 
