@@ -3,6 +3,8 @@ import path from 'path';
 import { Logger } from '../modules/Logger';
 import { Searcher } from './Searcher';
 import { FileSystem } from '../modules/FileSystem';
+import IndexBuilder from './IndexBuilder';
+import { JSDOM } from 'jsdom';
 
 const kramed : any = require("kramed");
 
@@ -300,10 +302,24 @@ class MarkdownBuilder
         let compiled = kramed(markdownText, {});
         let newPath = path.join(__dirname, dirPrefix, "built-views", filePath.replace(".md",".html").toLowerCase());
 
-        compiled = "<div class=\"container content is-size-5\">" + compiled +
-                   "</div>";
+        const index = IndexBuilder.CreateIndex(compiled);
 
-        fs.writeFileSync(newPath, compiled);
+        compiled = "<div class=\"container content is-size-5\">" + compiled + "</div>";
+        
+        const dom = new JSDOM(compiled);
+        const document = dom.window.document;
+        
+        if(index != "")
+        {
+            const title = document.getElementsByTagName("h1")[0];
+            const $index = document.createElement('div');
+            $index.innerHTML = index;
+            $index.classList.add("index");
+
+            (title.parentNode as Node).insertBefore($index ,title.nextSibling);
+        }
+
+        fs.writeFileSync(newPath, document.documentElement.innerHTML);
     }
 }
 
