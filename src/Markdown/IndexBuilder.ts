@@ -14,7 +14,8 @@ class IndexBuilder
 
         let prevLevel = 0;
 
-        let outHtml = "<h2 class='is-3'>" + Config.Translation.Get("Index") + "</h2><ul>";
+        let outHtml = "<h2 class='is-3'>" + Config.Translation.Get("Index") + "</h2>" + 
+            "<!--a-- class='button'>Collapse</!--a--><ul>";
 
         titles.forEach((title)=>
         {
@@ -35,7 +36,7 @@ class IndexBuilder
             }
             else if(prevLevel > level)
             {
-                outHtml += "</ul>"
+                for(let i = 0; i < prevLevel - level; i++) outHtml += "</ul>"
                 outHtml += "<li><a href='#" + title.id + "'>" + title.textContent + "</a>";
             }
 
