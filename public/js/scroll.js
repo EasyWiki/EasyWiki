@@ -1,4 +1,6 @@
 let scrollActions = [];
+let $backToTop;
+let prevTimeout;
 
 function OnScroll(action)
 {
@@ -13,13 +15,13 @@ window.onscroll = function()
 OnWindowLoad(function()
 {
     const scrollOffset = 500;
-    const $backToTop = document.getElementsByClassName("back-to-top")[0];
+    $backToTop = document.getElementsByClassName("back-to-top")[0];
 
-    $backToTop.classList.toggle("hide", window.scrollY <= 0);
+    Hide(window.scrollY <= 0);
 
     OnScroll(function()
     {
-        $backToTop.classList.toggle("hide", window.scrollY <= scrollOffset);
+        Hide(window.scrollY <= scrollOffset);
     });
 
     $backToTop.querySelector(".button").addEventListener("click", function(e)
@@ -28,3 +30,18 @@ OnWindowLoad(function()
         document.documentElement.scrollTop = 0;
     });
 });
+
+async function Hide(value)
+{
+    clearTimeout(prevTimeout);
+    
+    if(!value)
+        $backToTop.classList.toggle("is-hidden", false);
+
+    $backToTop.classList.toggle("hide", value);
+
+    prevTimeout = setTimeout(() =>
+    {
+        $backToTop.classList.toggle("is-hidden", value);
+    }, 1000);
+}
