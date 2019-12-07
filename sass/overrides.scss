@@ -78,3 +78,20 @@
 {
     opacity: 0;
 }
+
+.MathJax_Display
+{
+    overflow-y: hidden;
+    overflow-x: auto;
+
+    max-width: 100%;
+}
+
+@media screen and (max-width: 768px)
+{
+    .MathJax_Display
+    {
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+}
