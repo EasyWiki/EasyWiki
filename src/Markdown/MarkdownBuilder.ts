@@ -69,6 +69,8 @@ class MarkdownBuilder
     
         this._renderer.code = function(code:string, lang:string)
         {
+            code = code.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
             return "<pre class='line-numbers'><code class=' lang-" + lang + "'>" + code + "</code></pre>";
         }
 
