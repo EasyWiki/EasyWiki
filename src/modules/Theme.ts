@@ -26,7 +26,6 @@ class Theme
 
     public GetCss(accent: string) : string
     {
-        console.log(accent);
         let html = "";
 
         this._themeObj.defaults.css.forEach((file: string) =>
