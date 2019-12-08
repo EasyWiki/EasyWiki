@@ -106,7 +106,7 @@ class Web
                 themeHtml += '</label></div>';
             }
 
-            let accents = themes[0].GetAccents();
+            let accents = req.theme.GetAccents();
 
             let accentHtml = "";
             for(let i = 0; i < accents.length; i++)
@@ -134,6 +134,33 @@ class Web
             res.cookie("accent",req.body.accent,{secure: true, maxAge: Config.Config.Get("Style.maxAge")});
 
             res.redirect("/themes");
+        });
+
+        this._app.post("/themes/accents", async function(req, res)
+        {
+            const theme = Theme.GetTheme(req.body.theme);
+            const accents = theme.GetAccents();
+
+            if(accents.indexOf(req.accent) == -1) req.accent = theme.GetDefaultAccent();
+
+            let accentHtml = "";
+            for(let i = 0; i < accents.length; i++)
+            {
+                const accent = accents[i];
+
+                accentHtml += '<div class="radio-control">';
+                accentHtml += '<input class="is-checkradio is-medium" id="' + 
+                    accent + '" type="radio" name="accent" value="' + accent + '" ';
+                if(accent == req.accent)
+                    accentHtml += 'checked="checked"';
+                accentHtml += '>'
+                accentHtml += '<label for="' + accent + '">';
+                accentHtml += accent + ' ';
+
+                accentHtml += '</label></div>';
+            }
+
+            res.send(accentHtml);
         });
         
         this._app.all("/refresh", async function(req,res)
