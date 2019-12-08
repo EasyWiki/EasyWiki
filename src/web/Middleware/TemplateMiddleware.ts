@@ -25,8 +25,10 @@ class TemplateMiddleware
         let footer = await FileSystem.ReadFileCached(path.join(folder, "footer.html"));
         let menu = await FileSystem.ReadFileCached(path.join(folder, "menu.html"));
         let navbar = await FileSystem.ReadFileCached(path.join(folder, "navbar.html"));
+        let footerNavbar = await FileSystem.ReadFileCached(path.join(folder, "footer-nav.html"));
 
-        req.templateObject = new TemplateObject(body, head, header, imageViewer, footer, menu, navbar);
+        req.templateObject = new TemplateObject(body, head, header, imageViewer,
+             footer, menu, navbar, footerNavbar);
 
         next();
     }
@@ -72,9 +74,10 @@ class TemplateObject
     private footer : string;
     private menu : string;
     private navbar : string;
+    private footerNavbar : string;
 
     constructor(body: string, head: string, header: string, imageViewer: string,
-        footer: string, menu: string, navbar: string)
+        footer: string, menu: string, navbar: string, footerNavbar: string)
     {
         this.body = body;
         this.head = head;
@@ -83,6 +86,7 @@ class TemplateObject
         this.footer = footer;
         this.menu = menu;
         this.navbar = navbar;
+        this.footerNavbar = footerNavbar;
     }
 
     public async Render(req: express.Request, view: string, params: any = {})
@@ -139,6 +143,7 @@ class TemplateObject
         params["navbar"] = mustache.render(this.navbar, params);
         params["header"] = mustache.render(this.header, params);
         params["image-viewer"] = mustache.render(this.imageViewer, params);
+        params["footerNavbar"] = mustache.render(this.footerNavbar, params);
         params["footer"] = mustache.render(this.footer, params);
 
         return params;

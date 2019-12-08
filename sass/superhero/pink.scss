@@ -104,6 +104,7 @@ $navbar-dropdown-item-active-color: $link;
 @import "../../node_modules/bulma/bulma.sass";
 @import "../../node_modules/bulma-extensions/src/sass/index.sass";
 @import "../../node_modules/bulmaswatch/superhero/overrides";
+@import "../../private/footer.scss";
 
 h1, h2, h3, h4, h5, h6 {
     text-transform: none !important;
