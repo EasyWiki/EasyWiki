@@ -1,0 +1,22 @@
+{
+    "id": "fluent",
+    "name": "Fluent",
+    "light": true,
+    "defaults":
+    {
+        "accent": "Fluent",
+        "css":
+        [
+            "syntax/prism-default.css",
+            "body.css",
+            "overrides.css"
+        ]
+    },
+    "accents":
+    {
+        "Fluent":
+        [
+            "fluent/fluent.css"
+        ]
+    }
+}

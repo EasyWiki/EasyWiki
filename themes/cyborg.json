@@ -1,0 +1,22 @@
+{
+    "id": "cyborg",
+    "name": "Cyborg",
+    "light": false,
+    "defaults":
+    {
+        "accent": "Default",
+        "css":
+        [
+            "syntax/prism-night.css",
+            "body-dark.css",
+            "overrides.css"
+        ]
+    },
+    "accents":
+    {
+        "Default":
+        [
+            "cyborg/cyborg.css"
+        ]
+    }
+}

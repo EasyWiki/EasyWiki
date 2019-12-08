@@ -48,6 +48,7 @@
     "@types/node-cache": "^4.2.5",
     "bulma": "^0.8.0",
     "bulma-extensions": "^6.2.7",
+    "bulma-fluent": "^0.3.18",
     "bulmaswatch": "^0.7.5",
     "node-sass": "^4.13.0"
   }
