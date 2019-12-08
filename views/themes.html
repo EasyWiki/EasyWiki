@@ -2,14 +2,20 @@
 
 <div class="content is-size-4">
     <form action="/themes/" method="POST">
-        <h2 class="title">Themes</h2>
-        <div class="field" id="themes">
-            {{{themes}}}
+        <div class="columns">
+            <div class="column">
+                <h2 class="title">{{translation.Themes.Themes}}</h2>
+                <div class="field" id="themes">
+                    {{{themes}}}
+                </div>
+            </div>
+            <div class="column">
+                <h2 class="title">{{translation.Themes.Accents}}</h2>
+                <div class="field" id="accents">
+                    {{{accent}}}
+                </div>
+            </div>
         </div>
-        <h2 class="title">Accent</h2>
-        <div class="field" id="accents">
-            {{{accent}}}
-        </div>
-        <input type="submit" class="button">
+        <input type="submit" class="button" value="{{translation.Themes.ChangeTheme}}">
     </form>
 </div>

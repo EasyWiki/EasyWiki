@@ -25,5 +25,11 @@
         "link": "/privacy"
     },
     "Index": "Index",
-    "BackToTop": "Back to top"
+    "BackToTop": "Back to top",
+    "Themes":
+    {
+        "ChangeTheme": "Change Theme",
+        "Themes": "Themes",
+        "Accents": "Accents"
+    }
 }
