@@ -67,6 +67,11 @@ class Config
         });
     }
 
+    public GetJson()
+    {
+        return this._config;
+    }
+
     public static LoadConfig() : Config
     {
         let configPath = "config.json";
