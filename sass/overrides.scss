@@ -77,13 +77,20 @@
 .back-to-top.hide
 {
     opacity: 0;
+    cursor: default;
+}
+
+.back-to-top #label
+{
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 .MathJax_Display
 {
     overflow-y: hidden;
     overflow-x: auto;
-
+    
     max-width: 100%;
 }
 
