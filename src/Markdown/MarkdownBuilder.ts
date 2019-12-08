@@ -66,6 +66,11 @@ class MarkdownBuilder
         {
             return '<table class="table is-striped">' + header + body + "</table>";
         }
+    
+        this._renderer.code = function(code:string, lang:string)
+        {
+            return "<pre class='line-numbers'><code class=' lang-" + lang + "'>" + code + "</code></pre>";
+        }
 
         this._menuRenderer.list = function(body: string, ordered: boolean)
         {
