@@ -310,7 +310,7 @@ class MarkdownBuilder
         let compiled = kramed(markdownText, {});
         let newPath = path.join(__dirname, dirPrefix, "built-views", filePath.replace(".md",".html").toLowerCase());
 
-        const index = IndexBuilder.CreateIndex(compiled);
+        const index = IndexBuilder.CreateIndex(compiled, tags["indexdepth"]);
 
         compiled = "<div class=\"container content is-size-5\">" + compiled + "</div>";
         
@@ -335,7 +335,6 @@ class MarkdownBuilder
         if(fileText.substr(0,"<!--".length) == "<!--")
         {
             let tagStr = fileText.substr("<!--".length).split("-->")[0];
-            Logger.Log("tag",tagStr);
             return JSON.parse(tagStr);
         }
 

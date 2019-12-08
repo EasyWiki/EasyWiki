@@ -3,8 +3,10 @@ import { Config } from '../modules/Config';
 
 class IndexBuilder
 {
-    public static CreateIndex(html: string)
+    public static CreateIndex(html: string, depth: any = 5)
     {
+        if(depth == undefined || depth <= 0 || depth > 5) depth = 5;
+
         const dom = new JSDOM(html);
 
         if(dom.window.document.body.innerHTML.indexOf(Config.Translation.Get("Index")) != -1)
@@ -16,6 +18,7 @@ class IndexBuilder
 
         let outHtml = "<h2 class='is-3'>" + Config.Translation.Get("Index") + "</h2>" + 
             "<!--a-- class='button'>Collapse</!--a--><ul>";
+        let currentDepth = 0;
 
         titles.forEach((title)=>
         {
@@ -24,23 +27,31 @@ class IndexBuilder
             if(prevLevel == 0)
             {
                 outHtml += "<li><a href='#" + title.id + "'>" + title.textContent + "</a>";
+                currentDepth++;
+                prevLevel = level;
             }
-            else if(prevLevel == level)
+            else if(prevLevel == level && currentDepth <= depth)
             {
                 outHtml += "</li><li><a href='#" + title.id + "'>" + title.textContent + "</a>";
+                prevLevel = level;
             }
-            else if(prevLevel < level)
+            else if(prevLevel < level && currentDepth < depth)
             {
                 outHtml += "<ul>"
                 outHtml += "<li><a href='#" + title.id + "'>" + title.textContent + "</a>";
+                currentDepth++;
+                prevLevel = level;
             }
             else if(prevLevel > level)
             {
-                for(let i = 0; i < prevLevel - level; i++) outHtml += "</ul>"
+                for(let i = 0; i < prevLevel - level; i++)
+                {
+                    outHtml += "</ul>";
+                    currentDepth--;
+                }
                 outHtml += "<li><a href='#" + title.id + "'>" + title.textContent + "</a>";
+                prevLevel = level;
             }
-
-            prevLevel = level;
         });
 
         outHtml += "</li></ul>";
