@@ -16,6 +16,6 @@ function Request(url, params, callback)
 function Translate(path, callback)
 {
     const url = "/translation";
-    const params = "translation=" + encodeURIComponent(query);
+    const params = "translation=" + encodeURIComponent(path);
     Request(url,params,callback);
 }
