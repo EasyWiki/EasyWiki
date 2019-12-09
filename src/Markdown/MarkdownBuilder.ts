@@ -64,7 +64,7 @@ class MarkdownBuilder
 
         this._renderer.table = function(header:string, body:string) : string
         {
-            return '<table class="table is-striped">' + header + body + "</table>";
+            return '<div class="scrollbox no-y"><table class="table is-striped">' + header + body + "</table></div>";
         }
     
         this._renderer.code = function(code:string, lang:string)

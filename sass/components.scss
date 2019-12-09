@@ -12,15 +12,16 @@ div.scrollbox.no-x
 
 div.scrollbox.no-y
 {
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
-@media screen and (max-width: 768px)
+@media screen and (max-width: 1024px)
 {
     div.scrollbox
     {
         overflow: scroll;
+        max-width: 100%;
     }
 
     div.scrollbox.no-x
@@ -74,4 +75,26 @@ div.scrollbox.no-y
 {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
+}
+
+/*Index*/
+.index
+{
+    font-size: 1rem;
+    padding: 2rem;
+    float: right;
+    margin: 1rem 0rem 1rem 3rem;
+    min-width: 20rem;
+}
+
+@media screen and (max-width: 768px)
+{
+    .index
+    {
+        font-size: 1rem;
+        padding: 2rem;
+        float: none;
+        margin: 1rem 0rem 1rem 0rem;
+        max-width: 100%;
+    }
 }
