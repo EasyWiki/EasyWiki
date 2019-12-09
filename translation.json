@@ -31,5 +31,7 @@
         "ChangeTheme": "Change Theme",
         "Themes": "Themes",
         "Accents": "Accents"
-    }
+    },
+    "Hide": "Hide",
+    "Show": "Show"
 }
