@@ -14,7 +14,8 @@ $blue: #3498db;
 $purple: #8e44ad;
 $red: #e74c3c;
 $white-ter: #ecf0f1;
-$primary: darken($green, 18) !default;
+$black: #000;
+$secondary: $grey-light !default;
 $yellow-invert: #fff;
 
 $family-sans-serif: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -46,7 +47,7 @@ $box-color: $text;
 $box-background-color: $grey-dark;
 $box-shadow: none;
 
-$button-color: $primary;
+$button-color: $secondary;
 $button-hover-color: darken($text, 5); // text-dark
 $button-focus: darken($text, 5); // text-dark
 $button-active-color: darken($text, 5); // text-dark
@@ -76,7 +77,7 @@ $bulmaswatch-import-font: true !default;
 
 @import "../../node_modules/bulmaswatch/lux/variables";
 
-$link: $primary;
+$link: $secondary;
 $link-hover: lighten($link, 5);
 $link-focus: darken($link, 5);
 $link-active: darken($link, 5);
@@ -102,7 +103,6 @@ $navbar-dropdown-item-active-color: $link;
 @import "../../node_modules/bulma/bulma.sass";
 @import "../../node_modules/bulma-extensions/src/sass/index.sass";
 @import "../../node_modules/bulmaswatch/lux/overrides";
-@import "../../private/footer.scss";
 
 h1, h2, h3, h4, h5, h6 {
     text-transform: none !important;
@@ -118,7 +118,7 @@ pre[class*="language-"] {
 }
 
 span.token.function {
-    color: $primary;
+    color: $orange;
 }
 
 span.token.keyword {
@@ -128,8 +128,4 @@ span.token.keyword {
 .search-bar .icon
 {
     color: $primary !important;
-}
-
-.navbar {
-    background-image: url("https://previews.123rf.com/images/zara94/zara941711/zara94171100031/90743298-realistic-fir-branches-on-a-red-background-christmas-banner-with-snowflakes.jpg") !important;
 }
