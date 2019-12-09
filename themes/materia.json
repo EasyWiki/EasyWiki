@@ -9,7 +9,8 @@
         [
             "syntax/prism-default.css",
             "body.css",
-            "overrides.css"
+            "overrides.css",
+            "components.css"
         ]
     },
     "accents":

@@ -48,44 +48,6 @@
     vertical-align: top;
 }
 
-.cookie
-{
-    position: fixed;
-
-    bottom: 0;
-    left: 50%;
-    
-    transform: translate(-50%,0);
-
-    width: 500px;
-    height: auto;
-
-    z-index: 999;
-}
-
-.back-to-top
-{
-    position: fixed;
-
-    bottom: 3rem;
-    right: 3rem; 
-    z-index: 999;
-
-    transition: opacity 1s;
-}
-
-.back-to-top.hide
-{
-    opacity: 0;
-    cursor: default;
-}
-
-.back-to-top #label
-{
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-}
-
 .MathJax_Display
 {
     overflow-y: hidden;

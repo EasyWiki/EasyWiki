@@ -9,7 +9,8 @@
         [
             "syntax/prism-night.css",
             "body-dark.css",
-            "overrides.css"
+            "overrides.css",
+            "components.css"
         ]
     },
     "accents":

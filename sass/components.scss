@@ -1,0 +1,77 @@
+/*ScrollBox*/
+div.scrollbox
+{
+    overflow: auto;
+}
+
+div.scrollbox.no-x
+{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+div.scrollbox.no-y
+{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+@media screen and (max-width: 768px)
+{
+    div.scrollbox
+    {
+        overflow: scroll;
+    }
+
+    div.scrollbox.no-x
+    {
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    div.scrollbox.no-y
+    {
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+}
+
+/*Cookie Notice*/
+.cookie
+{
+    position: fixed;
+
+    bottom: 0;
+    left: 50%;
+    
+    transform: translate(-50%,0);
+
+    width: 500px;
+    height: auto;
+
+    z-index: 999;
+}
+
+/*Back to Top*/
+.back-to-top
+{
+    position: fixed;
+
+    bottom: 3rem;
+    right: 3rem; 
+    z-index: 999;
+
+    transition: opacity 1s;
+}
+
+.back-to-top.hide
+{
+    opacity: 0;
+    cursor: default;
+}
+
+.back-to-top #label
+{
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
