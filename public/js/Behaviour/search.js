@@ -37,5 +37,5 @@ function DoSearch(query, callback)
 {
     const url = "/search";
     const params = "query=" + encodeURIComponent(query);
-    Response(url,params,callback);
+    Request(url,params,callback);
 }
