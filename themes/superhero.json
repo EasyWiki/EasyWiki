@@ -17,7 +17,8 @@
     {
         "Festive":
         [
-            "superhero/festive.css"
+            "superhero/festive.css",
+            "snow.css"
         ],
         
         "Blue":

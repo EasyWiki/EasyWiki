@@ -143,7 +143,7 @@ class TemplateObject
         params["navbar"] = mustache.render(this.navbar, params);
         params["header"] = mustache.render(this.header, params);
         params["image-viewer"] = mustache.render(this.imageViewer, params);
-        params["footerNavbar"] = mustache.render(this.footerNavbar, params);
+        //params["footerNavbar"] = mustache.render(this.footerNavbar, params);
         params["footer"] = mustache.render(this.footer, params);
 
         return params;

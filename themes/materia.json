@@ -17,7 +17,8 @@
     {
         "Festive":
         [
-            "materia/festive.css"
+            "materia/festive.css",
+            "snow.css"
         ],
 
         "Blue": 
