@@ -190,9 +190,15 @@ class Web
             res.send(html);
         });
 
+        this._app.post("/translation", async function(req,res)
+        {
+            res.contentType("text").send(Config.Translation.Get(req.body.translation));
+        });
+
         this._app.all("/(:view)*", async function(req,res)
         {
-            var view = req.params.view + req.params["0"];
+            const view = req.params.view + req.params["0"];
+
             if(req.templateObject.ViewExists(view))
             {
                 req.templateObject.RenderAndSend(req, res, view, {});

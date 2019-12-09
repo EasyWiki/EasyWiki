@@ -37,15 +37,5 @@ function DoSearch(query, callback)
 {
     const url = "/search";
     const params = "query=" + encodeURIComponent(query);
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-    xhr.send(params);
-
-    xhr.addEventListener("loadend",function(e)
-    {
-        callback(xhr.responseText);
-    });
+    Response(url,params,callback);
 }
