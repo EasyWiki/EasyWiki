@@ -4,7 +4,7 @@
     "light": true,
     "defaults":
     {
-        "accent": "Black",
+        "accent": "Default",
         "css":
         [
             "syntax/prism-default.css",
@@ -15,45 +15,14 @@
     },
     "accents":
     {
-        "Festive":
+        "Default":
         [
-            "lux-light/festive.css",
-            "snow.css"
+            "lux-light/default.css"
         ],
         
         "Blue":
         [
             "lux-light/blue.css"
-        ],
-
-        "Orange":
-        [
-            "lux-light/orange.css"
-        ],
-
-        "Black":
-        [
-            "lux-light/black.css"
-        ],
-
-        "Red":
-        [
-            "lux-light/red.css"
-        ],
-
-        "Purple":
-        [
-            "lux-light/purple.css"
-        ],
-
-        "Pony Pink":
-        [
-            "lux-light/pink.css"
-        ],
-
-        "Green":
-        [
-            "lux-light/green.css"
         ]
     }
 }
