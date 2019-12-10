@@ -55,3 +55,26 @@
 {
     max-width: 500px;
 }
+
+@media screen and (max-width: 768px)
+{
+    .max-w-100
+    {
+        max-width: 90%;
+    }
+
+    .max-w-200
+    {
+        max-width: 90%;
+    }
+
+    .max-w-500
+    {
+        max-width: 90%;
+    }
+
+    .content img
+    {
+        max-width: 90%;
+    }
+}
