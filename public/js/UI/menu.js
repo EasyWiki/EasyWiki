@@ -2,7 +2,7 @@ OnWindowLoad(function()
 {
     const $menuButton = document.querySelector(".menu .button");
     const $menuBody = document.querySelector(".menu .menu-body");
-    let hidden = false;
+    let hidden = true;
 
     $menuButton.addEventListener("click",() =>
     {
