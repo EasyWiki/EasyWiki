@@ -98,3 +98,13 @@ div.scrollbox.no-y
         max-width: 100%;
     }
 }
+
+.breadcrumb-container
+{
+    margin: 0rem 0 3rem 0;
+}
+
+.breadcrumb-container li + li
+{
+    margin-top: 0rem !important;
+}

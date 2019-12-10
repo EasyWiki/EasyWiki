@@ -177,7 +177,7 @@ class MarkdownBuilder
 
             if(reindex)
             {
-                Searcher.Searcher.IndexAll(true);
+                await Searcher.Searcher.IndexAll(true);
             }
 
             this._isBuilding = false;

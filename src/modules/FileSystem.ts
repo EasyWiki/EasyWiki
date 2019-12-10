@@ -63,6 +63,13 @@ class FileSystem
         return fs.readFileSync(filePath).toString();
     }
 
+    public static ReadFileSync(filePath: string)
+    {
+        if(!fs.existsSync(filePath)) return "";
+
+        return fs.readFileSync(filePath).toString();
+    }
+
     /**
      * Read a file from the filesystem and cache it.
      * If the file is already in the chache read it from the chache.
@@ -187,8 +194,32 @@ class FileSystem
     public static async WriteLineToFile(filePath: string, line: string)
     {
         if(!fs.existsSync(filePath)) return;
-
+        
         fs.appendFileSync(filePath,line + "\n");
+    }
+    
+    public static LoopFolder(folderPath: string, relative: string = "/", callback: typeof LoopFolderCallback)
+    {
+        if(!fs.existsSync(folderPath)) return;
+
+        const files = fs.readdirSync(folderPath);
+
+        for(let i = 0; i < files.length; i++)
+        {
+            const file = files[i];
+            const filePath = path.join(folderPath, file);
+            const relPath = path.join(relative, path.basename(filePath));
+
+            if(fs.statSync(filePath).isDirectory())
+            {
+                callback(file,filePath,relPath,true);
+                this.LoopFolder(filePath,relPath,callback);
+            }
+            else
+            {
+                callback(file,filePath,relPath,false);
+            }
+        }
     }
 
     /**
@@ -205,6 +236,7 @@ class FileSystem
         return fileName;
     }
 
+
     /**
      * Clear all the stored cache
      */
@@ -215,3 +247,5 @@ class FileSystem
 }
 
 export {FileSystem};
+
+function LoopFolderCallback (file: string, absPath: string, relPath:string, isFolder: boolean) : void {};
