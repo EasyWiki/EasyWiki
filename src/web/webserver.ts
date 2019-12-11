@@ -48,6 +48,12 @@ class Web
         (process.send as Function)('ready'); 
     }
 
+    public StopServer()
+    {
+        this._server.close();
+        this._http.close();
+    }
+
     /**
      * Register all express middleware
      */

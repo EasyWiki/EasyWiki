@@ -45,4 +45,10 @@ async function StartServer()
 
     // Create the webserber
     const web = new Web();
+
+    process.on('SIGINT', function()
+    {
+        gitTimer.Stop();
+        web.StopServer();
+    });
 }
