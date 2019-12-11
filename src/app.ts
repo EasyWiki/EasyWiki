@@ -18,6 +18,8 @@ async function StartServer()
     // Create a log file for the logger
     Logger.CreateLogFile();
     
+    Logger.Log("App", "Starting EasyWiki...");
+
     // Load the config
     Config.LoadConfig();
     Config.LoadTranslation();
@@ -28,9 +30,11 @@ async function StartServer()
 
     // Clone everything from the git and build the markdown
     const gitter = new Gitter();
-    await gitter.CloneRepo();
+    if(Config.Config.Get("Gitter.cloneOnStart")) await gitter.CloneRepo();
+
     // Index all markdown files
-    await search.IndexAll();
+    if(Config.Config.Get("Gitter.cloneOnStart")) await search.IndexAll();
+    else await search.LoadIndexFiles();
 
     // Create a timer to refresh the files from the git
     const gitTimer = new Timer(gitter.CloneRepo, Config.Config.Get("Gitter.timeout"));
