@@ -47,6 +47,7 @@ div.scrollbox.no-y
     
     transform: translate(-50%,0);
 
+    max-width: 90%;
     width: 500px;
     height: auto;
 
@@ -83,7 +84,7 @@ div.scrollbox.no-y
     font-size: 1rem;
     padding: 2rem;
     float: right;
-    margin: 1rem 0rem 1rem 3rem;
+    margin: 0rem 0rem 1rem 3rem;
     min-width: 20rem;
 }
 
@@ -94,7 +95,17 @@ div.scrollbox.no-y
         font-size: 1rem;
         padding: 2rem;
         float: none;
-        margin: 1rem 0rem 1rem 0rem;
+        margin: 0rem 0rem 1rem 0rem;
         max-width: 100%;
     }
+}
+
+.breadcrumb-container
+{
+    margin: 0rem 0 3rem 0;
+}
+
+.breadcrumb-container li + li
+{
+    margin-top: 0rem !important;
 }

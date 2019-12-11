@@ -171,13 +171,13 @@ class MarkdownBuilder
             Logger.Log("Markdown", "Building all markdown.");
 
             await this.RemoveFolder("/", false);
-            this.BuildFolder("/");
+            await this.BuildFolder("/");
 
             Logger.Log("Markdown", "Built all markdown.");
 
             if(reindex)
             {
-                Searcher.Searcher.IndexAll(true);
+                await Searcher.Searcher.IndexAll(true);
             }
 
             this._isBuilding = false;
@@ -203,7 +203,8 @@ class MarkdownBuilder
             breaks: true
         });
 
-        menuHtml = "<aside class='menu'><a class='button is-hidden-desktop'>{{translation.Hide}}</a>" +
+
+        menuHtml = "<aside class='menu'><a class='button is-hidden-desktop'>{{translation.Show}}</a>" +
             "<div class='menu-body is-hidden-touch'>" + menuHtml + "</div></aside>";
         await FileSystem.WriteFile(path.join(partialFolder, "menu.html"), menuHtml);
     }
@@ -275,7 +276,7 @@ class MarkdownBuilder
      * Build all markdown files in folder or subfolders
      * @param folderpath The folder to build
      */
-    private BuildFolder(folderpath: string) : void
+    private async BuildFolder(folderpath: string)
     {
         var self = this;
         
@@ -284,32 +285,33 @@ class MarkdownBuilder
 
         let files = fs.readdirSync(path.join(pageFolder, folderpath));
 
-        files.forEach(function(file)
+        for(let i = 0; i < files.length; i++)
         {
-            let filePath = path.join(pageFolder, folderpath, file);
-            
+            const file = files[i];
+            const filePath = path.join(pageFolder, folderpath, file);
+
             if(fs.statSync(filePath).isDirectory())
             {
-                self.BuildFolder(path.join(folderpath, file));
+                await self.BuildFolder(path.join(folderpath, file));
             }
             else if(path.extname(filePath) == ".md")
             {
-                self.BuildFile(path.join(folderpath, file));
+                await self.BuildFile(path.join(folderpath, file), folderpath);
             }
-        });
+        }
     }
 
     /**
      * Build a file
      * @param filePath The file to build
      */
-    private BuildFile(filePath: string) : void
+    private async BuildFile(filePath: string, folderPath: string)
     {
         let markdownText = fs.readFileSync(path.join(pageFolder, filePath)).toString();
         const tags = this.GetTags(markdownText);
 
         let compiled = kramed(markdownText, {});
-        let newPath = path.join(__dirname, dirPrefix, "built-views", filePath.replace(".md",".html").toLowerCase());
+        let newPath = path.join(builtFolder, filePath.replace(".md",".html").toLowerCase());
 
         const index = IndexBuilder.CreateIndex(compiled, tags["indexdepth"]);
 
@@ -317,17 +319,16 @@ class MarkdownBuilder
         
         const dom = new JSDOM(compiled);
         const document = dom.window.document;
+        const title = document.getElementsByTagName("h1")[0];
 
         if(index != "" && !tags["noindex"])
         {
-            const title = document.getElementsByTagName("h1")[0];
             const $index = document.createElement('div');
             $index.innerHTML = index;
             $index.classList.add("index");
 
             (title.parentNode as Node).insertBefore($index ,title.nextSibling);
         }
-
         fs.writeFileSync(newPath, document.documentElement.innerHTML);
     }
 

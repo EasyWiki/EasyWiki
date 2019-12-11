@@ -42,12 +42,24 @@ class TemplateMiddleware
         {
             req.theme = Theme.GetTheme(req.cookies.theme);
 
-            res.cookie("theme", req.cookies.theme, {secure: true, maxAge: Config.Config.Get("Style.maxAge")});
+            if(!req.theme)
+            {
+                req.theme = Theme.GetTheme(Config.Config.Get("Style.theme"));
+                req.cookies.accent = req.theme.GetDefaultAccent();
+            }
+
+            res.cookie("theme", req.theme.GetId(), {secure: true, maxAge: Config.Config.Get("Style.maxAge")});
 
             if(req.cookies.accent)
             {
                 req.accent = req.cookies.accent;
-                res.cookie("accent", req.cookies.accent, {secure: true, maxAge: Config.Config.Get("Style.maxAge")});
+
+                if(req.theme.GetAccents().indexOf(req.accent) == -1)
+                {
+                    req.accent = req.theme.GetDefaultAccent();
+                }
+
+                res.cookie("accent", req.accent, {secure: true, maxAge: Config.Config.Get("Style.maxAge")});
             }
             else
             {

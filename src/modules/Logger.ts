@@ -51,7 +51,7 @@ class Logger
 
     public static async CheckLogCount() : Promise<void>
     {
-        if(this._logCount >= Config.Config.Get("Logger.max"))
+        if(Config.Config && this._logCount >= Config.Config.Get("Logger.max"))
         {
             this.CreateLogFile();
         }

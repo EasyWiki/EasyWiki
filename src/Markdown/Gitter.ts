@@ -4,6 +4,7 @@ import { FileSystem } from "../modules/FileSystem";
 import { Logger } from "../modules/Logger";
 import { MarkdownBuilder } from "./MarkdownBuilder";
 import { execSync } from "child_process";
+import BreadcrumbBuilder from './BreadcrumbBuilder';
 
 
 // Create constants to the special folders
@@ -12,6 +13,7 @@ const pageFolder = path.join(__dirname, dirPrefix, "pages");
 const mediaFolder = path.join(__dirname, dirPrefix, "public", "media");
 const tempFolder = path.join(__dirname, dirPrefix, "pages-temp");
 const partialFolder = path.join(__dirname, dirPrefix, "partials");
+const builtFolder = path.join(__dirname, dirPrefix, "built-views");
 
 class Gitter
 {
@@ -60,6 +62,7 @@ class Gitter
                 await MarkdownBuilder.MarkdownBuilder.BuildNavBar();
                 await MarkdownBuilder.MarkdownBuilder.BuildFooter();
                 await MarkdownBuilder.MarkdownBuilder.BuildAll(true);
+                BreadcrumbBuilder.AddBreadcrumbsToFolder(builtFolder);
                 MarkdownBuilder.MarkdownBuilder.WatchFolder();
             }
 
