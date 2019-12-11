@@ -84,6 +84,19 @@ abstract class TreeNode
 
         return maxScore;
     }
+
+    public FromJson(json: any)
+    {
+        json["Nodes"].forEach((nodeJson:any) =>
+        {
+            let node = new Node(nodeJson["Char"]);
+            node.AddOccurence(nodeJson["Score"]);
+
+            this._nodes.set(nodeJson["Char"], node);
+
+            node.FromJson(nodeJson);
+        });
+    }
 }
 
 class Node extends TreeNode
@@ -101,9 +114,9 @@ class Node extends TreeNode
     /**
      * Add occurence to the node
      */
-    public AddOccurence() : void
+    public AddOccurence(occurences = 1) : void
     {
-        this._occurences++;
+        this._occurences += occurences;
     }
     
     public CalculateScore(charSeq: string[], depth : number) : number
@@ -178,6 +191,12 @@ class RootNode extends TreeNode
         obj["MaxScores"] = this._maxScore;
 
         return obj;
+    }
+
+    public FromJson(json: any)
+    {
+        this._maxScore = json["MaxScores"];
+        super.FromJson(json);
     }
 }
 

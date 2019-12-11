@@ -143,10 +143,21 @@ class Searcher
 
     public LoadIndexFiles()
     {
-        FileSystem.LoopFolder("","/", (file, absPath, relPath, isFolder) =>
+        Logger.Log("Searcher", "Loading index files.");
+        FileSystem.LoopFolder(searchFolder,"/", (file, absPath, relPath, isFolder) =>
         {
+            if(!isFolder)
+            {
+                let node = new RootNode();
+                let jsonStr = FileSystem.ReadFileSync(absPath);
+                node.FromJson(JSON.parse(jsonStr));
+                
+                this._pageNodes.set(relPath.substr(0, relPath.length - ".json".length), node);
 
+            }
         });
+
+        Logger.Log("Searcher", "Loaded index files.")
     }
 }
 
