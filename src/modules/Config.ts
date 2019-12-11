@@ -74,23 +74,28 @@ class Config
 
     public static LoadConfig() : Config
     {
+        Logger.Log("Config", "Loading config.");
         let configPath = "config.json";
         
         if(fs.existsSync("dev-config.json"))
             configPath = "dev-config.json";
 
         Config.Config = new Config(configPath);
+
+        Logger.Log("Config", "Loaded config.");
         return Config.Config;
     }
 
     public static LoadTranslation() : Config
     {
+        Logger.Log("Config", "Loading translations.");
         let configPath = "translation.json";
         
         if(fs.existsSync("dev-translation.json"))
             configPath = "dev-translation.json";
 
         Config.Translation = new Config(configPath);
+        Logger.Log("Config", "Loaded translations.")
         return Config.Translation;
     }
 }

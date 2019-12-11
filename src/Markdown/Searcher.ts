@@ -140,6 +140,14 @@ class Searcher
 
         return node;
     }
+
+    public LoadIndexFiles()
+    {
+        FileSystem.LoopFolder("","/", (file, absPath, relPath, isFolder) =>
+        {
+
+        });
+    }
 }
 
 export {Searcher};

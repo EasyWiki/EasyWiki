@@ -6,6 +6,7 @@ module.exports = {
         autorestart: true,
         watch: ["config.json", "dev-config.json", "app"],
         max_memory_restart: '1G',
+        "wait_ready": true,
         env: {
             NODE_ENV: 'development',
             watch: ["dev-config.json", "app"],

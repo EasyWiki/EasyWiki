@@ -45,6 +45,7 @@ class Web
         this.RegisterRoutes();
 
         Logger.Log("Web","The server started on port " + Config.Config.Get("Web.port") + ".");
+        (process.send as Function)('ready'); 
     }
 
     /**
