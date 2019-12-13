@@ -12,5 +12,5 @@ services:
         - COMPOSE_CONVERT_WINDOWS_PATHS=true
       volumes: 
         - ./logs:/var/easywiki/logs
-        - ./config:/var/easywiki/config
         - ./ssl:/var/easywiki/ssl
+        - ./dev-config:/var/easywiki/config

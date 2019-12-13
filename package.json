@@ -7,14 +7,17 @@
     "start": "pm2 start --env production",
     "start-dev": "pm2 start",
     "start-node": "node app/app.js",
-    "test": "npm run build && node app/app.js",
+
     "build": "tsc --build",
     "watch": "tsc --build --watch",
     "clean": "tsc --build --clean",
+
     "build-css": "node-sass -r -x sass/export -o public/css",
     "watch-css": "node-sass --watch -r -x sass/export -o public/css",
-    "build-md": "node app/buildMarkdown.js",
-    "build-all": "npm run build && npm run build-css && npm run build-md"
+
+    "docker": "docker-compose up",
+    "docker-build": "docker-compose build",
+    "docker-dev": "docker-compose -f dev-docker-compose.yml up --build"
   },
   "repository": {
     "type": "git",

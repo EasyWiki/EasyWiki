@@ -73,8 +73,8 @@ class Config
 
         let configPath = "config/config.json";
         
-        if(fs.existsSync("config/dev-config.json"))
-            configPath = "config/dev-config.json";
+        if(fs.existsSync("dev-config/config.json"))
+            configPath = "dev-config/config.json";
 
         Config.Config = new Config(configPath);
 
@@ -87,8 +87,8 @@ class Config
         Logger.Log("Config", "Loading translations.");
         let configPath = "config/translation.json";
         
-        if(fs.existsSync("config/dev-translation.json"))
-            configPath = "config/dev-translation.json";
+        if(fs.existsSync("dev-config/dev-translation.json"))
+            configPath = "dev-config/dev-translation.json";
 
         Config.Translation = new Config(configPath);
         Logger.Log("Config", "Loaded translations.")

@@ -4,6 +4,7 @@ WORKDIR /var/easywiki
 
 # Copy environment files
 COPY package.json .
+COPY package-lock.json .
 COPY ecosystem.config.js .
 COPY tsconfig.json .
 
@@ -15,18 +16,26 @@ RUN npm install pm2 typescript -g
 COPY ./src ./src
 COPY ./sass ./sass
 
-# Copy all view files
-COPY ./partials ./partials
-COPY ./public ./public
-COPY ./themes ./themes
+# Copy all partials
+COPY ./partials/body.html ./partials/body.html
+COPY ./partials/head.html ./partials/head.html
+COPY ./partials/header.html ./partials/header.html
+COPY ./partials/imageViewer.html ./partials/imageViewer.html
+
+# Copy views
 COPY ./views ./views
-COPY ./ssl  ./ssl
+
+# Copy all javascript
+COPY ./public/js ./public/js
+
+# Copy theme files
+COPY ./themes ./themes
 
 # Build source
 RUN npm run build
 RUN npm run build-css
 
-# Add configuration files
+# Copy configuration files
 COPY ./config ./config
 
 EXPOSE 80
