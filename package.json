@@ -38,17 +38,16 @@
     "jsdom": "^15.2.1",
     "kramed": "^0.5.6",
     "mustache": "^3.1.0",
-    "node-cache": "^5.0.2"
+    "node-cache": "^5.1.0"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.2",
     "@types/jsdom": "^12.2.4",
     "@types/mustache": "^0.8.32",
-    "@types/node-cache": "^4.2.5",
     "bulma": "^0.8.0",
     "bulma-extensions": "^6.2.7",
-    "bulma-fluent": "^0.3.18",
+    "bulma-fluent": "^0.3.19",
     "bulmaswatch": "^0.7.5",
     "node-sass": "^4.13.0"
   }
