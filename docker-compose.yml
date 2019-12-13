@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+    easywiki:
+      container_name: easywiki
+      restart: always
+      build: .
+      ports: 
+        - "80:80"
+        - "443:443" 
+      environment: 
+        - COMPOSE_CONVERT_WINDOWS_PATHS=true
+      volumes: 
+        - ./logs:/var/easywiki/logs
+        - ./config:/var/easywiki/config

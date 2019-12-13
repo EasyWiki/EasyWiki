@@ -1,5 +1,6 @@
 import fs from 'fs';
 import { Logger } from './Logger';
+import path from 'path';
 
 class Config
 {
@@ -42,13 +43,7 @@ class Config
     public Reload()
     {
         Logger.Log("Config", "Reloading config.");
-        let configPath = "config.json";
-
-        if(fs.existsSync("dev-config.json"))
-            configPath = "dev-config.json";
-        
-        let json = fs.readFileSync(configPath).toString();
-        this._config = JSON.parse(json);
+        Config.LoadConfig();
     }
 
     /**
@@ -75,10 +70,11 @@ class Config
     public static LoadConfig() : Config
     {
         Logger.Log("Config", "Loading config.");
-        let configPath = "config.json";
+
+        let configPath = "config/config.json";
         
-        if(fs.existsSync("dev-config.json"))
-            configPath = "dev-config.json";
+        if(fs.existsSync("config/dev-config.json"))
+            configPath = "config/dev-config.json";
 
         Config.Config = new Config(configPath);
 
@@ -89,10 +85,10 @@ class Config
     public static LoadTranslation() : Config
     {
         Logger.Log("Config", "Loading translations.");
-        let configPath = "translation.json";
+        let configPath = "config/translation.json";
         
-        if(fs.existsSync("dev-translation.json"))
-            configPath = "dev-translation.json";
+        if(fs.existsSync("config/dev-translation.json"))
+            configPath = "config/dev-translation.json";
 
         Config.Translation = new Config(configPath);
         Logger.Log("Config", "Loaded translations.")
