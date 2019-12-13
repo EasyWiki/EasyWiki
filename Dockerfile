@@ -41,4 +41,4 @@ COPY ./config ./config
 EXPOSE 80
 EXPOSE 443
 
-CMD [ "node" , "app/app.js" ]
+CMD [ "pm2-docker" , "start", "ecosystem.config.js", "--env", "production" ]
