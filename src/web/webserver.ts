@@ -16,6 +16,7 @@ import { Searcher } from '../Markdown/Searcher';
 import { Theme } from '../modules/Theme';
 import { FileSystem } from '../modules/FileSystem';
 import AuthenticationMiddleware from './Middleware/AuthenticationMiddleware';
+import RedirectMiddleware from './Middleware/RedirectMiddleware';
 
 class Web
 {
@@ -61,6 +62,7 @@ class Web
     {        
         // Set up middleware
         this._app.use(LoggerMiddleware.LogRoute);
+        this._app.use(RedirectMiddleware.Redirect);
         
         this._app.use(express.json());
         this._app.use(express.urlencoded({extended: false}));
