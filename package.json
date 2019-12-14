@@ -1,7 +1,7 @@
 {
   "name": "easywiki",
   "version": "0.6.2",
-  "description": "EasyWiki is the wiki software designed with simplicity and easy.",
+  "description": "Simple wiki software for an easy wiki.",
   "main": "app/app.js",
   "scripts": {
     "start": "pm2 start --env production",
@@ -17,7 +17,7 @@
 
     "docker": "docker-compose up",
     "docker-build": "docker-compose build",
-    "docker-dev": "docker-compose -f dev-docker-compose.yml up --build"
+    "docker-dev": "docker-compose -f dev-docker-compose.yml up"
   },
   "repository": {
     "type": "git",
@@ -28,7 +28,7 @@
     "easywiki",
     "easy"
   ],
-  "author": "Mathias Maes",
+  "author": "EasyWiki",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/WatcherWhale/EasyWiki/issues"
