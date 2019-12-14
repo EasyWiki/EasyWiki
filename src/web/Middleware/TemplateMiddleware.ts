@@ -216,6 +216,13 @@ class TemplateObject
 
     public GenerateMeta() : string
     {
+        const cache = FileSystem.GetCache("meta");
+
+        if(cache)
+        {
+            return cache as string;
+        }
+
         const desc = Config.Meta.Get("description");
         const keywords = Config.Meta.Get("keywords");
         const copy = Config.Meta.Get("copyright");
