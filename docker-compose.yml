@@ -2,9 +2,8 @@ version: '3'
 
 services:
     easywiki:
-      container_name: easywiki
+      image: easywiki/easywiki
       restart: always
-      build: .
       ports: 
         - "80:80"
         - "443:443"

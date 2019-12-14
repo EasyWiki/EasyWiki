@@ -15,9 +15,9 @@
     "build-css": "node-sass -r -x sass/export -o public/css",
     "watch-css": "node-sass --watch -r -x sass/export -o public/css",
 
-    "docker": "docker-compose up",
+    "docker": "docker-compose up -d",
     "docker-build": "docker-compose build",
-    "docker-dev": "docker-compose -f dev-docker-compose.yml up"
+    "docker-dev": "docker-compose -f dev-docker-compose.yml up -d"
   },
   "repository": {
     "type": "git",

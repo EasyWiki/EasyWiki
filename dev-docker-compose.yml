@@ -2,7 +2,8 @@ version: '3'
 
 services:
     easywiki:
-      container_name: easywiki
+      image: easywiki/easywiki
+      container_name: easywiki-dev
       restart: always
       build: .
       ports: 
