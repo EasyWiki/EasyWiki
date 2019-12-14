@@ -1,0 +1,10 @@
+{
+    "description": "Simple wiki software for an easy wiki.",
+    "keywords": [
+        "Easywiki"
+    ],
+    "copyright":"Easywiki 2019",
+    "language": "EN",
+    "robots": "index, follow",
+    "rating": "general"
+}

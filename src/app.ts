@@ -23,6 +23,7 @@ async function StartServer()
     // Load the config
     Config.LoadConfig();
     Config.LoadTranslation();
+    Config.LoadMeta();
 
     // Create the searcher and markdownbuilder objects
     const search = new Searcher();
