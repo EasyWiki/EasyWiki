@@ -8,7 +8,7 @@ class Config
     public static Meta : Config;
 
     private _config : any;
-    private _watcher : fs.FSWatcher;
+    private _watcher : fs.FSWatcher | undefined;
     private _path : string;
 
     constructor(path: string)
@@ -17,7 +17,6 @@ class Config
 
         this.Load(false);
 
-        this._watcher = fs.watch(path, {persistent: true, recursive: false});
         this.WatchFile();
     }
 
@@ -43,10 +42,17 @@ class Config
      */
     public Load(reload: boolean = true)
     {
-        let json = fs.readFileSync(this._path).toString();
-        this._config = JSON.parse(json);
-        
-        if(reload) Logger.Log("Config", "Reloaded config file.");
+        try
+        {
+            let json = fs.readFileSync(this._path).toString();
+            this._config = JSON.parse(json);
+            
+            if(reload) Logger.Log("Config", "Reloaded config file.");
+        }
+        catch(e)
+        {
+            Logger.Error("Config", "Failed loading config.", e);
+        }
     }
 
     /**
@@ -54,6 +60,8 @@ class Config
      */
     private WatchFile()
     {
+        this._watcher = fs.watch(this._path, {persistent: true, recursive: false});
+
         const self = this;
         this._watcher.on("change", function(eventType, filename)
         {
