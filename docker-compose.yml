@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+    easywiki:
+      image: easywiki/easywiki
+      restart: always
+      ports: 
+        - "80:80"
+        - "443:443"
+      volumes: 
+        - ./logs:/var/easywiki/logs
+        - ./config:/var/easywiki/config
+        - ./ssl:/var/easywiki/ssl

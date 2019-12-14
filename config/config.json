@@ -11,6 +11,7 @@
     {
         "port": 443,
         "httpport": 80,
+        "forceurl": "",
         "cookieSecret": "password",
         "ssl":
         {

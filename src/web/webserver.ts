@@ -16,6 +16,7 @@ import { Searcher } from '../Markdown/Searcher';
 import { Theme } from '../modules/Theme';
 import { FileSystem } from '../modules/FileSystem';
 import AuthenticationMiddleware from './Middleware/AuthenticationMiddleware';
+import RedirectMiddleware from './Middleware/RedirectMiddleware';
 
 class Web
 {
@@ -45,7 +46,7 @@ class Web
         this.RegisterRoutes();
 
         Logger.Log("Web","The server started on port " + Config.Config.Get("Web.port") + ".");
-        (process.send as Function)('ready'); 
+        if(process.send)(process.send as Function)('ready'); 
     }
 
     public StopServer()
@@ -61,6 +62,7 @@ class Web
     {        
         // Set up middleware
         this._app.use(LoggerMiddleware.LogRoute);
+        this._app.use(RedirectMiddleware.Redirect);
         
         this._app.use(express.json());
         this._app.use(express.urlencoded({extended: false}));
@@ -226,8 +228,8 @@ class Web
      */
     private GetSslCertificate() : https.ServerOptions
     {
-        var cert = fs.readFileSync(path.join(__dirname , "../.." , Config.Config.Get("Web.ssl.cert")));
-        var key = fs.readFileSync(path.join(__dirname ,  "../../" , Config.Config.Get("Web.ssl.key")));
+        var cert = fs.readFileSync(Config.Config.Get("Web.ssl.cert"));
+        var key = fs.readFileSync(Config.Config.Get("Web.ssl.key"));
 
         var options : https.ServerOptions = {key:key.toString(),cert:cert.toString(),"passphrase": ""};
 

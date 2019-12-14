@@ -1,20 +1,23 @@
 {
   "name": "easywiki",
-  "version": "0.6.2",
-  "description": "EasyWiki is the wiki software designed with simplicity and easy.",
+  "version": "0.7.0",
+  "description": "Simple wiki software for an easy wiki.",
   "main": "app/app.js",
   "scripts": {
     "start": "pm2 start --env production",
     "start-dev": "pm2 start",
     "start-node": "node app/app.js",
-    "test": "npm run build && node app/app.js",
+
     "build": "tsc --build",
     "watch": "tsc --build --watch",
     "clean": "tsc --build --clean",
+
     "build-css": "node-sass -r -x sass/export -o public/css",
     "watch-css": "node-sass --watch -r -x sass/export -o public/css",
-    "build-md": "node app/buildMarkdown.js",
-    "build-all": "npm run build && npm run build-css && npm run build-md"
+
+    "docker": "docker-compose up -d",
+    "docker-build": "docker-compose build",
+    "docker-dev": "docker-compose -f dev-docker-compose.yml up -d"
   },
   "repository": {
     "type": "git",
@@ -25,7 +28,7 @@
     "easywiki",
     "easy"
   ],
-  "author": "Mathias Maes",
+  "author": "EasyWiki",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/WatcherWhale/EasyWiki/issues"
@@ -38,17 +41,16 @@
     "jsdom": "^15.2.1",
     "kramed": "^0.5.6",
     "mustache": "^3.1.0",
-    "node-cache": "^5.0.2"
+    "node-cache": "^5.1.0"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.2",
     "@types/jsdom": "^12.2.4",
     "@types/mustache": "^0.8.32",
-    "@types/node-cache": "^4.2.5",
     "bulma": "^0.8.0",
     "bulma-extensions": "^6.2.7",
-    "bulma-fluent": "^0.3.18",
+    "bulma-fluent": "^0.3.19",
     "bulmaswatch": "^0.7.5",
     "node-sass": "^4.13.0"
   }

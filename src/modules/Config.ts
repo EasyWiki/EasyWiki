@@ -5,17 +5,18 @@ class Config
 {
     public static Config : Config;
     public static Translation : Config;
+    public static Meta : Config;
 
     private _config : any;
-    private _watcher : fs.FSWatcher;
+    private _watcher : fs.FSWatcher | undefined;
+    private _path : string;
 
     constructor(path: string)
     {
-        
-        let json = fs.readFileSync(path).toString();
-        this._config = JSON.parse(json);
+        this._path = path;
 
-        this._watcher = fs.watch(path, {persistent: true, recursive: false});
+        this.Load(false);
+
         this.WatchFile();
     }
 
@@ -37,18 +38,21 @@ class Config
     }
 
     /**
-     * Reload the config
+     * (Re)Load the config
      */
-    public Reload()
+    public Load(reload: boolean = true)
     {
-        Logger.Log("Config", "Reloading config.");
-        let configPath = "config.json";
-
-        if(fs.existsSync("dev-config.json"))
-            configPath = "dev-config.json";
-        
-        let json = fs.readFileSync(configPath).toString();
-        this._config = JSON.parse(json);
+        try
+        {
+            let json = fs.readFileSync(this._path).toString();
+            this._config = JSON.parse(json);
+            
+            if(reload) Logger.Log("Config", "Reloaded config file.");
+        }
+        catch(e)
+        {
+            Logger.Error("Config", "Failed loading config.", e);
+        }
     }
 
     /**
@@ -56,9 +60,12 @@ class Config
      */
     private WatchFile()
     {
+        this._watcher = fs.watch(this._path, {persistent: true, recursive: false});
+
+        const self = this;
         this._watcher.on("change", function(eventType, filename)
         {
-            Config.Config.Reload();
+            self.Load(true);
         });
 
         this._watcher.on("error", function(err)
@@ -74,11 +81,14 @@ class Config
 
     public static LoadConfig() : Config
     {
+        const file = "config.json";
+
         Logger.Log("Config", "Loading config.");
-        let configPath = "config.json";
+
+        let configPath = "config/" + file;
         
-        if(fs.existsSync("dev-config.json"))
-            configPath = "dev-config.json";
+        if(fs.existsSync("dev-config/" + file))
+            configPath = "dev-config/" + file;
 
         Config.Config = new Config(configPath);
 
@@ -88,15 +98,32 @@ class Config
 
     public static LoadTranslation() : Config
     {
+        const file = "translation.json";
+
         Logger.Log("Config", "Loading translations.");
-        let configPath = "translation.json";
+        let configPath = "config/" + file;
         
-        if(fs.existsSync("dev-translation.json"))
-            configPath = "dev-translation.json";
+        if(fs.existsSync("dev-config/" + file))
+            configPath = "dev-config/" + file;
 
         Config.Translation = new Config(configPath);
         Logger.Log("Config", "Loaded translations.")
         return Config.Translation;
+    }
+
+    public static LoadMeta() : Config
+    {
+        const file = "meta.json";
+
+        Logger.Log("Config", "Loading meta.");
+        let configPath = "config/" + file;
+        
+        if(fs.existsSync("dev-config/" + file))
+            configPath = "dev-config/" + file;
+
+        Config.Meta = new Config(configPath);
+        Logger.Log("Config", "Loaded meta.")
+        return Config.Meta;
     }
 }
 

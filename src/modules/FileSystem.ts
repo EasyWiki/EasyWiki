@@ -244,6 +244,16 @@ class FileSystem
     {
         this.cacheStore.del(this.cacheStore.keys());
     }
+
+    public static AddCache(key: string, value: unknown)
+    {
+        this.cacheStore.set(key, value);
+    }
+
+    public static GetCache(key: string)
+    {
+        return this.cacheStore.get(key);
+    }
 }
 
 export {FileSystem};

@@ -106,6 +106,7 @@ class TemplateObject
         //Deep copy
         params = Object.create(params);
 
+        params["meta"] = this.GenerateMeta();
         params["path"] = req.url;
         params["sitetitle"] = Config.Config.Get("Style.title");
 
@@ -211,6 +212,30 @@ class TemplateObject
 
         return fs.existsSync(builtViewPath) || fs.existsSync(builtViewFolderPath) ||
                fs.existsSync(viewPath)
+    }
+
+    public GenerateMeta() : string
+    {
+        const cache = FileSystem.GetCache("meta");
+
+        if(cache)
+        {
+            return cache as string;
+        }
+
+        const desc = Config.Meta.Get("description");
+        const keywords = Config.Meta.Get("keywords");
+        const copy = Config.Meta.Get("copyright");
+        const language = Config.Meta.Get("language");
+        const robots = Config.Meta.Get("robots");
+        const rating = Config.Meta.Get("rating");
+
+        return `<meta name="description" content="${desc}">` + 
+                    `<meta name="copyright" content="${copy}">` + 
+                    `<meta name="language" content="${language}">` + 
+                    `<meta name="robots" content="${robots}">` + 
+                    `<meta name="rating" content="${rating}">` + 
+                    `<meta name="keywords" content="${keywords.join(",")}">`;
     }
 
 }
