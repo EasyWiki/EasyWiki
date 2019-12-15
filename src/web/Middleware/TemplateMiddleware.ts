@@ -67,7 +67,6 @@ class TemplateMiddleware
             {
                 req.accent = req.theme.GetDefaultAccent();
             }
-
         }
         else
         {
@@ -111,10 +110,11 @@ class TemplateObject
         params["meta"] = this.GenerateMeta();
         params["path"] = req.url;
         params["sitetitle"] = Config.Config.Get("Style.title");
-        params["sponsors"] = Sponsors.Sponsors.GetHtml();
-
+        
         params["translation"] = Config.Translation.GetJson();
 
+        params["sponsors"] = mustache.render(Sponsors.Sponsors.GetHtml(), params);
+        
         params["analytics"] = this.GenerateAnalytics(req);
 
         if(!params["theme"])

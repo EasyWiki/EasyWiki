@@ -34,7 +34,7 @@ class Sponsors
         else
         {
             let html = "<section class='section sponsors'>";
-            html += "<h3 class='title is-5'>Sponsors:</h3>"
+            html += "<h3 class='title is-5'>{{translation.Sponsors}}:</h3>"
             
             this._sponsors.forEach((sponsor) =>
             {
