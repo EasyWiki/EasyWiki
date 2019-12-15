@@ -7,14 +7,11 @@
     "start": "pm2 start --env production",
     "start-dev": "pm2 start",
     "start-node": "node app/app.js",
-
     "build": "tsc --build",
     "watch": "tsc --build --watch",
     "clean": "tsc --build --clean",
-
     "build-css": "node-sass -r -x sass/export -o public/css",
     "watch-css": "node-sass --watch -r -x sass/export -o public/css",
-
     "docker": "docker-compose up -d",
     "docker-build": "docker build -t easywiki/easywiki:latest .",
     "docker-dev": "docker-compose -f dev-docker-compose.yml up -d"
@@ -35,6 +32,9 @@
   },
   "homepage": "https://github.com/WatcherWhale/EasyWiki#readme",
   "dependencies": {
+    "@node-minify/core": "^5.2.1",
+    "@node-minify/uglify-es": "^5.2.0",
+    "@node-minify/uglify-js": "^5.2.1",
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",
