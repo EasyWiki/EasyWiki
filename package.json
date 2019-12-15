@@ -12,6 +12,7 @@
     "clean": "tsc --build --clean",
     "build-css": "node-sass -r -x sass/export -o public/css",
     "watch-css": "node-sass --watch -r -x sass/export -o public/css",
+    "minify": "node minifier/minify.js",
     "docker": "docker-compose up -d",
     "docker-build": "docker build -t easywiki/easywiki:latest .",
     "docker-dev": "docker-compose -f dev-docker-compose.yml up -d"
@@ -32,9 +33,6 @@
   },
   "homepage": "https://github.com/WatcherWhale/EasyWiki#readme",
   "dependencies": {
-    "@node-minify/core": "^5.2.1",
-    "@node-minify/uglify-es": "^5.2.0",
-    "@node-minify/uglify-js": "^5.2.1",
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",
@@ -44,6 +42,8 @@
     "node-cache": "^5.1.0"
   },
   "devDependencies": {
+    "@node-minify/core": "^5.2.1",
+    "@node-minify/uglify-es": "^5.2.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.2",
     "@types/jsdom": "^12.2.4",
