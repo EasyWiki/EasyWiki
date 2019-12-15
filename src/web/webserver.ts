@@ -208,6 +208,12 @@ class Web
             res.contentType("text").send(Config.Translation.Get(req.body.translation));
         });
 
+        this._app.get("/error", async function(req, res)
+        {
+            req.templateObject.RenderAndSend(req, res, "error",
+                    Config.Translation.Get("ErrorPages.500"), 500);
+        });
+
         this._app.all("/(:view)*", async function(req,res)
         {
             const view = req.params.view + req.params["0"];
