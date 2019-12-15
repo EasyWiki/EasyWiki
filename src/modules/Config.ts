@@ -79,18 +79,21 @@ class Config
         return this._config;
     }
 
-    public static LoadConfig() : Config
+    public static GetPath(file: string)
     {
-        const file = "config.json";
-
-        Logger.Log("Config", "Loading config.");
-
         let configPath = "config/" + file;
         
         if(fs.existsSync("dev-config/" + file))
             configPath = "dev-config/" + file;
 
-        Config.Config = new Config(configPath);
+        return configPath;
+    }
+
+    public static LoadConfig() : Config
+    {
+        Logger.Log("Config", "Loading config.");
+
+        Config.Config = new Config(this.GetPath("config.json"));
 
         Logger.Log("Config", "Loaded config.");
         return Config.Config;
@@ -98,30 +101,21 @@ class Config
 
     public static LoadTranslation() : Config
     {
-        const file = "translation.json";
-
         Logger.Log("Config", "Loading translations.");
-        let configPath = "config/" + file;
-        
-        if(fs.existsSync("dev-config/" + file))
-            configPath = "dev-config/" + file;
 
-        Config.Translation = new Config(configPath);
-        Logger.Log("Config", "Loaded translations.")
+        Config.Translation = new Config(this.GetPath("translation.json"));
+
+        Logger.Log("Config", "Loaded translations.");
+        
         return Config.Translation;
     }
 
     public static LoadMeta() : Config
     {
-        const file = "meta.json";
-
         Logger.Log("Config", "Loading meta.");
-        let configPath = "config/" + file;
-        
-        if(fs.existsSync("dev-config/" + file))
-            configPath = "dev-config/" + file;
 
-        Config.Meta = new Config(configPath);
+        Config.Meta = new Config(this.GetPath("meta.json"));
+
         Logger.Log("Config", "Loaded meta.")
         return Config.Meta;
     }
