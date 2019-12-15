@@ -9,9 +9,7 @@
     "start-node": "node app/app.js",
     "build": "tsc --build",
     "watch": "tsc --build --watch",
-    "clean": "tsc --build --clean",
-    "build-css": "node-sass -r -x sass/export -o public/css",
-    "watch-css": "node-sass --watch -r -x sass/export -o public/css",
+    "clean": "tsc --build --clean"
     "minify": "node minifier/minify.js",
     "docker": "docker-compose up -d",
     "docker-build": "docker build -t easywiki/easywiki:latest .",
