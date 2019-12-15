@@ -62,7 +62,6 @@ typings/
 
 # Compiled output
 app/
-public/css/
 public/js/ui.js
 public/js/behaviour.js
 
@@ -88,3 +87,7 @@ partials/footer.html
 public/media/
 public/logo.png
 public/favicon.png
+
+# EasyWiki Themes
+public/css/
+themes/
