@@ -1,0 +1,11 @@
+{
+    "sponsors":[
+        {
+            "name": "EasyWiki",
+            "priority": 1,
+            "url": "https://github.com/EasyWiki",
+            "img": "https://avatars3.githubusercontent.com/u/58704442?s=200&v=4",
+            "background": false
+        }
+    ]
+}

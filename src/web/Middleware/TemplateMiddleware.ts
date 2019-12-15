@@ -7,6 +7,7 @@ import { Theme } from '../../modules/Theme';
 import { Config } from '../../modules/Config';
 import { FileSystem } from '../../modules/FileSystem';
 import { JSDOM } from 'jsdom';
+import Sponsors from '../../modules/Sponsors';
 
 const dirPrefix = "../../..";
 
@@ -109,6 +110,7 @@ class TemplateObject
         params["meta"] = this.GenerateMeta();
         params["path"] = req.url;
         params["sitetitle"] = Config.Config.Get("Style.title");
+        params["sponsors"] = Sponsors.Sponsors.GetHtml();
 
         params["translation"] = Config.Translation.GetJson();
 

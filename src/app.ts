@@ -6,6 +6,7 @@ import { Searcher } from "./Markdown/Searcher";
 import { Gitter } from "./Markdown/Gitter";
 import { Timer } from "./modules/Timer";
 import { Logger } from "./modules/Logger";
+import Sponsors = require("./modules/Sponsors");
 
 // Start the server asynchrously
 StartServer();
@@ -24,6 +25,8 @@ async function StartServer()
     Config.LoadConfig();
     Config.LoadTranslation();
     Config.LoadMeta();
+
+    Sponsors.Load();
 
     // Create the searcher and markdownbuilder objects
     const search = new Searcher();
