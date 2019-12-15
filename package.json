@@ -16,7 +16,7 @@
     "watch-css": "node-sass --watch -r -x sass/export -o public/css",
 
     "docker": "docker-compose up -d",
-    "docker-build": "docker-compose build",
+    "docker-build": "docker build -t easywiki/easywiki:latest .",
     "docker-dev": "docker-compose -f dev-docker-compose.yml up -d"
   },
   "repository": {
