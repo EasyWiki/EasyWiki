@@ -4,7 +4,10 @@ var uglifyes = require('@node-minify/uglify-es');
 minify({
     compressor: uglifyes,
     input: './javascript/Behaviour/*.js',
-    output: './public/js/behaviour.js'
+    output: './public/js/behaviour.js',
+    options:{
+        mangle: true
+    }
 }).catch((e) => {
     console.log("\x1b[31mFailed.\x1b[0m");
     console.log(e);
@@ -15,7 +18,10 @@ minify({
 minify({
     compressor: uglifyes,
     input: './javascript/UI/*.js',
-    output: './public/js/ui.js'
+    output: './public/js/ui.js',
+    options:{
+        mangle: true
+    }
 }).catch((e) => {
     console.log("\x1b[31mFailed.\x1b[0m");
     console.log(e);
