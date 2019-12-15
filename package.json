@@ -9,7 +9,7 @@
     "start-node": "node app/app.js",
     "build": "tsc --build",
     "watch": "tsc --build --watch",
-    "clean": "tsc --build --clean"
+    "clean": "tsc --build --clean",
     "minify": "node minifier/minify.js",
     "docker": "docker-compose up -d",
     "docker-build": "docker build -t easywiki/easywiki:latest .",

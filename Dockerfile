@@ -14,7 +14,6 @@ RUN npm install pm2 typescript -g
 
 # Copy source
 COPY ./src ./src
-COPY ./sass ./sass
 COPY ./minifier ./minifier
 
 # Copy all partials
