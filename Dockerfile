@@ -31,10 +31,10 @@ COPY ./public/js ./public/js
 
 # Copy theme files
 COPY ./themes ./themes
+COPY ./public/css .//public/css
 
 # Build source
 RUN npm run build
-RUN npm run build-css
 RUN npm run minify
 
 # Copy configuration files
