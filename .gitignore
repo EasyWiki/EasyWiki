@@ -63,6 +63,8 @@ typings/
 # Compiled output
 app/
 public/css/
+public/js/ui.js
+public/js/behaviour.js
 
 # Developer configuration
 dev-config/
