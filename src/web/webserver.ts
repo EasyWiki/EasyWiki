@@ -145,8 +145,8 @@ class Web
 
         this._app.post("/themes", async function(req, res)
         {
-            res.cookie("theme",req.body.theme,{secure: true, maxAge: Config.Config.Get("Style.maxAge")});
-            res.cookie("accent",req.body.accent,{secure: true, maxAge: Config.Config.Get("Style.maxAge")});
+            CookieMiddleWare.SetCookie("theme",req.body.theme, res);
+            CookieMiddleWare.SetCookie("accent",req.body.accent, res);
 
             res.redirect("/themes");
         });
