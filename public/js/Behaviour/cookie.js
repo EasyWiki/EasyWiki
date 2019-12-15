@@ -10,11 +10,6 @@ OnWindowLoad(function()
     {
         $cookieMessage.classList.toggle("is-hidden", false);
     }
-    else
-    {
-        SetCookie("accepted",cookie,30);
-    }
-
 
     $accepted.addEventListener("click",function(e)
     {

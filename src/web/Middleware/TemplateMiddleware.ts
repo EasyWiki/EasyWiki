@@ -8,6 +8,7 @@ import { Config } from '../../modules/Config';
 import { FileSystem } from '../../modules/FileSystem';
 import { JSDOM } from 'jsdom';
 import Sponsors from '../../modules/Sponsors';
+import CookieMiddleware from './CookieMiddleware';
 
 const dirPrefix = "../../..";
 
@@ -46,10 +47,12 @@ class TemplateMiddleware
             if(!req.theme)
             {
                 req.theme = Theme.GetTheme(Config.Config.Get("Style.theme"));
+
                 req.cookies.accent = req.theme.GetDefaultAccent();
+                CookieMiddleware.SetCookie("accent", req.theme.GetDefaultAccent(), res);
             }
 
-            res.cookie("theme", req.theme.GetId(), {secure: true, maxAge: Config.Config.Get("Style.maxAge")});
+            CookieMiddleware.SetCookie("theme", req.theme.GetId(), res);
 
             if(req.cookies.accent)
             {
@@ -59,8 +62,6 @@ class TemplateMiddleware
                 {
                     req.accent = req.theme.GetDefaultAccent();
                 }
-
-                res.cookie("accent", req.accent, {secure: true, maxAge: Config.Config.Get("Style.maxAge")});
             }
             else
             {
