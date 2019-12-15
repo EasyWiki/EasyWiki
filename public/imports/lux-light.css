@@ -14323,5 +14323,5 @@ footer.footer {
   background: #282f2f !important;
   color: white !important; }
 
-footer.footer h1, h2, h3, h4, h5, h6 {
+footer.footer h1, footer.footer h2, footer.footer h3, footer.footer h4, footer.footer h5, footer.footer h6 {
   color: white !important; }
