@@ -112,7 +112,7 @@ class TemplateObject
 
         params["translation"] = Config.Translation.GetJson();
 
-        params["analytics"] = Config.Config.Get("Web.analytics");
+        params["analytics"] = this.GenerateAnalytics(req);
 
         if(!params["theme"])
         {
@@ -238,6 +238,23 @@ class TemplateObject
                     `<meta name="keywords" content="${keywords.join(",")}">`;
     }
 
+    public GenerateAnalytics(req: express.Request) : string
+    {
+        const accepted = req.cookies["accepted"];
+
+        if(accepted == "minimal")
+        {
+            return "";
+        }
+        else
+        {
+            return '<script async src="https://www.googletagmanager.com/gtag/js?id=' + 
+                Config.Config.Get("Web.analytics") + '"></script>' + 
+                "<script>window.dataLayer = window.dataLayer || [];" +
+                "function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '" +
+                Config.Config.Get("Web.analytics") + "');</script>";
+        }
+    }
 }
 
 export {TemplateMiddleware, TemplateObject};

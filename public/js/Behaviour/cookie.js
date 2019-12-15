@@ -1,16 +1,18 @@
 OnWindowLoad(function()
 {
-    $cookieMessage = document.getElementById("cookie-message");
-    $accepted = $cookieMessage.querySelector("#accept");
+    const $cookieMessage = document.getElementById("cookie-message");
+    const $accepted = $cookieMessage.querySelector("#accept");
+    const $minimal = $cookieMessage.querySelector("#minimal");
 
+    const cookie = GetCookie("accepted");
 
-    if(GetCookie("accepted") != "true")
+    if(cookie != "true" && cookie != "minimal")
     {
         $cookieMessage.classList.toggle("is-hidden", false);
     }
     else
     {
-        SetCookie("accepted","true",30);
+        SetCookie("accepted",cookie,30);
     }
 
 
@@ -18,6 +20,14 @@ OnWindowLoad(function()
     {
         $cookieMessage.classList.toggle("is-hidden", true);
         SetCookie("accepted","true",30);
+    });
+
+    $minimal.addEventListener("click", function(e)
+    {
+        $cookieMessage.classList.toggle("is-hidden", true);
+        SetCookie("accepted","minimal",30);
+
+        window.location.reload();
     });
 });
 
