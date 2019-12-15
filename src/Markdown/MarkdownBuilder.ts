@@ -238,7 +238,7 @@ class MarkdownBuilder
 
         var footHtml = kramed(await FileSystem.ReadFile(path.join(partialFolder, "footer.md")), {});
         footHtml = "</div></div></section><footer class='footer'>" +
-        "<div class='content'>" + footHtml + "</div></footer>";
+        "<div class='content'>" + footHtml + "</div>{{{sponsors}}}</footer>";
 
         await FileSystem.WriteFile(path.join(partialFolder, "footer.html"), footHtml);
     }

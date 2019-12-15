@@ -17,6 +17,7 @@ import { Theme } from '../modules/Theme';
 import { FileSystem } from '../modules/FileSystem';
 import AuthenticationMiddleware from './Middleware/AuthenticationMiddleware';
 import RedirectMiddleware from './Middleware/RedirectMiddleware';
+import CookieMiddleWare from './Middleware/CookieMiddleware';
 
 class Web
 {
@@ -77,6 +78,9 @@ class Web
         this._app.use(AuthenticationMiddleware.Authenticate);
         
         this._app.use(express.static(path.join(__dirname, "../..", 'public')));
+        
+        this._app.use(CookieMiddleWare.RefreshCookies);
+        this._app.use(ErrorMiddleware.HandleError);
     }
 
     /**
@@ -204,6 +208,12 @@ class Web
             res.contentType("text").send(Config.Translation.Get(req.body.translation));
         });
 
+        this._app.get("/error", async function(req, res)
+        {
+            req.templateObject.RenderAndSend(req, res, "error",
+                    Config.Translation.Get("ErrorPages.500"), 500);
+        });
+
         this._app.all("/(:view)*", async function(req,res)
         {
             const view = req.params.view + req.params["0"];
@@ -219,8 +229,6 @@ class Web
             }
             
         });
-
-        this._app.use(ErrorMiddleware.HandleError);
     }
 
     /**

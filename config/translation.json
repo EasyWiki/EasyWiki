@@ -21,6 +21,7 @@
         "title": "This website uses cookies",
         "message": "We use cookies to improve your experience. We use them to collect analytical data and to save your site preferences.",
         "accept": "Accept",
+        "minimal": "Minimal settings",
         "readmore": "Read More",
         "link": "/privacy"
     },
@@ -33,5 +34,6 @@
         "Accents": "Accents"
     },
     "Hide": "Hide",
-    "Show": "Show"
+    "Show": "Show",
+    "Sponsors": "Sponsors"
 }

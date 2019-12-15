@@ -7,6 +7,8 @@ import { Theme } from '../../modules/Theme';
 import { Config } from '../../modules/Config';
 import { FileSystem } from '../../modules/FileSystem';
 import { JSDOM } from 'jsdom';
+import Sponsors from '../../modules/Sponsors';
+import CookieMiddleware from './CookieMiddleware';
 
 const dirPrefix = "../../..";
 
@@ -45,10 +47,12 @@ class TemplateMiddleware
             if(!req.theme)
             {
                 req.theme = Theme.GetTheme(Config.Config.Get("Style.theme"));
+
                 req.cookies.accent = req.theme.GetDefaultAccent();
+                CookieMiddleware.SetCookie("accent", req.theme.GetDefaultAccent(), res);
             }
 
-            res.cookie("theme", req.theme.GetId(), {secure: true, maxAge: Config.Config.Get("Style.maxAge")});
+            CookieMiddleware.SetCookie("theme", req.theme.GetId(), res);
 
             if(req.cookies.accent)
             {
@@ -58,14 +62,11 @@ class TemplateMiddleware
                 {
                     req.accent = req.theme.GetDefaultAccent();
                 }
-
-                res.cookie("accent", req.accent, {secure: true, maxAge: Config.Config.Get("Style.maxAge")});
             }
             else
             {
                 req.accent = req.theme.GetDefaultAccent();
             }
-
         }
         else
         {
@@ -109,10 +110,12 @@ class TemplateObject
         params["meta"] = this.GenerateMeta();
         params["path"] = req.url;
         params["sitetitle"] = Config.Config.Get("Style.title");
-
+        
         params["translation"] = Config.Translation.GetJson();
 
-        params["analytics"] = Config.Config.Get("Web.analytics");
+        params["sponsors"] = mustache.render(Sponsors.Sponsors.GetHtml(), params);
+        
+        params["analytics"] = this.GenerateAnalytics(req);
 
         if(!params["theme"])
         {
@@ -238,6 +241,23 @@ class TemplateObject
                     `<meta name="keywords" content="${keywords.join(",")}">`;
     }
 
+    public GenerateAnalytics(req: express.Request) : string
+    {
+        const accepted = req.cookies["accepted"];
+
+        if(accepted == "minimal")
+        {
+            return "";
+        }
+        else
+        {
+            return '<script async src="https://www.googletagmanager.com/gtag/js?id=' + 
+                Config.Config.Get("Web.analytics") + '"></script>' + 
+                "<script>window.dataLayer = window.dataLayer || [];" +
+                "function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '" +
+                Config.Config.Get("Web.analytics") + "');</script>";
+        }
+    }
 }
 
 export {TemplateMiddleware, TemplateObject};

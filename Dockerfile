@@ -15,6 +15,7 @@ RUN npm install pm2 typescript -g
 # Copy source
 COPY ./src ./src
 COPY ./sass ./sass
+COPY ./minifier ./minifier
 
 # Copy all partials
 COPY ./partials/body.html ./partials/body.html
@@ -34,6 +35,7 @@ COPY ./themes ./themes
 # Build source
 RUN npm run build
 RUN npm run build-css
+RUN npm run minify
 
 # Copy configuration files
 COPY ./config ./config
