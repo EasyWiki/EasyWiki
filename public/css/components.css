@@ -74,7 +74,6 @@ div.scrollbox.no-y {
   margin-top: 1em; }
 
 section.sponsors {
-  margin-top: 5em;
   padding: 1rem; }
 
 section.sponsors .sponsor {
@@ -93,3 +92,9 @@ section.sponsors .sponsor img {
 
 section.sponsors .sponsor.has-background img {
   height: calc(100px - 2rem); }
+
+section.section .links {
+  max-height: 170px;
+  overflow-wrap: normal;
+  column-count: 3;
+  column-fill: auto; }
