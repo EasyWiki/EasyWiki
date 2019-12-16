@@ -14,6 +14,7 @@ RUN npm install pm2 typescript -g
 
 # Copy source
 COPY ./src ./src
+COPY ./javascript ./javascript
 COPY ./minifier ./minifier
 
 # Copy all partials
@@ -30,7 +31,10 @@ COPY ./public/js ./public/js
 
 # Copy theme files
 COPY ./themes ./themes
-COPY ./public/css .//public/css
+COPY ./public/css ./public/css
+
+ADD https://github.com/EasyWiki/EasyWiki-Themes/releases/download/V1.0/themes.zip .
+RUN unzip -o themes.zip
 
 # Build source
 RUN npm run build
