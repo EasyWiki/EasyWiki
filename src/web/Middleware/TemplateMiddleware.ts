@@ -25,12 +25,22 @@ class TemplateMiddleware
         let header = await FileSystem.ReadFileCached(path.join(folder, "header.html"));
         let imageViewer = await FileSystem.ReadFileCached(path.join(folder, "imageViewer.html"));
         let footer = await FileSystem.ReadFileCached(path.join(folder, "footer.html"));
+        let footerLinks = await FileSystem.ReadFileCached(path.join(folder, "footerLinks.html"));
         let menu = await FileSystem.ReadFileCached(path.join(folder, "menu.html"));
         let navbar = await FileSystem.ReadFileCached(path.join(folder, "navbar.html"));
-        let footerNavbar = await FileSystem.ReadFileCached(path.join(folder, "footer-nav.html"));
 
-        req.templateObject = new TemplateObject(body, head, header, imageViewer,
-             footer, menu, navbar, footerNavbar);
+        const params = {
+            body: body,
+            head: head,
+            header: header,
+            imageViewer: imageViewer,
+            footer: footer,
+            footerLinks: footerLinks,
+            menu: menu,
+            navbar: navbar 
+        }
+
+        req.templateObject = new TemplateObject(params);
 
         next();
     }
@@ -80,26 +90,11 @@ class TemplateMiddleware
 
 class TemplateObject
 {
-    private body : string;
-    private head : string;
-    private header : string;
-    private imageViewer : string;
-    private footer : string;
-    private menu : string;
-    private navbar : string;
-    private footerNavbar : string;
+    private _params : any;
 
-    constructor(body: string, head: string, header: string, imageViewer: string,
-        footer: string, menu: string, navbar: string, footerNavbar: string)
+    constructor(params: any)
     {
-        this.body = body;
-        this.head = head;
-        this.header = header;
-        this.imageViewer = imageViewer;
-        this.footer = footer;
-        this.menu = menu;
-        this.navbar = navbar;
-        this.footerNavbar = footerNavbar;
+        this._params = params;
     }
 
     public async Render(req: express.Request, view: string, params: any = {})
@@ -144,7 +139,7 @@ class TemplateObject
         if(fs.existsSync(favicon)) params["favicon"] = "<link rel='icon' type='image/png' href='/" + Config.Config.Get("Style.favicon") + "'>";
         
         params = await this.RenderView(view, params); 
-        return mustache.render(this.body, params);
+        return mustache.render(this._params["body"], params);
     }
 
     public async RenderAndSend(req: express.Request, res: express.Response, view: string, params: any = {}, code = 200)
@@ -154,13 +149,23 @@ class TemplateObject
 
     public GetRenderObject(params: any = {}): any
     {
-        params["head"] = mustache.render(this.head, params);
-        params["menu"] = mustache.render(this.menu, params);
-        params["navbar"] = mustache.render(this.navbar, params);
-        params["header"] = mustache.render(this.header, params);
-        params["image-viewer"] = mustache.render(this.imageViewer, params);
-        //params["footerNavbar"] = mustache.render(this.footerNavbar, params);
-        params["footer"] = mustache.render(this.footer, params);
+        params["head"] = mustache.render(this._params["head"], params);
+        params["menu"] = mustache.render(this._params["menu"], params);
+        params["navbar"] = mustache.render(this._params["navbar"], params);
+        params["header"] = mustache.render(this._params["header"], params);
+        params["image-viewer"] = mustache.render(this._params["imageViewer"], params);
+        params["footerLinks"] = mustache.render(this._params["footerLinks"], params);
+
+        const currKeys = Object.keys(params);
+        Object.keys(this._params).forEach((key) =>
+        {
+            if(currKeys.indexOf(key) == -1)
+            {
+                params[key] = this._params[key];
+            }
+        });
+
+        params["footer"] = mustache.render(this._params["footer"], params);
 
         return params;
     }

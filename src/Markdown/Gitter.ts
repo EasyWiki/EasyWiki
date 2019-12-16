@@ -51,6 +51,7 @@ class Gitter
             await FileSystem.CopyFile(path.join(tempFolder, "menu.md"), path.join(partialFolder, "menu.md"));
             await FileSystem.CopyFile(path.join(tempFolder, "navbar.md"), path.join(partialFolder, "navbar.md"));
             await FileSystem.CopyFile(path.join(tempFolder, "footer.md"), path.join(partialFolder, "footer.md"));
+            await FileSystem.CopyFile(path.join(tempFolder, "footerLinks.md"), path.join(partialFolder, "footerLinks.md"));
             
             // Remove the temp folder
             FileSystem.RemoveFolder(tempFolder);

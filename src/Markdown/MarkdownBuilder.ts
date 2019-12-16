@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs, { linkSync } from 'fs';
 import path from 'path';
 import { Logger } from '../modules/Logger';
 import { Searcher } from './Searcher';
@@ -193,10 +193,7 @@ class MarkdownBuilder
      */
     public async BuildMenu()
     {
-        await FileSystem.RemoveFile(path.join(partialFolder, "menu.html"));
-
-        if(!fs.existsSync(path.join(partialFolder, "menu.md"))) return;
-        
+        await FileSystem.RemoveFile(path.join(partialFolder, "menu.html"));        
 
         var menuHtml = kramed(await FileSystem.ReadFile(path.join(partialFolder, "menu.md")), {
             renderer: this._menuRenderer,
@@ -213,10 +210,7 @@ class MarkdownBuilder
      */
     public async BuildNavBar()
     {
-        await FileSystem.RemoveFile(path.join(partialFolder, "navbar.html"));
-
-        if(!fs.existsSync(path.join(partialFolder, "navbar.md"))) return;
-        
+        await FileSystem.RemoveFile(path.join(partialFolder, "navbar.html"));        
 
         var navHtml = kramed(await FileSystem.ReadFile(path.join(partialFolder, "navbar.md")), {
             renderer: this._navRenderer,
@@ -232,14 +226,19 @@ class MarkdownBuilder
     public async BuildFooter()
     {
         await FileSystem.RemoveFile(path.join(partialFolder, "footer.html"));
-        if(!fs.existsSync(path.join(partialFolder, "footer.md"))) return;
-        
 
-        var footHtml = kramed(await FileSystem.ReadFile(path.join(partialFolder, "footer.md")), {});
+        var footHtml = this.BuildString(await FileSystem.ReadFile(path.join(partialFolder, "footer.md")));
         footHtml = "</div></div></section><footer class='footer'>" +
-        "<div class='content'>" + footHtml + "</div>{{{sponsors}}}</footer>";
+        "<div class='content'>" + footHtml + "</div>{{{footerLinks}}} {{{sponsors}}}</footer>";
 
         await FileSystem.WriteFile(path.join(partialFolder, "footer.html"), footHtml);
+
+        await FileSystem.RemoveFile(path.join(partialFolder, "footerLinks.html"));
+
+        var linkHtml = this.BuildString(await FileSystem.ReadFile(path.join(partialFolder, "footerLinks.md")));
+        linkHtml = "<section class='section'><h3 class='title is-5'>{{translation.Links}}:</h3><div class='links'>" + linkHtml;
+        await FileSystem.WriteFile(path.join(partialFolder, "footerLinks.html"), linkHtml + "</div></section>");
+
     }
 
     /**
@@ -306,10 +305,10 @@ class MarkdownBuilder
      */
     private async BuildFile(filePath: string, folderPath: string)
     {
-        let markdownText = fs.readFileSync(path.join(pageFolder, filePath)).toString();
+        let markdownText = await FileSystem.ReadFile(path.join(pageFolder, filePath));
         const tags = this.GetTags(markdownText);
 
-        let compiled = kramed(markdownText, {});
+        let compiled = this.BuildString(markdownText);
         let newPath = path.join(builtFolder, filePath.replace(".md",".html").toLowerCase());
 
         const index = IndexBuilder.CreateIndex(compiled, tags["indexdepth"]);
