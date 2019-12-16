@@ -33,7 +33,7 @@ COPY ./public/js ./public/js
 COPY ./themes ./themes
 COPY ./public/css ./public/css
 
-ADD https://github.com/EasyWiki/EasyWiki-Themes/releases/download/V1.0/themes.zip .
+ADD https://github.com/EasyWiki/EasyWiki-Themes/releases/download/V1.1/themes.zip .
 RUN unzip -o themes.zip
 
 # Build source

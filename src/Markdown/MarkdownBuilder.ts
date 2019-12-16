@@ -235,7 +235,7 @@ class MarkdownBuilder
 
         await FileSystem.RemoveFile(path.join(partialFolder, "footerLinks.html"));
 
-        var linkHtml = this.BuildString(await FileSystem.ReadFile(path.join(partialFolder, "footerLinks.md")));
+        var linkHtml = this.BuildString(await FileSystem.ReadFile(path.join(partialFolder, "footerlinks.md")));
         linkHtml = "<section class='section'><h3 class='title is-5'>{{translation.Links}}:</h3><div class='links'>" + linkHtml;
         await FileSystem.WriteFile(path.join(partialFolder, "footerLinks.html"), linkHtml + "</div></section>");
 
