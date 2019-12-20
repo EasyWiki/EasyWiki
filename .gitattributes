@@ -1,2 +1,1 @@
-*.css linguist-vendored=false
-* linguist-vendored=true
+public/* linguist-vendored
