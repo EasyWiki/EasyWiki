@@ -22,7 +22,7 @@ import CookieMiddleWare from './Middleware/CookieMiddleware';
 class Web
 {
     private _app : express.Application;
-    private _server : https.Server;
+    private _server : https.Server | http.Server;
     private _http : http.Server;
 
     constructor()
@@ -31,16 +31,25 @@ class Web
 
         // Start the web server
         this._app = express();
-        this._server = https.createServer(this.GetSslCertificate(), 
+        
+        if(Config.Config.Get("Web.ssl.use"))
+        {
+            this._server = https.createServer(this.GetSslCertificate(), 
             this._app).listen(Config.Config.Get("Web.port"));
 
-        // Start the http redirect server
-        this._http = http.createServer(function (req, res)
+            // Start the http redirect server
+            this._http = http.createServer(function (req, res)
+            {
+                Logger.Log("Web",req.socket.remoteAddress + " -> https");
+                res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+                res.end();
+            }).listen(Config.Config.Get("Web.httpport"));
+        }
+        else
         {
-            Logger.Log("Web",req.socket.remoteAddress + " -> https");
-            res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
-            res.end();
-        }).listen(Config.Config.Get("Web.httpport"));
+            this._server = http.createServer(this._app).listen(Config.Config.Get("Web.httpport"));
+            this._http = this._server;
+        }
 
         // Register
         this.RegisterMiddleware();
