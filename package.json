@@ -1,6 +1,6 @@
 {
   "name": "easywiki",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple wiki software for an easy wiki.",
   "main": "app/app.js",
   "scripts": {
@@ -36,12 +36,12 @@
     "express-basic-auth": "^1.2.0",
     "jsdom": "^15.2.1",
     "kramed": "^0.5.6",
-    "mustache": "^3.2.0",
+    "mustache": "^3.2.1",
     "node-cache": "^5.1.0"
   },
   "devDependencies": {
-    "@node-minify/core": "^5.2.1",
-    "@node-minify/uglify-es": "^5.2.0",
+    "@node-minify/core": "^5.3.0",
+    "@node-minify/uglify-es": "^5.3.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.2",
     "@types/jsdom": "^12.2.4",
