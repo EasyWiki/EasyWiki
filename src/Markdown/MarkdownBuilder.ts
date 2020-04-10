@@ -138,14 +138,21 @@ class MarkdownBuilder
      */
     public WatchFolder()
     {
-        this._watcher = fs.watch(pageFolder, {recursive: true, encoding: 'utf8', persistent: true});
-
-        this._watcher.on("change", function(eventType, filename)
+        try
         {
-            if(eventType != "change") return;
-            
-            MarkdownBuilder.MarkdownBuilder.BuildAll(true);
-        });
+            this._watcher = fs.watch(pageFolder, {recursive: true, encoding: 'utf8', persistent: true});
+
+            this._watcher.on("change", function(eventType, filename)
+            {
+                if(eventType != "change") return;
+                
+                MarkdownBuilder.MarkdownBuilder.BuildAll(true);
+            });
+        }
+        catch(e)
+        {
+            Logger.Error("Markdown", "Failed watching folder", e);
+        }
     }
 
     /**
@@ -153,9 +160,16 @@ class MarkdownBuilder
      */
     public UnwatchFolder()
     {
-        if(this._watcher == null) return;
+        try
+        {
+            if(this._watcher == null) return;
         
-        (this._watcher as fs.FSWatcher).close();
+            (this._watcher as fs.FSWatcher).close();
+        }
+        catch(e)
+        {
+            Logger.Error("Markdown", "Failed unwatching folder", e);
+        }
     }
 
     /**
