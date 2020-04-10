@@ -1,60 +1,69 @@
 import { JSDOM } from 'jsdom';
 import { Config } from '../modules/Config';
+import { Logger } from '../modules/Logger';
 
 class IndexBuilder
 {
     public static CreateIndex(html: string, depth: any = 5)
     {
         if(depth == undefined || depth <= 0 || depth > 5) depth = 5;
+        let outHtml = "";
 
-        const dom = new JSDOM(html);
-
-        if(dom.window.document.body.innerHTML.indexOf(Config.Translation.Get("Index")) != -1)
-            return "";
-
-        const titles = dom.window.document.querySelectorAll("h2, h3, h4, h5, h6");
-
-        let prevLevel = 0;
-
-        let outHtml = "<h2 class='is-3'>" + Config.Translation.Get("Index") + "</h2>" + 
-            "<!--a-- class='button'>Collapse</!--a--><ul>";
-        let currentDepth = 0;
-
-        titles.forEach((title)=>
+        try
         {
-            const level = this.GetTitleLevel(title.tagName);
+            const dom = new JSDOM(html);
 
-            if(prevLevel == 0)
+            if(dom.window.document.body.innerHTML.indexOf(Config.Translation.Get("Index")) != -1)
+                return "";
+
+            const titles = dom.window.document.querySelectorAll("h2, h3, h4, h5, h6");
+
+            let prevLevel = 0;
+
+            outHtml = "<h2 class='is-3'>" + Config.Translation.Get("Index") + "</h2>" + 
+                "<!--a-- class='button'>Collapse</!--a--><ul>";
+            let currentDepth = 0;
+
+            titles.forEach((title)=>
             {
-                outHtml += "<li><a href='#" + title.id + "'>" + title.textContent + "</a>";
-                currentDepth++;
-                prevLevel = level;
-            }
-            else if(prevLevel == level && currentDepth <= depth)
-            {
-                outHtml += "</li><li><a href='#" + title.id + "'>" + title.textContent + "</a>";
-                prevLevel = level;
-            }
-            else if(prevLevel < level && currentDepth < depth)
-            {
-                outHtml += "<ul>"
-                outHtml += "<li><a href='#" + title.id + "'>" + title.textContent + "</a>";
-                currentDepth++;
-                prevLevel = level;
-            }
-            else if(prevLevel > level)
-            {
-                for(let i = 0; i < prevLevel - level; i++)
+                const level = this.GetTitleLevel(title.tagName);
+
+                if(prevLevel == 0)
                 {
-                    outHtml += "</ul>";
-                    currentDepth--;
+                    outHtml += "<li><a href='#" + title.id + "'>" + title.textContent + "</a>";
+                    currentDepth++;
+                    prevLevel = level;
                 }
-                outHtml += "<li><a href='#" + title.id + "'>" + title.textContent + "</a>";
-                prevLevel = level;
-            }
-        });
+                else if(prevLevel == level && currentDepth <= depth)
+                {
+                    outHtml += "</li><li><a href='#" + title.id + "'>" + title.textContent + "</a>";
+                    prevLevel = level;
+                }
+                else if(prevLevel < level && currentDepth < depth)
+                {
+                    outHtml += "<ul>"
+                    outHtml += "<li><a href='#" + title.id + "'>" + title.textContent + "</a>";
+                    currentDepth++;
+                    prevLevel = level;
+                }
+                else if(prevLevel > level)
+                {
+                    for(let i = 0; i < prevLevel - level; i++)
+                    {
+                        outHtml += "</ul>";
+                        currentDepth--;
+                    }
+                    outHtml += "<li><a href='#" + title.id + "'>" + title.textContent + "</a>";
+                    prevLevel = level;
+                }
+            });
 
-        outHtml += "</li></ul>";
+            outHtml += "</li></ul>";
+        }
+        catch (e)
+        {
+            Logger.Error("IndexBuilder", "Failed building index.", e);
+        }
 
         return outHtml;
     }

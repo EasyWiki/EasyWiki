@@ -305,29 +305,46 @@ class MarkdownBuilder
      */
     private async BuildFile(filePath: string, folderPath: string)
     {
-        let markdownText = await FileSystem.ReadFile(path.join(pageFolder, filePath));
-        const tags = this.GetTags(markdownText);
-
-        let compiled = this.BuildString(markdownText);
-        let newPath = path.join(builtFolder, filePath.replace(".md",".html").toLowerCase());
-
-        const index = IndexBuilder.CreateIndex(compiled, tags["indexdepth"]);
-
-        compiled = "<div class=\"container content is-size-5\">" + compiled + "</div>";
-        
-        const dom = new JSDOM(compiled);
-        const document = dom.window.document;
-        const title = document.getElementsByTagName("h1")[0];
-
-        if(index != "" && !tags["noindex"])
+        try
         {
-            const $index = document.createElement('div');
-            $index.innerHTML = index;
-            $index.classList.add("index");
+            let markdownText = await FileSystem.ReadFile(path.join(pageFolder, filePath));
+            const tags = this.GetTags(markdownText);
 
-            (title.parentNode as Node).insertBefore($index ,title.nextSibling);
+            let compiled = this.BuildString(markdownText);
+            let newPath = path.join(builtFolder, filePath.replace(".md",".html").toLowerCase());
+
+            const index = IndexBuilder.CreateIndex(compiled, tags["indexdepth"]);
+
+            compiled = "<div class=\"container content is-size-5\">" + compiled + "</div>";
+        
+            try
+            {
+
+                const dom = new JSDOM(compiled);
+                const document = dom.window.document;
+                const title = document.getElementsByTagName("h1")[0];
+
+                if(index != "" && !tags["noindex"])
+                {
+                    const $index = document.createElement('div');
+                    $index.innerHTML = index;
+                    $index.classList.add("index");
+
+                    (title.parentNode as Node).insertBefore($index ,title.nextSibling);
+                }
+
+                fs.writeFileSync(newPath, document.documentElement.innerHTML);
+            }
+            catch(e)
+            {
+                Logger.Error("Mardown", `An error has occured while building ${filePath}. Using compiled html instead.`, e);
+                fs.writeFileSync(newPath, compiled);
+            }
         }
-        fs.writeFileSync(newPath, document.documentElement.innerHTML);
+        catch(e)
+        {
+            Logger.Error("Mardown", `An error has occured while building ${filePath}`, e);
+        }
     }
 
     private GetTags(fileText: string)
