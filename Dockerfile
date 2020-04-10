@@ -43,6 +43,30 @@ RUN npm run minify
 # Copy configuration files
 COPY ./config ./config
 
+# Remove build files/folders
+RUN rm -Rf ./src
+RUN rm -Rf ./javascript
+RUN rm -Rf ./minifier
+RUN rm ./tsconfig.json
+RUN rm ./themes.zip
+
+# Permissions
+RUN chmod 740 /var/easywiki
+
+RUN chmod 640 ./config/*
+RUN chmod 640 ./themes/*
+RUN chmod 640 ./views/*
+
+RUN chmod -R 740 ./app/*
+RUN chmod -R 740 ./app/*
+RUN chmod -R 644 ./public/*
+
+RUN chmod 740 ecosystem.config.js
+RUN chmod 640 package.json
+RUN chmod 640 package-lock.json
+
+RUN find . -type d -exec chmod 750 {} \;
+
 EXPOSE 80
 EXPOSE 443
 

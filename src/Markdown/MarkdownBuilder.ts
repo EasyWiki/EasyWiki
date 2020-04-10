@@ -200,6 +200,7 @@ class MarkdownBuilder
             breaks: true
         });
 
+
         menuHtml = "<aside class='menu'><a class='button is-hidden-desktop'>{{translation.Show}}</a>" +
             "<div class='menu-body is-hidden-touch'>" + menuHtml + "</div></aside>";
         await FileSystem.WriteFile(path.join(partialFolder, "menu.html"), menuHtml);
