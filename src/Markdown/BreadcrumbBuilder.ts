@@ -23,7 +23,14 @@ class BreadcrumbBuilder
             else
             {   
                 // Add breadcrumbs to the file
-                this.SetBreadcrumbs(absPath, this.GetTitle(absPath), relPath);
+                try
+                {
+                    this.SetBreadcrumbs(absPath, this.GetTitle(absPath), relPath);
+                }
+                catch(e)
+                {
+                    Logger.Error("Crumbs", `Failed generating breadcrumbs for ${file}`, e);
+                }
             }
         });
 

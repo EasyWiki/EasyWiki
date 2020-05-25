@@ -194,6 +194,12 @@ class Web
             res.redirect("/");
         });
 
+        this._app.all("/version", async function(req, res)
+        {
+            const ver = JSON.parse(fs.readFileSync("package.json").toString()).version;
+            req.templateObject.RenderAndSend(req, res, "version", {version: ver}, 200)
+        });
+
         this._app.post("/search", async function(req, res)
         {
             const query = decodeURIComponent(req.body["query"]);

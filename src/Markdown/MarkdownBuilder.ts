@@ -138,14 +138,21 @@ class MarkdownBuilder
      */
     public WatchFolder()
     {
-        this._watcher = fs.watch(pageFolder, {recursive: true, encoding: 'utf8', persistent: true});
-
-        this._watcher.on("change", function(eventType, filename)
+        try
         {
-            if(eventType != "change") return;
-            
-            MarkdownBuilder.MarkdownBuilder.BuildAll(true);
-        });
+            this._watcher = fs.watch(pageFolder, {recursive: true, encoding: 'utf8', persistent: true});
+
+            this._watcher.on("change", function(eventType, filename)
+            {
+                if(eventType != "change") return;
+                
+                MarkdownBuilder.MarkdownBuilder.BuildAll(true);
+            });
+        }
+        catch(e)
+        {
+            Logger.Error("Markdown", "Failed watching folder", e);
+        }
     }
 
     /**
@@ -153,9 +160,16 @@ class MarkdownBuilder
      */
     public UnwatchFolder()
     {
-        if(this._watcher == null) return;
+        try
+        {
+            if(this._watcher == null) return;
         
-        (this._watcher as fs.FSWatcher).close();
+            (this._watcher as fs.FSWatcher).close();
+        }
+        catch(e)
+        {
+            Logger.Error("Markdown", "Failed unwatching folder", e);
+        }
     }
 
     /**
@@ -306,29 +320,46 @@ class MarkdownBuilder
      */
     private async BuildFile(filePath: string, folderPath: string)
     {
-        let markdownText = await FileSystem.ReadFile(path.join(pageFolder, filePath));
-        const tags = this.GetTags(markdownText);
-
-        let compiled = this.BuildString(markdownText);
-        let newPath = path.join(builtFolder, filePath.replace(".md",".html").toLowerCase());
-
-        const index = IndexBuilder.CreateIndex(compiled, tags["indexdepth"]);
-
-        compiled = "<div class=\"container content is-size-5\">" + compiled + "</div>";
-        
-        const dom = new JSDOM(compiled);
-        const document = dom.window.document;
-        const title = document.getElementsByTagName("h1")[0];
-
-        if(index != "" && !tags["noindex"])
+        try
         {
-            const $index = document.createElement('div');
-            $index.innerHTML = index;
-            $index.classList.add("index");
+            let markdownText = await FileSystem.ReadFile(path.join(pageFolder, filePath));
+            const tags = this.GetTags(markdownText);
 
-            (title.parentNode as Node).insertBefore($index ,title.nextSibling);
+            let compiled = this.BuildString(markdownText);
+            let newPath = path.join(builtFolder, filePath.replace(".md",".html").toLowerCase());
+
+            const index = IndexBuilder.CreateIndex(compiled, tags["indexdepth"]);
+
+            compiled = "<div class=\"container content is-size-5\">" + compiled + "</div>";
+        
+            try
+            {
+
+                const dom = new JSDOM(compiled);
+                const document = dom.window.document;
+                const title = document.getElementsByTagName("h1")[0];
+
+                if(index != "" && !tags["noindex"])
+                {
+                    const $index = document.createElement('div');
+                    $index.innerHTML = index;
+                    $index.classList.add("index");
+
+                    (title.parentNode as Node).insertBefore($index ,title.nextSibling);
+                }
+
+                fs.writeFileSync(newPath, document.documentElement.innerHTML);
+            }
+            catch(e)
+            {
+                Logger.Error("Mardown", `An error has occured while building ${filePath}. Using compiled html instead.`, e);
+                fs.writeFileSync(newPath, compiled);
+            }
         }
-        fs.writeFileSync(newPath, document.documentElement.innerHTML);
+        catch(e)
+        {
+            Logger.Error("Mardown", `An error has occured while building ${filePath}`, e);
+        }
     }
 
     private GetTags(fileText: string)

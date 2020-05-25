@@ -55,8 +55,17 @@ class Gitter
             
             // Remove the temp folder
             FileSystem.RemoveFolder(tempFolder);
-            
-            // Build all markdown
+
+            Logger.Log("Gitter", "Done cloning repository.");
+        }
+        catch(e)
+        {
+            Logger.Error("Gitter", "Cloning has failed!", e);
+        }
+
+        // Build all markdown
+        try
+        {
             if(MarkdownBuilder.MarkdownBuilder)
             {   
                 await MarkdownBuilder.MarkdownBuilder.BuildMenu();
@@ -66,12 +75,10 @@ class Gitter
                 BreadcrumbBuilder.AddBreadcrumbsToFolder(builtFolder);
                 MarkdownBuilder.MarkdownBuilder.WatchFolder();
             }
-
-            Logger.Log("Gitter", "Done cloning repository.");
         }
         catch(e)
         {
-            Logger.Error("Gitter", "Cloning has failed!",e);
+            Logger.Error("Gitter", "Failed building markdown!", e);
         }
     }
 }

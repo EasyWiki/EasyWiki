@@ -2,16 +2,18 @@ import express from 'express';
 import basicAuth from 'express-basic-auth';
 import { Config } from '../../modules/Config';
 import { Logger } from '../../modules/Logger';
+import { TemplateMiddleware, TemplateObject } from './TemplateMiddleware';
 
 class AuthenticationMiddleware
 {
     public static async Authenticate(req: express.Request, res: express.Response, next: express.NextFunction)
     {
-        if(req.path == "/refresh")
+        if(req.path == "/refresh" || req.path == "/version")
         {
             basicAuth({
                 users: Config.Config.Get("Web.users"),
-                challenge: true
+                challenge: true,
+                unauthorizedResponse: await AuthenticationMiddleware.Create401Error(req)
             })(req,res,next);
         }
         else
@@ -20,11 +22,12 @@ class AuthenticationMiddleware
         }
     }
 
-    public static Create401Error(req: express.Request)
+    private static async Create401Error(req: express.Request)
     {
-        Logger.Error("Auth", req.ip +  " tried to login!");
+        Logger.Error("Auth", req.ip +  " tried to login and failed!");
 
-        return  "";
+        return req.templateObject.Render(req, "error", {description: "401: Unauthorized", 
+            subtitle: "You made a failed login attempt!", text: "This event will be reported!"})
     }
 }
 

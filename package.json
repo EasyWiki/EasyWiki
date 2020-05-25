@@ -1,6 +1,6 @@
 {
   "name": "easywiki",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Simple wiki software for an easy wiki.",
   "main": "app/app.js",
   "scripts": {
