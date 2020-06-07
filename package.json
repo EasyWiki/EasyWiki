@@ -4,10 +4,10 @@
   "description": "Simple wiki software for an easy wiki.",
   "main": "app/app.js",
   "scripts": {
-    "start": "pm2 start --env production",
     "start-dev": "pm2 start",
-    "start-node": "node app/app.js",
-    "build": "tsc --build",
+    "prestart": "npm run build",
+    "start": "node app/app.js",
+    "build": "tsc",
     "watch": "tsc --build --watch",
     "clean": "tsc --build --clean",
     "minify": "node minifier/minify.js",
