@@ -9,7 +9,7 @@ COPY ecosystem.config.js .
 COPY tsconfig.json .
 
 # Install EasyWiki
-RUN yarn add pm2 typescript -g
+RUN npm install pm2 typescript -g
 RUN yarn install
 
 # Copy source
