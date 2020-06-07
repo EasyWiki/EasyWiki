@@ -1,16 +1,16 @@
-FROM node
+FROM node:latest
 
 WORKDIR /var/easywiki
 
 # Copy environment files
 COPY package.json .
-COPY package-lock.json .
+COPY yarn.lock .
 COPY ecosystem.config.js .
 COPY tsconfig.json .
 
 # Install EasyWiki
-RUN npm install
-RUN npm install pm2 typescript -g
+RUN yarn add pm2 typescript -g
+RUN yarn install
 
 # Copy source
 COPY ./src ./src
@@ -37,8 +37,8 @@ ADD https://github.com/EasyWiki/EasyWiki-Themes/releases/download/V1.1/themes.zi
 RUN unzip -o themes.zip
 
 # Build source
-RUN npm run build
-RUN npm run minify
+RUN yarn build
+RUN yarn minify
 
 # Copy configuration files
 COPY ./config ./config
@@ -63,7 +63,7 @@ RUN chmod -R 644 ./public/*
 
 RUN chmod 740 ecosystem.config.js
 RUN chmod 640 package.json
-RUN chmod 640 package-lock.json
+RUN chmod 640 yarn.lock
 
 RUN find . -type d -exec chmod 750 {} \;
 
