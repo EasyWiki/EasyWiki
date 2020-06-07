@@ -33,8 +33,6 @@ class Gitter
         {
             Logger.Log("Gitter", "Cloning repository...");
 
-            if(MarkdownBuilder.MarkdownBuilder) MarkdownBuilder.MarkdownBuilder.UnwatchFolder();
-
             await FileSystem.RemoveFolder(tempFolder);
 
             execSync("git clone \"" + Config.Get("config").Gitter.repo + "\" \"" + tempFolder + "\"", {
@@ -73,7 +71,6 @@ class Gitter
                 await MarkdownBuilder.MarkdownBuilder.BuildFooter();
                 await MarkdownBuilder.MarkdownBuilder.BuildAll(true);
                 BreadcrumbBuilder.AddBreadcrumbsToFolder(builtFolder);
-                MarkdownBuilder.MarkdownBuilder.WatchFolder();
             }
         }
         catch(e)
