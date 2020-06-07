@@ -1,0 +1,21 @@
+# This is the default security.txt for EasyWiki
+
+# Please try to also contact the server admin
+# meaning the person currently hosting this instance of EasyWiki
+Contact: The server admin
+
+# If it is a bug that affects all EasyWiki users
+# please contact us here:
+# Mail is our prefered medium
+Contact: mailto:mathiasmaesdev@gmail.com
+Contact: https://github.com/EasyWiki/EasyWiki/issues
+
+# Our security engineers speak the following languages
+Preferred-Languages: en, nl
+
+# The privacy policy of EasyWIki
+Policy: https://github.com/EasyWiki/EasyWiki/blob/master/SECURITY.md
+
+# Our Hall of Fame
+Acknowledgments: https://github.com/EasyWiki/EasyWiki/blob/master/SECURITY.md#hall-of-fame
+

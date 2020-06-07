@@ -1,124 +1,63 @@
 import fs from 'fs';
-import { Logger } from './Logger';
+import path from 'path';
 
-class Config
+export class Config
 {
-    public static Config : Config;
-    public static Translation : Config;
-    public static Meta : Config;
+    private static _configs = new Map<string, Config>();
 
-    private _config : any;
-    private _watcher : fs.FSWatcher | undefined;
-    private _path : string;
+    private _path: string;
+    private _obj: any;
 
-    constructor(path: string)
+    constructor(config: string)
     {
-        this._path = path;
-
-        this.Load(false);
-
-        this.WatchFile();
+        this._path = this.GetFullPath(config);
+        this._obj = JSON.parse(fs.readFileSync(this._path).toString());
     }
 
-    /**
-     * Get a config setting from a given path
-     * @param path The config path
-     */
-    public Get(path : string) : any
+    public Get()
     {
-        let pathArr = path.split('.');
-        let currConf = this._config;
+        return this._obj;
+    }
 
-        for(let p in pathArr)
+    private GetFullPath(config: string)
+    {
+        config += ".json";
+
+        return fs.existsSync("dev-config") ? path.join("dev-config", config) : path.join("config", config);
+    }
+
+    public static GetConfig(config: string) : Config
+    {
+        if(this._configs.has(config))
+            return this._configs.get(config) as Config;
+
+        let conf = new Config(config);
+        this._configs.set(config, conf);
+        return conf;
+    }
+
+    public static Get(config: string) : any
+    {
+        return this.GetConfig(config).Get();
+    }
+
+    public static GetProperty(config: string, path: string) : any
+    {
+        let value = this.Get(config);
+
+        for( let piece in path.split("."))
         {
-            currConf = currConf[pathArr[p]];
+            if(Object.keys(value).indexOf(piece) !== -1)
+            {
+                value = value[piece];
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        return currConf;
-    }
+        return value;
 
-    /**
-     * (Re)Load the config
-     */
-    public Load(reload: boolean = true)
-    {
-        try
-        {
-            let json = fs.readFileSync(this._path).toString();
-            this._config = JSON.parse(json);
-            
-            if(reload) Logger.Log("Config", "Reloaded config file.");
-        }
-        catch(e)
-        {
-            Logger.Error("Config", "Failed loading config.", e);
-        }
-    }
-
-    /**
-     * Watch the file for changes
-     */
-    private WatchFile()
-    {
-        this._watcher = fs.watch(this._path, {persistent: true, recursive: false});
-
-        const self = this;
-        this._watcher.on("change", function(eventType, filename)
-        {
-            self.Load(true);
-        });
-
-        this._watcher.on("error", function(err)
-        {
-            Logger.Error("Config","An error has occured while watching the config file.", err);
-        });
-    }
-
-    public GetJson()
-    {
-        return this._config;
-    }
-
-    public static GetPath(file: string)
-    {
-        let configPath = "config/" + file;
-        
-        if(fs.existsSync("dev-config/" + file))
-            configPath = "dev-config/" + file;
-
-        return configPath;
-    }
-
-    public static LoadConfig() : Config
-    {
-        Logger.Log("Config", "Loading config.");
-
-        Config.Config = new Config(this.GetPath("config.json"));
-
-        Logger.Log("Config", "Loaded config.");
-        return Config.Config;
-    }
-
-    public static LoadTranslation() : Config
-    {
-        Logger.Log("Config", "Loading translations.");
-
-        Config.Translation = new Config(this.GetPath("translation.json"));
-
-        Logger.Log("Config", "Loaded translations.");
-        
-        return Config.Translation;
-    }
-
-    public static LoadMeta() : Config
-    {
-        Logger.Log("Config", "Loading meta.");
-
-        Config.Meta = new Config(this.GetPath("meta.json"));
-
-        Logger.Log("Config", "Loaded meta.")
-        return Config.Meta;
     }
 }
-
-export {Config};

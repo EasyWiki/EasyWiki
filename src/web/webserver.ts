@@ -31,11 +31,13 @@ class Web
 
         // Start the web server
         this._app = express();
+
+        let port : number = Config.Get("config").Web.port;
         
-        if(Config.Config.Get("Web.ssl.use"))
+        if(Config.Get("config").Web.ssl.use)
         {
             this._server = https.createServer(this.GetSslCertificate(), 
-            this._app).listen(Config.Config.Get("Web.port"));
+            this._app).listen(port);
 
             // Start the http redirect server
             this._http = http.createServer(function (req, res)
@@ -43,11 +45,12 @@ class Web
                 Logger.Log("Web",req.socket.remoteAddress + " -> https");
                 res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
                 res.end();
-            }).listen(Config.Config.Get("Web.httpport"));
+            }).listen(Config.Get("config").Web.httpport);
         }
         else
         {
-            this._server = http.createServer(this._app).listen(Config.Config.Get("Web.httpport"));
+            port = Config.Get("config").Web.httpport;
+            this._server = http.createServer(this._app).listen(port);
             this._http = this._server;
         }
 
@@ -55,7 +58,9 @@ class Web
         this.RegisterMiddleware();
         this.RegisterRoutes();
 
-        Logger.Log("Web","The server started on port " + Config.Config.Get("Web.port") + ".");
+        Logger.Log("Web","The server started on port " + port + ".");
+
+        // Send PM2 signal
         if(process.send)(process.send as Function)('ready'); 
     }
 
@@ -71,6 +76,8 @@ class Web
     private RegisterMiddleware()
     {        
         // Set up middleware
+        this._app.disable('x-powered-by');
+
         this._app.use(LoggerMiddleware.LogRoute);
         this._app.use(RedirectMiddleware.Redirect);
         
@@ -79,7 +86,7 @@ class Web
 
         this._app.use(LoggerMiddleware.LogBody);
 
-        this._app.use(cookieParser(Config.Config.Get("Web.cookieSecret")));
+        this._app.use(cookieParser(Config.Get("config").Web.cookieSecret));
         
         this._app.use(TemplateMiddleware.AttachTemplate);
         this._app.use(TemplateMiddleware.AttachTheme);
@@ -220,13 +227,13 @@ class Web
 
         this._app.post("/translation", async function(req,res)
         {
-            res.contentType("text").send(Config.Translation.Get(req.body.translation));
+            res.contentType("text").send(Config.GetProperty("translation", req.body.translation));
         });
 
         this._app.get("/error", async function(req, res)
         {
             req.templateObject.RenderAndSend(req, res, "error",
-                    Config.Translation.Get("ErrorPages.500"), 500);
+                    Config.GetProperty("translation", "ErrorPages.500"), 500);
         });
 
         this._app.all("/(:view)*", async function(req,res)
@@ -240,7 +247,7 @@ class Web
             else
             {
                 req.templateObject.RenderAndSend(req, res, "error",
-                    Config.Translation.Get("ErrorPages.404"),404);
+                    Config.GetProperty("translation", "ErrorPages.404"),404);
             }
             
         });
@@ -251,8 +258,8 @@ class Web
      */
     private GetSslCertificate() : https.ServerOptions
     {
-        var cert = fs.readFileSync(Config.Config.Get("Web.ssl.cert"));
-        var key = fs.readFileSync(Config.Config.Get("Web.ssl.key"));
+        var cert = fs.readFileSync(Config.Get("config").Web.ssl.cert);
+        var key = fs.readFileSync(Config.Get("config").Web.ssl.key);
 
         var options : https.ServerOptions = {key:key.toString(),cert:cert.toString(),"passphrase": ""};
 

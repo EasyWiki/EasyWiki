@@ -14,8 +14,7 @@ class Sponsors
         
         Sponsors.Sponsors = this;
 
-        const json = FileSystem.ReadFileSync(Config.GetPath("sponsors.json"));
-        const obj = JSON.parse(json);
+        const obj = Config.Get("sponsors");
 
         this._sponsors = (obj["sponsors"] as any[]).sort((a,b) =>
         {

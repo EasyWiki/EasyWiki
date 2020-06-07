@@ -13,14 +13,14 @@ class IndexBuilder
         {
             const dom = new JSDOM(html);
 
-            if(dom.window.document.body.innerHTML.indexOf(Config.Translation.Get("Index")) != -1)
+            if(dom.window.document.body.innerHTML.indexOf(Config.Get("translation").Index) != -1)
                 return "";
 
             const titles = dom.window.document.querySelectorAll("h2, h3, h4, h5, h6");
 
             let prevLevel = 0;
 
-            outHtml = "<h2 class='is-3'>" + Config.Translation.Get("Index") + "</h2>" + 
+            outHtml = "<h2 class='is-3'>" + Config.Get("translation").Index + "</h2>" + 
                 "<!--a-- class='button'>Collapse</!--a--><ul>";
             let currentDepth = 0;
 

@@ -1,16 +1,20 @@
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; }
+  min-height: 100vh;
+}
 
 section {
-  flex: 1; }
+  flex: 1;
+}
 
 footer {
-  margin-top: auto; }
+  margin-top: auto;
+}
 
 .search-bar {
-  width: 350px; }
+  width: 350px;
+}
 
 .search-results {
   position: absolute;
@@ -19,13 +23,17 @@ footer {
   z-index: 31;
   width: 348px;
   border-radius: 0px !important;
-  padding: 0 !important; }
+  padding: 0 !important;
+}
 
 .search-results .result a {
-  color: black; }
+  color: black;
+}
 
 .navbar-burger {
-  height: 70px !important; }
+  height: 70px !important;
+}
 
 .index {
-  background: #ecf0f1; }
+  background: #ecf0f1;
+}
