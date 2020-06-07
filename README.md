@@ -1,4 +1,6 @@
 # EasyWiki
+![Docker build](https://github.com/EasyWiki/EasyWiki/workflows/Docker%20build/badge.svg?event=create)
+
 EasyWiki is the wiki software designed with simplicity and easy.
 
 It is powered by git, bulma and nodejs, and has a very easy setup process.
