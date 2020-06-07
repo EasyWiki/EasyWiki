@@ -1,24 +1,31 @@
 .navbar-item img {
-  max-height: 55px !important; }
+  max-height: 55px !important;
+}
 
 .menu {
-  font-size: 1.2rem; }
+  font-size: 1.2rem;
+}
 
 .menu .button {
-  float: right; }
+  float: right;
+}
 
 .hide-menu {
   width: 0px !important;
-  opacity: 0 !important; }
+  opacity: 0 !important;
+}
 
 .hide-menu .menu {
-  display: none; }
+  display: none;
+}
 
 .navbar-brand img {
-  margin-right: 20px; }
+  margin-right: 20px;
+}
 
 .container.content img {
-  cursor: pointer; }
+  cursor: pointer;
+}
 
 .token.number {
   align-items: left;
@@ -30,17 +37,21 @@
   min-width: 0em;
   padding: 0rem 0rem;
   text-align: left;
-  vertical-align: top; }
+  vertical-align: top;
+}
 
 .MathJax_Display {
   overflow-y: hidden;
   overflow-x: auto;
-  max-width: 100%; }
+  max-width: 100%;
+}
 
 @media screen and (max-width: 768px) {
   .MathJax_Display {
     overflow-x: scroll;
-    overflow-y: hidden; } }
+    overflow-y: hidden;
+  }
+}
 
 .token.tag {
   align-items: initial;
@@ -54,10 +65,13 @@
   line-height: initial;
   padding-left: initial;
   padding-right: initial;
-  white-space: initial; }
+  white-space: initial;
+}
 
 .footer {
-  padding-bottom: 3rem !important; }
+  padding-bottom: 3rem !important;
+}
 
 .navbar.on-bottom .navbar-start {
-  margin-left: 6rem; }
+  margin-left: 6rem;
+}
