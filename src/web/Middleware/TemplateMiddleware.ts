@@ -56,7 +56,7 @@ class TemplateMiddleware
 
             if(!req.theme)
             {
-                req.theme = Theme.GetTheme(Config.Config.Get("Style.theme"));
+                req.theme = Theme.GetTheme(Config.Get("config").Style.theme);
 
                 req.cookies.accent = req.theme.GetDefaultAccent();
                 CookieMiddleware.SetCookie("accent", req.theme.GetDefaultAccent(), res);
@@ -80,7 +80,7 @@ class TemplateMiddleware
         }
         else
         {
-            req.theme = Theme.GetTheme(Config.Config.Get("Style.theme"));
+            req.theme = Theme.GetTheme(Config.Get("config").Style.theme);
             req.accent = req.theme.GetDefaultAccent();
         }
 
@@ -104,9 +104,9 @@ class TemplateObject
 
         params["meta"] = this.GenerateMeta();
         params["path"] = req.url;
-        params["sitetitle"] = Config.Config.Get("Style.title");
+        params["sitetitle"] = Config.Get("config").Style.title;
         
-        params["translation"] = Config.Translation.GetJson();
+        params["translation"] = Config.Get("translation");
 
         params["sponsors"] = mustache.render(Sponsors.Sponsors.GetHtml(), params);
         
@@ -121,13 +121,13 @@ class TemplateObject
         let titleText = mustache.render("<h1 class='title is-3 has-text-white'>{{sitetitle}}</h1>" ,params);
 
         // Add logo
-        if(Config.Config.Get("Style.logo"))
+        if(Config.Get("config").Style.logo)
         {
-            let logo = path.join(__dirname, dirPrefix, "public", Config.Config.Get("Style.logo"));
+            let logo = path.join(__dirname, dirPrefix, "public", Config.Get("config").Style.logo);
             
             if(fs.existsSync(logo))
             {
-                params["logo"] = "<img src='/" + Config.Config.Get("Style.logo") + "'>";
+                params["logo"] = "<img src='/" + Config.Get("config").Style.logo + "'>";
                 params["logo"] += titleText;
             }
         }
@@ -135,8 +135,8 @@ class TemplateObject
         if(!params["logo"]) params["logo"] = titleText;
         
         // Add favicon
-        let favicon = path.join(__dirname, dirPrefix, "public", Config.Config.Get("Style.favicon"));
-        if(fs.existsSync(favicon)) params["favicon"] = "<link rel='icon' type='image/png' href='/" + Config.Config.Get("Style.favicon") + "'>";
+        let favicon = path.join(__dirname, dirPrefix, "public", Config.Get("config").Style.favicon);
+        if(fs.existsSync(favicon)) params["favicon"] = "<link rel='icon' type='image/png' href='/" + Config.Get("config").Style.favicon + "'>";
         
         params = await this.RenderView(view, params); 
         return mustache.render(this._params["body"], params);
@@ -231,12 +231,14 @@ class TemplateObject
             return cache as string;
         }
 
-        const desc = Config.Meta.Get("description");
-        const keywords = Config.Meta.Get("keywords");
-        const copy = Config.Meta.Get("copyright");
-        const language = Config.Meta.Get("language");
-        const robots = Config.Meta.Get("robots");
-        const rating = Config.Meta.Get("rating");
+        const meta = Config.Get("meta");
+
+        const desc = meta.description;
+        const keywords = meta.keywords;
+        const copy = meta.copyright;
+        const language = meta.language;
+        const robots = meta.robots;
+        const rating = meta.rating;
 
         return `<meta name="description" content="${desc}">` + 
                     `<meta name="copyright" content="${copy}">` + 
@@ -257,10 +259,10 @@ class TemplateObject
         else
         {
             return '<script async src="https://www.googletagmanager.com/gtag/js?id=' + 
-                Config.Config.Get("Web.analytics") + '"></script>' + 
+                Config.Get("config").Web.analytics + '"></script>' + 
                 "<script>window.dataLayer = window.dataLayer || [];" +
                 "function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', '" +
-                Config.Config.Get("Web.analytics") + "');</script>";
+                Config.Get("config").Web.analytics + "');</script>";
         }
     }
 }

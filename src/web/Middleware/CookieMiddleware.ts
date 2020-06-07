@@ -6,7 +6,7 @@ class CookieMiddleWare
     public static RefreshCookies(req: express.Request, res: express.Response, next: express.NextFunction)
     {
         const date = new Date();
-        date.setDate(date.getDate() + Config.Config.Get("Web.cookieTTL"));
+        date.setDate(date.getDate() + Config.Get("config").Web.cookieTTL);
 
         Object.keys(req.cookies).forEach((key) =>
         {
@@ -21,7 +21,7 @@ class CookieMiddleWare
         if(!date)
         {
             date = new Date();
-            date.setDate(date.getDate() + Config.Config.Get("Web.cookieTTL"));
+            date.setDate(date.getDate() + Config.Get("config").Web.cookieTTL);
         }
 
         res.cookie(key, value, {

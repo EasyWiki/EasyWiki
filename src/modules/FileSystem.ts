@@ -79,14 +79,14 @@ class FileSystem
     {
         var value = this.cacheStore.get(filePath);
 
-        if(value && !Config.Config.Get("Web.disableCache"))
+        if(value && !Config.Get("config").Web.disableCache)
         {
             return value as string;
         }
         else
         {
             var content = await this.ReadFile(filePath);
-            this.cacheStore.set(filePath, content, Config.Config.Get("Web.cacheTTL"));
+            this.cacheStore.set(filePath, content, Config.Get("config").Web.cacheTTL);
             return content;
         }
     }

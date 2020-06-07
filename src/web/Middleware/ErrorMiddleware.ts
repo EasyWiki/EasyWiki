@@ -8,8 +8,8 @@ class ErrorMiddleware
     {
         Logger.Error("web",err.message,err);
 
-        req.templateObject.RenderAndSend(req, res.status(500), "error",
-            Config.Translation.Get("ErrorPages.500"));
+        req.templateObject.RenderAndSend(req, res, "error",
+                    Config.GetProperty("translation", "ErrorPages.500"), 500);
             
         next();   
     }

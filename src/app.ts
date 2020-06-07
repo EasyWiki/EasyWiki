@@ -21,11 +21,6 @@ async function StartServer()
     
     Logger.Log("App", "Starting EasyWiki...");
 
-    // Load the config
-    Config.LoadConfig();
-    Config.LoadTranslation();
-    Config.LoadMeta();
-
     Sponsors.Load();
 
     // Create the searcher and markdownbuilder objects
@@ -34,14 +29,14 @@ async function StartServer()
 
     // Clone everything from the git and build the markdown
     const gitter = new Gitter();
-    if(Config.Config.Get("Gitter.cloneOnStart")) await gitter.CloneRepo();
+    if(Config.Get("config").Gitter.cloneOnStart) await gitter.CloneRepo();
 
     // Index all markdown files
-    if(Config.Config.Get("Gitter.cloneOnStart")) await search.IndexAll();
-    else await search.LoadIndexFiles();
+    if(Config.Get("config").Gitter.cloneOnStart) await search.IndexAll();
+    else search.LoadIndexFiles();
 
     // Create a timer to refresh the files from the git
-    const gitTimer = new Timer(gitter.CloneRepo, Config.Config.Get("Gitter.timeout"));
+    const gitTimer = new Timer(gitter.CloneRepo, Config.Get("config").Gitter.timeout);
     gitTimer.Start();
 
     // Load all themes
