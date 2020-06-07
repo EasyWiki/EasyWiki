@@ -36,6 +36,9 @@ COPY ./public/css ./public/css
 ADD https://github.com/EasyWiki/EasyWiki-Themes/releases/download/V1.1/themes.zip .
 RUN unzip -o themes.zip
 
+# Copy .well-known
+COPY ./public/.well-known ./public/.well-known
+
 # Build source
 RUN yarn build
 RUN yarn minify

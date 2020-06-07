@@ -45,8 +45,11 @@ export class Config
     {
         let value = this.Get(config);
 
-        for( let piece in path.split("."))
+        const pieces = path.split(".");
+        for(let i in pieces)
         {
+            const piece = pieces[i];
+
             if(Object.keys(value).indexOf(piece) !== -1)
             {
                 value = value[piece];

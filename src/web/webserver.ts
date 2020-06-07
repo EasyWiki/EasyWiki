@@ -220,7 +220,6 @@ class Web
 
                 html += "<tr class='result'><td><a href='" + page + "'>";
                 html += "<p class='has-text-weight-bold search-title'>" + page + "</p>";
-                //html += "<p class='search-text'>" + page.data + "</p></a></td>";
             }
             res.send(html);
         });
