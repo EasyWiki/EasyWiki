@@ -31,11 +31,15 @@ class Web
 
         // Start the web server
         this._app = express();
+
+        let port : number;
         
         if(Config.Config.Get("Web.ssl.use"))
         {
             this._server = https.createServer(this.GetSslCertificate(), 
             this._app).listen(Config.Config.Get("Web.port"));
+
+            port = Config.Config.Get("Web.port");
 
             // Start the http redirect server
             this._http = http.createServer(function (req, res)
@@ -47,6 +51,7 @@ class Web
         }
         else
         {
+            port = Config.Config.Get("Web.httpport");
             this._server = http.createServer(this._app).listen(Config.Config.Get("Web.httpport"));
             this._http = this._server;
         }
@@ -55,7 +60,9 @@ class Web
         this.RegisterMiddleware();
         this.RegisterRoutes();
 
-        Logger.Log("Web","The server started on port " + Config.Config.Get("Web.port") + ".");
+        Logger.Log("Web","The server started on port " + port + ".");
+
+        // Send PM2 signal
         if(process.send)(process.send as Function)('ready'); 
     }
 
@@ -71,6 +78,8 @@ class Web
     private RegisterMiddleware()
     {        
         // Set up middleware
+        this._app.disable('x-powered-by');
+
         this._app.use(LoggerMiddleware.LogRoute);
         this._app.use(RedirectMiddleware.Redirect);
         
