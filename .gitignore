@@ -93,3 +93,4 @@ public/favicon.png
 # EasyWiki Themes
 public/css/
 themes/
+.vscode/settings.json

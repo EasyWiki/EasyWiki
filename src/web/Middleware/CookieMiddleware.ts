@@ -1,7 +1,7 @@
 import express from 'express';
 import { Config } from '../../modules/Config';
 
-class CookieMiddleWare
+export class CookieMiddleWare
 {
     public static RefreshCookies(req: express.Request, res: express.Response, next: express.NextFunction)
     {
@@ -31,5 +31,3 @@ class CookieMiddleWare
         });
     }
 }
-
-export = CookieMiddleWare;

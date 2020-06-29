@@ -6,7 +6,7 @@ import { Searcher } from "./Markdown/Searcher";
 import { Gitter } from "./Markdown/Gitter";
 import { Timer } from "./modules/Timer";
 import { Logger } from "./modules/Logger";
-import Sponsors = require("./modules/Sponsors");
+import {Sponsors} from "./modules/Sponsors";
 
 // Start the server asynchrously
 StartServer();

@@ -1,9 +1,9 @@
-import fs, { linkSync } from 'fs';
+import fs from 'fs';
 import path from 'path';
 import { Logger } from '../modules/Logger';
 import { Searcher } from './Searcher';
 import { FileSystem } from '../modules/FileSystem';
-import IndexBuilder from './IndexBuilder';
+import { IndexBuilder } from './IndexBuilder';
 import { JSDOM } from 'jsdom';
 
 const kramed : any = require("kramed");

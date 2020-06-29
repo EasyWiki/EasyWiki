@@ -4,7 +4,7 @@ import { FileSystem } from "../modules/FileSystem";
 import { Logger } from "../modules/Logger";
 import { MarkdownBuilder } from "./MarkdownBuilder";
 import { execSync } from "child_process";
-import BreadcrumbBuilder from './BreadcrumbBuilder';
+import { BreadcrumbBuilder } from './BreadcrumbBuilder';
 
 
 // Create constants to the special folders
