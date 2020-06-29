@@ -5,7 +5,7 @@
   "main": "app/app.js",
   "scripts": {
     "start-dev": "pm2 start",
-    "prestart": "yarn build",
+    "prestart": "yarn build && yarn minify",
     "start": "node app/app.js",
     "build": "tsc",
     "watch": "tsc --build --watch",
