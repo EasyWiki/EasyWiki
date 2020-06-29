@@ -124,7 +124,7 @@ class FileSystem
         if(!fs.existsSync(srcFolder)) return;
 
         await this.RemoveFolder(destFolder);
-        fs.mkdirSync(destFolder.toLowerCase());
+        fs.mkdirSync(destFolder);
 
         let files = fs.readdirSync(srcFolder);
 
@@ -156,7 +156,7 @@ class FileSystem
         
         await this.RemoveFile(destFile);
 
-        fs.copyFileSync(srcFile, destFile.toLowerCase());
+        fs.copyFileSync(srcFile, destFile);
     }
 
     /**
