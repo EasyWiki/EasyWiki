@@ -1,0 +1,33 @@
+name: Docker build
+
+on:
+  release:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Docker Login
+      run: docker login -u $DOCKER_USER -p $DOCKER_TOKEN
+      env: 
+        DOCKER_USER: ${{ secrets.DOCKER_USER }}
+        DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+    
+    - name: Latest docker build
+      run: |
+        yarn docker-build
+    - name: Get current version
+      id: package-version
+      run: |
+        PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }' | sed 's/[",]//g' | tr -d '[[:space:]]') &&
+        echo ::set-output name=current-version::$PACKAGE_VERSION
+    - name: Build current version
+      run: |
+        docker build -t easywiki/easywiki:${{ steps.package-version.outputs.current-version}} .
+    - name: Docker Push
+      run: |
+        docker push easywiki/easywiki
