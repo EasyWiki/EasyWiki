@@ -18,7 +18,7 @@ async function StartServer()
 {
     // Create a log file for the logger
     Logger.CreateLogFile();
-    
+
     Logger.Log("App", "Starting EasyWiki...");
 
     Sponsors.Load();
@@ -36,18 +36,22 @@ async function StartServer()
     else search.LoadIndexFiles();
 
     // Create a timer to refresh the files from the git
-    const gitTimer = new Timer(gitter.CloneRepo, Config.Get("config").Gitter.timeout);
-    gitTimer.Start();
+    let gitTimer : Timer;
+    if(Config.Get("config").Gitter.timeout)
+    {
+        gitTimer = new Timer(gitter.CloneRepo, Config.Get("config").Gitter.timeout);
+        gitTimer.Start();
+    }
 
     // Load all themes
     Theme.LoadThemes();
 
-    // Create the webserber
+    // Create the webserver
     const web = new Web();
 
     process.on('SIGINT', function()
     {
-        gitTimer.Stop();
+        if(gitTimer) gitTimer.Stop();
         web.StopServer();
     });
 }
