@@ -3,7 +3,7 @@ import basicAuth from 'express-basic-auth';
 import { Config } from '../../modules/Config';
 import { Logger } from '../../modules/Logger';
 
-class AuthenticationMiddleware
+export class AuthenticationMiddleware
 {
     public static async Authenticate(req: express.Request, res: express.Response, next: express.NextFunction)
     {
@@ -29,5 +29,3 @@ class AuthenticationMiddleware
             subtitle: "You made a failed login attempt!", text: "This event will be reported!"})
     }
 }
-
-export = AuthenticationMiddleware;

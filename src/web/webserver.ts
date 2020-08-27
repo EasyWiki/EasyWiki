@@ -15,9 +15,9 @@ import { Gitter } from '../Markdown/Gitter';
 import { Searcher } from '../Markdown/Searcher';
 import { Theme } from '../modules/Theme';
 import { FileSystem } from '../modules/FileSystem';
-import AuthenticationMiddleware from './Middleware/AuthenticationMiddleware';
-import RedirectMiddleware from './Middleware/RedirectMiddleware';
-import CookieMiddleWare from './Middleware/CookieMiddleware';
+import { AuthenticationMiddleware } from './Middleware/AuthenticationMiddleware';
+import { RedirectMiddleware } from './Middleware/RedirectMiddleware';
+import { CookieMiddleWare } from './Middleware/CookieMiddleware';
 
 class Web
 {

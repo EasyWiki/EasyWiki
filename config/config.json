@@ -9,12 +9,12 @@
     "Web":
     {
         "port": 443,
-        "httpport": 80,
+        "httpport": 8080,
         "forceurl": "",
         "cookieSecret": "password",
         "ssl":
         {
-            "use": true,
+            "use": false,
             "key": "ssl/ssl.key",
             "cert": "ssl/ssl.crt"
         },
@@ -30,6 +30,7 @@
     "Gitter":
     {
         "repo": "https://github.com/WatcherWhale/EasyWiki-Testrepo.git",
+        "branch": "master",
         "timeout": 600000,
         "cloneOnStart": true
     },

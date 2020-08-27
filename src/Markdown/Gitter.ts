@@ -4,7 +4,7 @@ import { FileSystem } from "../modules/FileSystem";
 import { Logger } from "../modules/Logger";
 import { MarkdownBuilder } from "./MarkdownBuilder";
 import { execSync } from "child_process";
-import BreadcrumbBuilder from './BreadcrumbBuilder';
+import { BreadcrumbBuilder } from './BreadcrumbBuilder';
 
 
 // Create constants to the special folders
@@ -34,10 +34,20 @@ class Gitter
             Logger.Log("Gitter", "Cloning repository...");
 
             await FileSystem.RemoveFolder(tempFolder);
-
+            
+            // Clone the wiki repo
             execSync("git clone \"" + Config.Get("config").Gitter.repo + "\" \"" + tempFolder + "\"", {
                 stdio: "ignore"
             });
+            
+            // Checkout to the correct branch
+            if(Config.Get("config").Gitter.branch)
+            {
+                execSync("git checkout " + Config.Get("config").Gitter.branch, {
+                    cwd: tempFolder,
+                    stdio: "ignore"
+                });
+            }
 
             // Copy all special files
             var p1 = FileSystem.CopyInto(path.join(tempFolder, "pages"), pageFolder);
@@ -45,12 +55,12 @@ class Gitter
 
             await p1;
             await p2;
-            
+
             await FileSystem.CopyFile(path.join(tempFolder, "menu.md"), path.join(partialFolder, "menu.md"));
             await FileSystem.CopyFile(path.join(tempFolder, "navbar.md"), path.join(partialFolder, "navbar.md"));
             await FileSystem.CopyFile(path.join(tempFolder, "footer.md"), path.join(partialFolder, "footer.md"));
             await FileSystem.CopyFile(path.join(tempFolder, "footerLinks.md"), path.join(partialFolder, "footerLinks.md"));
-            
+
             // Remove the temp folder
             FileSystem.RemoveFolder(tempFolder);
 

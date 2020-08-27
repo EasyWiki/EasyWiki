@@ -2,7 +2,7 @@ import { FileSystem } from "./FileSystem";
 import { Logger } from "./Logger";
 import { Config } from "./Config";
 
-class Sponsors
+export class Sponsors
 {
     public static Sponsors : Sponsors;
 
@@ -56,5 +56,3 @@ class Sponsors
         return new Sponsors();
     }
 }
-
-export = Sponsors;

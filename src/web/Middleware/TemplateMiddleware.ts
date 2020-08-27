@@ -7,8 +7,8 @@ import { Theme } from '../../modules/Theme';
 import { Config } from '../../modules/Config';
 import { FileSystem } from '../../modules/FileSystem';
 import { JSDOM } from 'jsdom';
-import Sponsors from '../../modules/Sponsors';
-import CookieMiddleware from './CookieMiddleware';
+import { Sponsors } from '../../modules/Sponsors';
+import { CookieMiddleWare } from './CookieMiddleware';
 
 const dirPrefix = "../../..";
 
@@ -59,10 +59,10 @@ class TemplateMiddleware
                 req.theme = Theme.GetTheme(Config.Get("config").Style.theme);
 
                 req.cookies.accent = req.theme.GetDefaultAccent();
-                CookieMiddleware.SetCookie("accent", req.theme.GetDefaultAccent(), res);
+                CookieMiddleWare.SetCookie("accent", req.theme.GetDefaultAccent(), res);
             }
 
-            CookieMiddleware.SetCookie("theme", req.theme.GetId(), res);
+            CookieMiddleWare.SetCookie("theme", req.theme.GetId(), res);
 
             if(req.cookies.accent)
             {

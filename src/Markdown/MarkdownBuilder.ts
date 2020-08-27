@@ -1,9 +1,9 @@
-import fs, { linkSync } from 'fs';
+import fs from 'fs';
 import path from 'path';
 import { Logger } from '../modules/Logger';
 import { Searcher } from './Searcher';
 import { FileSystem } from '../modules/FileSystem';
-import IndexBuilder from './IndexBuilder';
+import { IndexBuilder } from './IndexBuilder';
 import { JSDOM } from 'jsdom';
 
 const kramed : any = require("kramed");
@@ -211,7 +211,7 @@ class MarkdownBuilder
 
         await FileSystem.RemoveFile(path.join(partialFolder, "footerLinks.html"));
 
-        var linkHtml = this.BuildString(await FileSystem.ReadFile(path.join(partialFolder, "footerlinks.md")));
+        var linkHtml = this.BuildString(await FileSystem.ReadFile(path.join(partialFolder, "footerLinks.md")));
         linkHtml = "<section class='section'><h3 class='title is-5'>{{translation.Links}}:</h3><div class='links'>" + linkHtml;
         await FileSystem.WriteFile(path.join(partialFolder, "footerLinks.html"), linkHtml + "</div></section>");
 
