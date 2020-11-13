@@ -1,7 +1,7 @@
 import express from 'express';
 import { Config } from '../../modules/Config';
 
-class RedirectMiddleware
+export class RedirectMiddleware
 {
     public static async Redirect(req: express.Request, res: express.Response, next: express.NextFunction)
     {
@@ -18,5 +18,3 @@ class RedirectMiddleware
         }
     }
 }
-
-export = RedirectMiddleware;

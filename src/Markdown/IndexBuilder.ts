@@ -2,7 +2,7 @@ import { JSDOM } from 'jsdom';
 import { Config } from '../modules/Config';
 import { Logger } from '../modules/Logger';
 
-class IndexBuilder
+export class IndexBuilder
 {
     public static CreateIndex(html: string, depth: any = 5)
     {
@@ -78,5 +78,3 @@ class IndexBuilder
         return 0;
     }
 }
-
-export = IndexBuilder;

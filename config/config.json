@@ -9,12 +9,12 @@
     "Web":
     {
         "port": 443,
-        "httpport": 80,
+        "httpport": 8080,
         "forceurl": "",
         "cookieSecret": "password",
         "ssl":
         {
-            "use": true,
+            "use": false,
             "key": "ssl/ssl.key",
             "cert": "ssl/ssl.crt"
         },

@@ -3,7 +3,7 @@ import path from 'path';
 import { JSDOM } from "jsdom";
 import { Logger } from "../modules/Logger";
 
-class BreadcrumbBuilder
+export class BreadcrumbBuilder
 {
     public static TitleMap : Map<string,string>;
 
@@ -102,5 +102,3 @@ class BreadcrumbBuilder
     }
 
 }
-
-export = BreadcrumbBuilder;
