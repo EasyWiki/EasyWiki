@@ -11,12 +11,12 @@
     globby "11.0.1"
     mkdirp "1.0.4"
 
-"@node-minify/uglify-es@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@node-minify/uglify-es/-/uglify-es-6.0.0.tgz#e981dd50b1f9558f6083d5206bf5f2242cae75df"
-  integrity sha512-2CIwmvaVTPXsoevNjWkpry5PP3F7YuNonKMqHgPiVYJawm5grfSizZL7DtupypKWTl6EZqWDWLmoq2AgbNGndA==
+"@node-minify/uglify-es@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@node-minify/uglify-es/-/uglify-es-6.1.0.tgz#1513250556ee65c1a89de0b2d05412d8c8737626"
+  integrity sha512-VS1bIz9MnxcAg1DLu9QQ2Tc+hj/3DpYu8BZOk8m3a+QonN9OJaQB6bB3A9XV9ywbj1hbrHbHliK3nqHM7W0c/Q==
   dependencies:
-    "@node-minify/utils" "^6.0.0"
+    "@node-minify/utils" "^6.1.0"
     uglify-es "3.3.9"
 
 "@node-minify/utils@^6.0.0", "@node-minify/utils@^6.1.0":
