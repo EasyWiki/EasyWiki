@@ -2,27 +2,27 @@
 # yarn lockfile v1
 
 
-"@node-minify/core@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@node-minify/core/-/core-6.0.0.tgz#c5cc0c84336257cf7d4be6834325a74e918b8666"
-  integrity sha512-gi+Exrut9TdNaFSEIhzAFS8ND49j0HVOBdFYqHe+TF+uEyd5E7MOPDxTfAz4DkTqQwqIDSChm4avz7vzISDacA==
+"@node-minify/core@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@node-minify/core/-/core-6.1.0.tgz#344c841fa07c60394944566daf61afa6bc5972d5"
+  integrity sha512-JScyWXCSOKnilDgtoUEP7ubTmXnkVXSWpAqhZWFn0PVo7ZdSOI0nTQooQekRhH4UXAIqnrSVgBYNJieO8GAkSw==
   dependencies:
-    "@node-minify/utils" "^6.0.0"
+    "@node-minify/utils" "^6.1.0"
     globby "11.0.1"
     mkdirp "1.0.4"
 
-"@node-minify/uglify-es@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@node-minify/uglify-es/-/uglify-es-6.0.0.tgz#e981dd50b1f9558f6083d5206bf5f2242cae75df"
-  integrity sha512-2CIwmvaVTPXsoevNjWkpry5PP3F7YuNonKMqHgPiVYJawm5grfSizZL7DtupypKWTl6EZqWDWLmoq2AgbNGndA==
+"@node-minify/uglify-es@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@node-minify/uglify-es/-/uglify-es-6.1.0.tgz#1513250556ee65c1a89de0b2d05412d8c8737626"
+  integrity sha512-VS1bIz9MnxcAg1DLu9QQ2Tc+hj/3DpYu8BZOk8m3a+QonN9OJaQB6bB3A9XV9ywbj1hbrHbHliK3nqHM7W0c/Q==
   dependencies:
-    "@node-minify/utils" "^6.0.0"
+    "@node-minify/utils" "^6.1.0"
     uglify-es "3.3.9"
 
-"@node-minify/utils@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@node-minify/utils/-/utils-6.0.0.tgz#de7b8c355e8600e4d9dd2cd6f67d7841d7ec6a70"
-  integrity sha512-x+WuhvKN63z3FnkUTeOROscC4t79IekSMoRaDrD1bcouG/dyct2myCyUTRd2d2MzPahPm6lEqQPXH+qR3AADSw==
+"@node-minify/utils@^6.0.0", "@node-minify/utils@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@node-minify/utils/-/utils-6.1.0.tgz#4652752d33ccb8cc2e4c4fe2d07aecab9e6073ce"
+  integrity sha512-/98HlSlCRioGhWMRWfp9MhAVIzdB6SfcCrMGna55dQ5rjOeJL/Znlls7jkYDW+ZW0zd0bRxGmOwRjxCg1qfQ8w==
   dependencies:
     gzip-size "5.1.1"
 
@@ -78,20 +78,20 @@
     "@types/qs" "*"
     "@types/range-parser" "*"
 
-"@types/express@*", "@types/express@^4.17.7":
-  version "4.17.7"
-  resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.7.tgz#42045be6475636d9801369cd4418ef65cdb0dd59"
-  integrity sha512-dCOT5lcmV/uC2J9k0rPafATeeyz+99xTt54ReX11/LObZgfzJqZNcW27zGhYyX+9iSEGXGt5qLPwRSvBZcLvtQ==
+"@types/express@*", "@types/express@^4.17.9":
+  version "4.17.9"
+  resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.9.tgz#f5f2df6add703ff28428add52bdec8a1091b0a78"
+  integrity sha512-SDzEIZInC4sivGIFY4Sz1GG6J9UObPwCInYJjko2jzOf/Imx/dlpume6Xxwj1ORL82tBbmN4cPDIDkLbWHk9hw==
   dependencies:
     "@types/body-parser" "*"
     "@types/express-serve-static-core" "*"
     "@types/qs" "*"
     "@types/serve-static" "*"
 
-"@types/jsdom@^16.2.3":
-  version "16.2.3"
-  resolved "https://registry.yarnpkg.com/@types/jsdom/-/jsdom-16.2.3.tgz#c6feadfe0836389b27f9c911cde82cd32e91c537"
-  integrity sha512-BREatezSn74rmLIDksuqGNFUTi9HNAWWQXYpFBFLK9U6wlMCO4M0QCa8CMpDsZQuqxSO9XifVLT5Q1P0vgKLqw==
+"@types/jsdom@^16.2.5":
+  version "16.2.5"
+  resolved "https://registry.yarnpkg.com/@types/jsdom/-/jsdom-16.2.5.tgz#74ebad438741d249ecb416c5486dcde4217eb66c"
+  integrity sha512-k/ZaTXtReAjwWu0clU0KLS53dyqZnA8mm+jwKFeFrvufXgICp+VNbskETFxKKAguv0pkaEKTax5MaRmvalM+TA==
   dependencies:
     "@types/node" "*"
     "@types/parse5" "*"
@@ -1231,10 +1231,10 @@ type-is@~1.6.17, type-is@~1.6.18:
     media-typer "0.3.0"
     mime-types "~2.1.24"
 
-typescript@^3.9.7:
-  version "3.9.7"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
-  integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==
+typescript@^4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.5.tgz#ae9dddfd1069f1cb5beb3ef3b2170dd7c1332389"
+  integrity sha512-ywmr/VrTVCmNTJ6iV2LwIrfG1P+lv6luD8sUJs+2eI9NLGigaN+nUQc13iHqisq7bra9lnmUSYqbJvegraBOPQ==
 
 uglify-es@3.3.9:
   version "3.3.9"
