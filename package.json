@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@node-minify/core": "^6.0.0",
-    "@node-minify/uglify-es": "^6.0.0",
+    "@node-minify/uglify-es": "^6.1.0",
     "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.9",
     "@types/jsdom": "^16.2.3",

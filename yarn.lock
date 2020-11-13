@@ -11,18 +11,18 @@
     globby "11.0.1"
     mkdirp "1.0.4"
 
-"@node-minify/uglify-es@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@node-minify/uglify-es/-/uglify-es-6.0.0.tgz#e981dd50b1f9558f6083d5206bf5f2242cae75df"
-  integrity sha512-2CIwmvaVTPXsoevNjWkpry5PP3F7YuNonKMqHgPiVYJawm5grfSizZL7DtupypKWTl6EZqWDWLmoq2AgbNGndA==
+"@node-minify/uglify-es@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@node-minify/uglify-es/-/uglify-es-6.1.0.tgz#1513250556ee65c1a89de0b2d05412d8c8737626"
+  integrity sha512-VS1bIz9MnxcAg1DLu9QQ2Tc+hj/3DpYu8BZOk8m3a+QonN9OJaQB6bB3A9XV9ywbj1hbrHbHliK3nqHM7W0c/Q==
   dependencies:
-    "@node-minify/utils" "^6.0.0"
+    "@node-minify/utils" "^6.1.0"
     uglify-es "3.3.9"
 
-"@node-minify/utils@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@node-minify/utils/-/utils-6.0.0.tgz#de7b8c355e8600e4d9dd2cd6f67d7841d7ec6a70"
-  integrity sha512-x+WuhvKN63z3FnkUTeOROscC4t79IekSMoRaDrD1bcouG/dyct2myCyUTRd2d2MzPahPm6lEqQPXH+qR3AADSw==
+"@node-minify/utils@^6.0.0", "@node-minify/utils@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@node-minify/utils/-/utils-6.1.0.tgz#4652752d33ccb8cc2e4c4fe2d07aecab9e6073ce"
+  integrity sha512-/98HlSlCRioGhWMRWfp9MhAVIzdB6SfcCrMGna55dQ5rjOeJL/Znlls7jkYDW+ZW0zd0bRxGmOwRjxCg1qfQ8w==
   dependencies:
     gzip-size "5.1.1"
 
