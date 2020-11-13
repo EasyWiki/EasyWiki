@@ -2,12 +2,12 @@
 # yarn lockfile v1
 
 
-"@node-minify/core@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@node-minify/core/-/core-6.0.0.tgz#c5cc0c84336257cf7d4be6834325a74e918b8666"
-  integrity sha512-gi+Exrut9TdNaFSEIhzAFS8ND49j0HVOBdFYqHe+TF+uEyd5E7MOPDxTfAz4DkTqQwqIDSChm4avz7vzISDacA==
+"@node-minify/core@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@node-minify/core/-/core-6.1.0.tgz#344c841fa07c60394944566daf61afa6bc5972d5"
+  integrity sha512-JScyWXCSOKnilDgtoUEP7ubTmXnkVXSWpAqhZWFn0PVo7ZdSOI0nTQooQekRhH4UXAIqnrSVgBYNJieO8GAkSw==
   dependencies:
-    "@node-minify/utils" "^6.0.0"
+    "@node-minify/utils" "^6.1.0"
     globby "11.0.1"
     mkdirp "1.0.4"
 
@@ -19,10 +19,10 @@
     "@node-minify/utils" "^6.0.0"
     uglify-es "3.3.9"
 
-"@node-minify/utils@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@node-minify/utils/-/utils-6.0.0.tgz#de7b8c355e8600e4d9dd2cd6f67d7841d7ec6a70"
-  integrity sha512-x+WuhvKN63z3FnkUTeOROscC4t79IekSMoRaDrD1bcouG/dyct2myCyUTRd2d2MzPahPm6lEqQPXH+qR3AADSw==
+"@node-minify/utils@^6.0.0", "@node-minify/utils@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@node-minify/utils/-/utils-6.1.0.tgz#4652752d33ccb8cc2e4c4fe2d07aecab9e6073ce"
+  integrity sha512-/98HlSlCRioGhWMRWfp9MhAVIzdB6SfcCrMGna55dQ5rjOeJL/Znlls7jkYDW+ZW0zd0bRxGmOwRjxCg1qfQ8w==
   dependencies:
     gzip-size "5.1.1"
 
