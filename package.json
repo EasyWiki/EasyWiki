@@ -13,6 +13,7 @@
     "minify": "node minifier/minify.js",
     "docker": "docker-compose up -d",
     "docker-build": "docker build -t easywiki/easywiki:latest .",
+    "docker-arm": "docker build -f Dockerfile-arm64 -t easywiki/easywiki:arm64 .",
     "docker-dev": "docker-compose -f dev-docker-compose.yml up -d"
   },
   "repository": {

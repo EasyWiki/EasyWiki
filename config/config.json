@@ -30,11 +30,13 @@
     "Gitter":
     {
         "repo": "https://github.com/WatcherWhale/EasyWiki-Testrepo.git",
+        "branch": "master",
         "timeout": 600000,
         "cloneOnStart": true
     },
     "Logger":
     {
-        "max": 10000
+        "max": 10000,
+        "kill_on_error": false
     }
 }

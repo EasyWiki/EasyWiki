@@ -59,6 +59,7 @@ class Gitter
         catch(e)
         {
             Logger.Error("Gitter", "Cloning has failed!", e);
+            //if(Config.Get("config").Logger.close_on_error
         }
 
         // Build all markdown
