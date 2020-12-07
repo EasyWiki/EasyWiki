@@ -19,7 +19,7 @@
     "@node-minify/utils" "^6.1.0"
     uglify-es "3.3.9"
 
-"@node-minify/utils@^6.0.0", "@node-minify/utils@^6.1.0":
+"@node-minify/utils@^6.1.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@node-minify/utils/-/utils-6.1.0.tgz#4652752d33ccb8cc2e4c4fe2d07aecab9e6073ce"
   integrity sha512-/98HlSlCRioGhWMRWfp9MhAVIzdB6SfcCrMGna55dQ5rjOeJL/Znlls7jkYDW+ZW0zd0bRxGmOwRjxCg1qfQ8w==
@@ -78,7 +78,7 @@
     "@types/qs" "*"
     "@types/range-parser" "*"
 
-"@types/express@*", "@types/express@^4.17.9":
+"@types/express@*", "@types/express@^4.17.7":
   version "4.17.9"
   resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.9.tgz#f5f2df6add703ff28428add52bdec8a1091b0a78"
   integrity sha512-SDzEIZInC4sivGIFY4Sz1GG6J9UObPwCInYJjko2jzOf/Imx/dlpume6Xxwj1ORL82tBbmN4cPDIDkLbWHk9hw==
@@ -891,10 +891,10 @@ ms@2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
   integrity sha512-tgp+dl5cGk28utYktBsrFqA7HKgrhgPsg6Z/EfhWI4gl1Hwq8B/GmY/0oXZ6nF8hDVesS/FpnYaD/kOWhYQvyg==
 
-mustache@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/mustache/-/mustache-4.0.1.tgz#d99beb031701ad433338e7ea65e0489416c854a2"
-  integrity sha512-yL5VE97+OXn4+Er3THSmTdCFCtx5hHWzrolvH+JObZnUYwuaG7XV+Ch4fR2cIrcYI0tFHxS7iyFYl14bW8y2sA==
+mustache@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/mustache/-/mustache-4.1.0.tgz#8c1b042238a982d2eb2d30efc6c14296ae3f699d"
+  integrity sha512-0FsgP/WVq4mKyjolIyX+Z9Bd+3WS8GOwoUTyKXT5cTYMGeauNTi2HPCwERqseC1IHAy0Z7MDZnJBfjabd4O8GQ==
 
 negotiator@0.6.2:
   version "0.6.2"
