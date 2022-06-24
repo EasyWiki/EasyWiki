@@ -35,7 +35,7 @@
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",
-    "jsdom": "^16.4.0",
+    "jsdom": "^16.5.0",
     "kramed": "^0.5.6",
     "mustache": "^4.0.1",
     "node-cache": "^5.1.2"
